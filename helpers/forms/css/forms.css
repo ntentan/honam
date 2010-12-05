@@ -1,0 +1,121 @@
+/* 
+ * Ntentan PHP Framework
+ * Copyright 2010 James Ekow Abaka Ainooson
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+input[type='text'],
+input[type='password']
+{
+    border:2px solid #e0e0e0;
+    width:100%;
+    background-color:#ffffff;
+    font-size:larger;
+    color:#404040
+}
+
+select
+{
+	font-size:larger;
+}
+
+input[type='text']:focus,
+input[type='password']:focus
+{
+    border:2px solid orange;
+}
+
+textarea
+{
+    border:2px solid #e0e0e0;
+    width:100%;
+    font-family:"Helvetica", sans-serif;
+}
+
+textarea:focus
+{
+    border:1px solid orange;
+}
+
+input[type='submit']
+{
+	/*font-size:larger;*/
+	font-weight:bold;
+}
+
+label
+{
+    font-weight:bold;
+    color:#808080;
+}
+
+div.fapi-element-div
+{
+	margin-bottom:10px;
+}
+
+div.fapi-description
+{
+	color:#a0a0a0;
+}
+
+div.fapi-submit-area
+{
+	padding-top:10px;
+	border-top:1px solid #f0f0f0;
+}
+
+span.fapi-required
+{
+	color:orange;
+}
+
+input[type='text'].fapi-error
+{
+	border:1px solid red;
+}
+
+div.fapi-error
+{
+	background-color:pink;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    margin-bottom:5px;
+}
+
+div.fapi-error > ul
+{
+	list-style:none;
+	padding:5px;
+	margin:0px;
+}
+
+table.fapi-table
+{
+	width:100%;
+	border-collapse:collapse;
+}
+
+table.fapi-table td
+{
+	padding:5px;
+	vertical-align:top;
+}
+
+fieldset
+{
+	border:1px solid #f0f0f0;
+    border-radius:5px;
+    -moz-border-radius:5px;
+}
