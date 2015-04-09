@@ -30,7 +30,7 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers;
+namespace ntentan\honam\helpers;
 
 class Helper
 {

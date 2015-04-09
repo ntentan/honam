@@ -1,9 +1,9 @@
 <?php
 /**
- * A renderer which doesn't layout the form elements
+ * Hidden form field
  * 
  * Ntentan Framework
- * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
+ * Copyright (c) 2008-2013 James Ekow Abaka Ainooson
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -29,33 +29,22 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api\renderers;
+namespace ntentan\honam\helpers\form\api;
 
-use \ntentan\views\helpers\forms\api\Element;
-
-class None extends Renderer
+class HiddenField extends Field
 {
-    public function head()
+    public function __construct($name="", $value="")
     {
-    
+        parent::__construct($name, $value);
     }
-    
-    public function element($element)
+
+    public function render()
     {
-        return $element->render();
+        return "<input type='hidden'  name='".$this->getName()."' value='".$this->getValue()."' {$this->getAttributes()} />";
     }
-    
-    /**
-     * The foot of the default renderer.
-     *
-     */
-    public function foot()
+
+    public function getType()
     {
-    
-    }
-    
-    public function type()
-    {
-        return "none";
+        return __CLASS__;
     }
 }

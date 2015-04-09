@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\views\template_engines;
+namespace ntentan\honam\template_engines;
 
 use ntentan\Ntentan;
 use ntentan\caching\Cache;
@@ -44,10 +44,7 @@ abstract class TemplateEngine
         $engine = end($last);
         if(!isset(TemplateEngine::$loadedInstances[$engine]))
         {
-            Ntentan::addIncludePath(
-                Ntentan::getFilePath("lib/views/template_engines/" . $engine)
-            );
-            $engineClass = "ntentan\\views\\template_engines\\$engine\\" . Ntentan::camelize($engine);
+            $engineClass = "ntentan\\honam\\template_engines\\$engine\\" . Ntentan::camelize($engine);
             try{
                 $engineInstance = new $engineClass();
             }

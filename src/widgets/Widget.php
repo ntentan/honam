@@ -30,12 +30,11 @@
  * @license MIT
  */
 
-namespace ntentan\views\widgets;
+namespace ntentan\honam\widgets;
 
-use ntentan\views\template_engines\TemplateEngine;
-use ntentan\views\template_engines\Template;
+use ntentan\honam\template_engines\TemplateEngine;
 use ntentan\Ntentan;
-use ntentan\views\Presentation;
+use ntentan\honam\Presentation;
 use ntentan\caching\Cache;
 
 /**

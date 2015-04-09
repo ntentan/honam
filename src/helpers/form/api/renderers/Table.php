@@ -29,9 +29,9 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api\renderers;
+namespace ntentan\honam\helpers\form\api\renderers;
 
-use \ntentan\views\helpers\forms\api\Element;
+use \ntentan\honam\helpers\form\api\Element;
 
 class Table extends Renderer
 {

@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\views\template_engines\php;
+namespace ntentan\honam\template_engines\php;
 
 class Variable implements \ArrayAccess, \Iterator
 {

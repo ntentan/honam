@@ -30,8 +30,8 @@
  * @license MIT
  */
 
-namespace ntentan\views\widgets\pagination;
-use ntentan\views\widgets\Widget;
+namespace ntentan\honam\widgets\pagination;
+use ntentan\honam\widgets\Widget;
 use ntentan\Ntentan;
 
 class PaginationWidget extends Widget

@@ -1,8 +1,8 @@
 <?php
-namespace ntentan\views\helpers\feeds\generators\rss;
+namespace ntentan\honam\helpers\feeds\generators\rss;
 
 use ntentan\Ntentan;
-use ntentan\views\helpers\feeds\generators\Generator;
+use ntentan\honam\helpers\feeds\generators\Generator;
 
 class RssFeed extends Generator
 {

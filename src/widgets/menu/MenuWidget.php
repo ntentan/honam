@@ -31,10 +31,10 @@
  */
 
 
-namespace ntentan\views\widgets\menu;
+namespace ntentan\honam\widgets\menu;
 
 use ntentan\Ntentan;
-use ntentan\views\widgets\Widget;
+use ntentan\honam\widgets\Widget;
 
 /**
  * Standard menu widget which ships with the menu widget.

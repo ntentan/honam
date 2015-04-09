@@ -34,7 +34,7 @@
  * @author ekow
  *
  */
-namespace ntentan\views;
+namespace ntentan\honam;
 
 class Presentation
 {

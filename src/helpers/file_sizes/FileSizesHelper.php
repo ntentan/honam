@@ -1,6 +1,6 @@
 <?php
-namespace ntentan\views\helpers\file_sizes;
-use ntentan\views\helpers\Helper;
+namespace ntentan\honam\helpers\file_sizes;
+use ntentan\honam\helpers\Helper;
 
 class FileSizesHelper extends Helper
 {

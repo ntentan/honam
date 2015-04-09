@@ -1,6 +1,6 @@
 <?php
 /**
- * A container for holding form elements
+ * Fields for collecting dates
  * 
  * Ntentan Framework
  * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
@@ -29,28 +29,38 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api;
+namespace ntentan\honam\helpers\form\api;
 
-/**
- * A simple container for containing form elements. This container does
- * not expose itself to styling by default but styling can be added
- * by adding a css class through the attributes interface.
- */
-class BoxContainer extends Container
+class DateField extends TextField
 {
-	public function __construct()
-	{
-		parent::__construct();
-	}
+    public function __construct($label="",$name="",$description="")
+    {
+        parent::__construct($label,$name,$description);
+    }
 
-	public function render()
-	{
-		$ret = "";
-		$this->addAttribute("class","form-box {$this->getCSSClasses()}");
-		$ret .= "<div {$this->getAttributes()}>";
-		$ret .= $this->renderElements();
-		$ret .= "</div>";
-		return $ret;
-	}
+    public function render()
+    {
+    	$this->addCSSClass("fapi-textfield");
+    	$this->addAttribute("class" , "form-date ".$this->getCSSClasses());
+    	$this->addAttribute("id" , $this->id());
+    	$this->addAttribute("name" , $this->getName());
+    	$this->addAttribute("value" , $this->getValue()!==""?date("Y-m-d",(int)$this->getValue()) : "" );
+    	$this->setAttribute('type', 'date');
+    	$id = $this->id();
+        return "<input ".$this->getAttributes()." />";
+    }
 
+    public function setValue($value)
+    {
+        if(is_numeric($value))
+		{
+			parent::setValue($value);
+		}
+		else
+		{
+			if(strlen($value)>0) parent::setValue(strtotime($value)); else parent::setValue("");
+		}
+		return $this;
+    }
 }
+

@@ -1,8 +1,7 @@
 <?php
-namespace ntentan\views\helpers\stylesheets;
+namespace ntentan\honam\helpers\stylesheets;
 
-use ntentan\Ntentan;
-use ntentan\views\helpers\minifiables\MinifiablesHelper;
+use ntentan\honam\helpers\minifiables\MinifiablesHelper;
 
 class StylesheetsHelper extends MinifiablesHelper
 {

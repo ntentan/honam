@@ -1,6 +1,6 @@
 <?php
 /**
- * Text area for forms
+ * Abstract renderer
  * 
  * Ntentan Framework
  * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
@@ -29,24 +29,29 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api;
+namespace ntentan\honam\helpers\form\api\renderers;
 
-class TextArea extends Field
+abstract class Renderer
 {
-    public function __construct($label="",$name="",$description="")
+    public $showFields = true;
+    
+    abstract public function head();
+    abstract public function element($element);
+    abstract public function foot();
+    abstract public function type();
+    
+    protected function renderLabel($element)
     {
-        $this->setLabel($label);
-        $this->setName($name);
-        $this->setDescription($description);
-    }
-
-    public function render()
-    {
-        $this->addAttribute('rows', 10);
-        $this->addAttribute('cols', 80);
-        $this->addAttribute('class', 'fapi-textarea');
-        $this->addAttribute('name', $this->getName());
-        return "<textarea ".$this->getAttributes().$this->getCSSClasses().">".
-               $this->getValue()."</textarea>";
-    }
+        $label = $element->getLabel();
+        if($label != '')
+        {
+            $ret .= "<label class='form-label'>".$label;
+            if($element->getRequired() && $label!="" && $element->getShowField())
+            {
+                $ret .= "<span class='required'>*</span>";
+            }
+            $ret .= "</label>";
+        }
+        return $ret;
+    }    
 }

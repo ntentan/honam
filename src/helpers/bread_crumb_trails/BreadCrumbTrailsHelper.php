@@ -29,10 +29,10 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\bread_crumb_trails;
+namespace ntentan\honam\helpers\bread_crumb_trails;
 
 use ntentan\Ntentan;
-use ntentan\views\helpers\Helper;
+use ntentan\honam\helpers\Helper;
 
 class BreadCrumbTrailsHelper extends Helper
 {

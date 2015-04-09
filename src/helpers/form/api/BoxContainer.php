@@ -1,6 +1,6 @@
 <?php
 /**
- * Abstract renderer
+ * A container for holding form elements
  * 
  * Ntentan Framework
  * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
@@ -29,29 +29,28 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api\renderers;
+namespace ntentan\honam\helpers\form\api;
 
-abstract class Renderer
+/**
+ * A simple container for containing form elements. This container does
+ * not expose itself to styling by default but styling can be added
+ * by adding a css class through the attributes interface.
+ */
+class BoxContainer extends Container
 {
-    public $showFields = true;
-    
-    abstract public function head();
-    abstract public function element($element);
-    abstract public function foot();
-    abstract public function type();
-    
-    protected function renderLabel($element)
-    {
-        $label = $element->getLabel();
-        if($label != '')
-        {
-            $ret .= "<label class='form-label'>".$label;
-            if($element->getRequired() && $label!="" && $element->getShowField())
-            {
-                $ret .= "<span class='required'>*</span>";
-            }
-            $ret .= "</label>";
-        }
-        return $ret;
-    }    
+	public function __construct()
+	{
+		parent::__construct();
+	}
+
+	public function render()
+	{
+		$ret = "";
+		$this->addAttribute("class","form-box {$this->getCSSClasses()}");
+		$ret .= "<div {$this->getAttributes()}>";
+		$ret .= $this->renderElements();
+		$ret .= "</div>";
+		return $ret;
+	}
+
 }

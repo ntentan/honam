@@ -31,9 +31,9 @@
 
 
 
-namespace ntentan\views\helpers\dates;
+namespace ntentan\honam\helpers\date;
 
-use ntentan\views\helpers\Helper;
+use ntentan\honam\helpers\Helper;
 
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -42,7 +42,7 @@ error_reporting(E_ALL ^ E_NOTICE);
  *
  * @author James Ekow Abaka Ainooson
  */
-class DatesHelper extends Helper
+class DateHelper extends Helper
 {
     /**
      * The UNIX timestamp which represents the most recently parsed date.

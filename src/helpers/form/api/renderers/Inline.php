@@ -29,9 +29,9 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api\renderers;
+namespace ntentan\honam\helpers\form\api\renderers;
 
-use \ntentan\views\helpers\forms\api\Element;
+use \ntentan\honam\helpers\form\api\Element;
 
 class Inline extends Renderer
 {
@@ -77,7 +77,7 @@ class Inline extends Renderer
             $ret .= $this->renderLabel($element);
         }
             
-        if($element->getType()=="ntentan\views\helpers\forms\api\Field")
+        if($element->getType()=="ntentan\honam\helpers\form\api\Field")
         {
             $ret .= "<div>" . $element->render() . "</div>";
         }

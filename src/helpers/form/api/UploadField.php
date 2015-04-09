@@ -16,14 +16,23 @@
  * limitations under the License.
  */
 
+namespace ntentan\honam\helpers\form\api;
 
-namespace ntentan\views\helpers\forms\api;
-
-class PasswordField extends TextField
+class UploadField extends Field
 {
-    public function __construct($label="",$name="",$description="")
+    public function __construct($label="",$name="",$description="",$value="",$destinationFile="")
     {
-        parent::__construct($label,$name,$description);
-        $this->setAttribute("type","password");
+        Field::__construct($name,$value);
+        Element::__construct($label, $description);
+        $this->addAttribute("type","file");
+    }
+
+    public function render()
+    {
+        $this->setAttribute("id",$this->id());
+        $this->addAttribute("name",$this->getName());
+        $attributes = $this->getAttributes();
+        $ret .= "<input $attributes />";
+        return $ret;
     }
 }

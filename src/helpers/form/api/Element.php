@@ -29,9 +29,9 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api;
+namespace ntentan\honam\helpers\form\api;
 
-use ntentan\views\helpers\forms\FormsHelper;
+use ntentan\honam\helpers\form\FormHelper;
 
 /**
  * The form element class. An element can be anything from the form
@@ -180,7 +180,7 @@ abstract class Element
         else
         {
             $this->name = $name;
-            $this->setValue(FormsHelper::getDataField($this->name));
+            $this->setValue(FormHelper::getDataField($this->name));
             return $this;
         }
     }
@@ -278,7 +278,7 @@ abstract class Element
 
     public function __toString()
     {
-        return FormsHelper::getRendererInstance()->element($this);
+        return FormHelper::getRendererInstance()->element($this);
     }
 
     //! Returns an array of all the CSS classes associated with this

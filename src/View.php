@@ -29,9 +29,9 @@
  * @license MIT
  */
 
-namespace ntentan\views;
+namespace ntentan\honam;
 
-use ntentan\views\template_engines\TemplateEngine;
+use ntentan\honam\template_engines\TemplateEngine;
 
 use ntentan\Ntentan;
 

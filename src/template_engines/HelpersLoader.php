@@ -30,7 +30,7 @@
  * @license MIT
  */
 
-namespace ntentan\views\template_engines;
+namespace ntentan\honam\template_engines;
 
 use ntentan\Ntentan;
 
@@ -42,15 +42,14 @@ class HelpersLoader
     private $pluginMode = false;
     private $plugin;
     private $loadedHelpers = array();
-
+    
+    /**
+     * 
+     * @param string $helper
+     * @return boolean|
+     */
     private function getHelper($helper)
     {
-        $helperPlural = Ntentan::plural($helper);
-        $helper = $helperPlural == null ? $helper : $helperPlural;
-        if($helper === null)
-        {
-            return false;
-        }
         if(!isset($this->loadedHelpers[$this->plugin . $helper]))
         {
             $camelizedHelper = Ntentan::camelize($helper) . "Helper";
@@ -64,10 +63,9 @@ class HelpersLoader
             {
                 $helperClass = "\\ntentan\\extensions\\{$this->plugin}\\helpers\\$helper\\$camelizedHelper";
             }
-            else if(file_exists(Ntentan::getFilePath("lib/views/helpers/$helper")))
+            else if(file_exists("vendor/ntentan/honam/src/helpers/$helper"))
             {
-                $path = Ntentan::getFilePath("lib/views/helpers/$helper");
-                $helperClass = "\\ntentan\\views\\helpers\\$helper\\$camelizedHelper";                
+                $helperClass = "\\ntentan\\honam\\helpers\\$helper\\$camelizedHelper";                
             }
             else
             {

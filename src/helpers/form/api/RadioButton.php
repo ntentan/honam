@@ -17,7 +17,7 @@
  * 
  */
 
-namespace ntentan\views\helpers\forms\api;
+namespace ntentan\honam\helpers\form\api;
 
 /**
  * A standard radio button. Can be added to the radio button group.

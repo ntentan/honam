@@ -1,9 +1,9 @@
 <?php
 /**
- * Source code file for text fields
+ * Text area for forms
  * 
  * Ntentan Framework
- * Copyright (c) 2008-2013 James Ekow Abaka Ainooson
+ * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -29,35 +29,24 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api;
+namespace ntentan\honam\helpers\form\api;
 
-/**
- * Implementation of a regular text field. This field is used to
- * accept single line text input from the user.
- * @ingroup Form_API
- */
-class TextField extends Field
+class TextArea extends Field
 {
-    protected $max_length;
-    protected $type;
-    protected $max_val;
-    protected $min_val;
-    protected $regexp;
-
-    public function __construct($label="",$name="",$description="",$value="")
+    public function __construct($label="",$name="",$description="")
     {
-        Field::__construct($name,$value);
-        Element::__construct($label, $description);
-        $this->type = "TEXT";
-        $this->addAttribute("type","text");
+        $this->setLabel($label);
+        $this->setName($name);
+        $this->setDescription($description);
     }
 
     public function render()
     {
-        $this->addAttribute("class", "textfield ".$this->getCSSClasses());
-        $this->addAttribute("name", $this->getName());
-        //$this->addAttribute("id", $this->id());
-        $this->addAttribute("value", $this->getValue());
-        return "<input {$this->getAttributes()} />";
+        $this->addAttribute('rows', 10);
+        $this->addAttribute('cols', 80);
+        $this->addAttribute('class', 'fapi-textarea');
+        $this->addAttribute('name', $this->getName());
+        return "<textarea ".$this->getAttributes().$this->getCSSClasses().">".
+               $this->getValue()."</textarea>";
     }
 }

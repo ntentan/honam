@@ -29,8 +29,8 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api;
-use ntentan\views\helpers\forms\FormsHelper;
+namespace ntentan\honam\helpers\form\api;
+use ntentan\honam\helpers\form\FormHelper;
 
 /**
  * The form class. This class represents the overall form class. This
@@ -67,7 +67,7 @@ class Form extends Container
         $this->addAttribute('action', $this->action);
         $this->addAttribute('accept-charset', 'utf-8');
         
-        return '<form '.$this->getAttributes().'>' . FormsHelper::getRendererInstance()->head();
+        return '<form '.$this->getAttributes().'>' . FormHelper::getRendererInstance()->head();
     }
 
     public function renderFoot()
@@ -91,7 +91,7 @@ class Form extends Container
             $ret .= '</div>';
         }
         $ret .= '</form>';
-        return FormsHelper::getRendererInstance()->foot() . $ret;
+        return FormHelper::getRendererInstance()->foot() . $ret;
     }
 
     public function setShowFields($show_field)

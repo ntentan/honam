@@ -1,8 +1,8 @@
 <?php
-namespace ntentan\views\template_engines\php;
+namespace ntentan\honam\template_engines\php;
 
 use ntentan\Ntentan;
-use ntentan\views\template_engines\TemplateEngine;
+use ntentan\honam\template_engines\TemplateEngine;
 
 /**
  * 

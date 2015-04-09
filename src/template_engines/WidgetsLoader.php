@@ -30,10 +30,10 @@
  * @license MIT
  */
 
-namespace ntentan\views\template_engines;
+namespace ntentan\honam\template_engines;
 
 use ntentan\Ntentan;
-use ntentan\views\widgets\Widget;
+use ntentan\honam\widgets\Widget;
 use \ReflectionClass;
 
 /**
@@ -71,11 +71,10 @@ class WidgetsLoader
             $widgetClass = "\\ntentan\\extensions\\{$this->plugin}\\widgets\\$widget\\" . Ntentan::camelize($widget) . 'Widget';
             $path = "plugins/{$this->plugin}/widgets/$widget";
         }
-        else if(file_exists(Ntentan::getFilePath("lib/views/widgets/$widget/" . Ntentan::camelize($widget) . "Widget.php")))
+        else if(file_exists("vendor/ntentan/honam/src/widgets/$widget/" . Ntentan::camelize($widget) . "Widget.php"))
         {
-            Ntentan::addIncludePath(Ntentan::getFilePath("lib/controllers/widgets/$widget"));
-            $widgetClass = "\\ntentan\\views\\widgets\\$widget\\" . Ntentan::camelize($widget) . 'Widget';
-            $path = Ntentan::getFilePath("lib/views/widgets/$widget");
+            $widgetClass = "\\ntentan\\honam\\widgets\\$widget\\" . Ntentan::camelize($widget) . 'Widget';
+            $path = "vendor/ntentan/honam/src/widgets/$widget/";
         }
         else
         {

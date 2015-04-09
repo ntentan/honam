@@ -29,9 +29,9 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms;
+namespace ntentan\honam\helpers\form;
 
-use ntentan\views\helpers\Helper;
+use ntentan\honam\helpers\Helper;
 use ntentan\Ntentan;
 use \ReflectionMethod;
 use \ReflectionClass;
@@ -40,7 +40,7 @@ use \Exception;
 /**
  * Forms helper for rendering forms.
  */
-class FormsHelper extends Helper
+class FormHelper extends Helper
 {
     private $container;
     public $id;
@@ -52,13 +52,7 @@ class FormsHelper extends Helper
     
     public function __construct()
     {
-        Ntentan::addIncludePath(
-            Ntentan::getFilePath("lib/views/helpers/forms/api")
-        );
-        Ntentan::addIncludePath(
-            Ntentan::getFilePath("lib/views/helpers/forms/api/renderers")
-        );
-        \ntentan\views\template_engines\TemplateEngine::appendPath(
+        \ntentan\honam\template_engines\TemplateEngine::appendPath(
             Ntentan::getFilePath("lib/views/helpers/forms/views")
         );
     }
@@ -79,7 +73,7 @@ class FormsHelper extends Helper
     
     public function stylesheet()
     {
-        return Ntentan::getFilePath('lib/views/helpers/forms/css/forms.css');
+        return __DIR__ . '/css/forms.css';
     }
     
     public static function create()
@@ -95,7 +89,7 @@ class FormsHelper extends Helper
         $args = func_get_args();
         if(is_string($args[0]))
         {
-            $elementClass = new ReflectionMethod(__NAMESPACE__ . "\\FormsHelper", 'create');
+            $elementClass = new ReflectionMethod(__NAMESPACE__ . "\\FormHelper", 'create');
             $element = $elementClass->invokeArgs(null, $args);
             $this->container->add($element);
         }
@@ -184,11 +178,6 @@ class FormsHelper extends Helper
         }
         return self::$rendererInstance;
     }
-
-    public static function getStylesheet()
-    {
-        return Ntentan::getFilePath('lib/views/helpers/forms/css/forms.css');
-    }
     
     public function help($arguments)
     {
@@ -255,21 +244,21 @@ class FormsHelper extends Helper
         }
         else if(substr($function, 0, 5) == "open_")
         {
-            $container = "ntentan\\views\\helpers\\forms\\api\\" . Ntentan::camelize(substr($function, 5, strlen($function)));
+            $container = __NAMESPACE__ . "\\api\\" . Ntentan::camelize(substr($function, 5, strlen($function)));
             $containerClass = new ReflectionClass($container);
             $containerObject = $containerClass->newInstanceArgs($arguments);
             $return = $containerObject->renderHead();
         }
         elseif(substr($function, 0, 6) == "close_")
         {
-            $container = "ntentan\\views\\helpers\\forms\\api\\" . Ntentan::camelize(substr($function, 6, strlen($function)));
+            $container = __NAMESPACE__ . "\\api\\" . Ntentan::camelize(substr($function, 6, strlen($function)));
             $containerClass = new ReflectionClass($container);
             $containerObject = $containerClass->newInstanceArgs($arguments);
             $return = $containerObject->renderFoot();
         }
         elseif(substr($function, 0, 4) == "get_")
         {
-            $element = "ntentan\\views\\helpers\\forms\\api\\" . Ntentan::camelize(substr($function, 4, strlen($function)));
+            $element = __NAMESPACE__ . "\\api\\" . Ntentan::camelize(substr($function, 4, strlen($function)));
             $elementClass = new ReflectionClass($element);
             $elementObject = $elementClass->newInstanceArgs($arguments);
             $name = $elementObject->getName();

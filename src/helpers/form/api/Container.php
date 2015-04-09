@@ -29,9 +29,9 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api;
+namespace ntentan\honam\helpers\form\api;
 
-use ntentan\views\helpers\forms\Forms;
+use ntentan\honam\helpers\form\Forms;
 use ntentan\Ntentan;
 use \Exception;
 

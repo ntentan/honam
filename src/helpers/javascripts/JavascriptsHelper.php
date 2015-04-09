@@ -4,10 +4,10 @@
  * and open the template in the editor.
  */
 
-namespace ntentan\views\helpers\javascripts;
+namespace ntentan\honam\helpers\javascripts;
 
 use ntentan\Ntentan;
-use ntentan\views\helpers\minifiables\MinifiablesHelper;
+use ntentan\honam\helpers\minifiables\MinifiablesHelper;
 
 class JavascriptsHelper extends MinifiablesHelper
 {

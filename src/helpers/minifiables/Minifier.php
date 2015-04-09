@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\views\helpers\minifiables;
+namespace ntentan\honam\helpers\minifiables;
 
 use ntentan\Ntentan;
 

@@ -1,9 +1,9 @@
 <?php
 /**
- * Fields for collecting dates
+ * Source code file for text fields
  * 
  * Ntentan Framework
- * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
+ * Copyright (c) 2008-2013 James Ekow Abaka Ainooson
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -29,38 +29,35 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\forms\api;
+namespace ntentan\honam\helpers\form\api;
 
-class DateField extends TextField
+/**
+ * Implementation of a regular text field. This field is used to
+ * accept single line text input from the user.
+ * @ingroup Form_API
+ */
+class TextField extends Field
 {
-    public function __construct($label="",$name="",$description="")
+    protected $max_length;
+    protected $type;
+    protected $max_val;
+    protected $min_val;
+    protected $regexp;
+
+    public function __construct($label="",$name="",$description="",$value="")
     {
-        parent::__construct($label,$name,$description);
+        Field::__construct($name,$value);
+        Element::__construct($label, $description);
+        $this->type = "TEXT";
+        $this->addAttribute("type","text");
     }
 
     public function render()
     {
-    	$this->addCSSClass("fapi-textfield");
-    	$this->addAttribute("class" , "form-date ".$this->getCSSClasses());
-    	$this->addAttribute("id" , $this->id());
-    	$this->addAttribute("name" , $this->getName());
-    	$this->addAttribute("value" , $this->getValue()!==""?date("Y-m-d",(int)$this->getValue()) : "" );
-    	$this->setAttribute('type', 'date');
-    	$id = $this->id();
-        return "<input ".$this->getAttributes()." />";
-    }
-
-    public function setValue($value)
-    {
-        if(is_numeric($value))
-		{
-			parent::setValue($value);
-		}
-		else
-		{
-			if(strlen($value)>0) parent::setValue(strtotime($value)); else parent::setValue("");
-		}
-		return $this;
+        $this->addAttribute("class", "textfield ".$this->getCSSClasses());
+        $this->addAttribute("name", $this->getName());
+        //$this->addAttribute("id", $this->id());
+        $this->addAttribute("value", $this->getValue());
+        return "<input {$this->getAttributes()} />";
     }
 }
-
