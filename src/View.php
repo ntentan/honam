@@ -41,15 +41,12 @@ use ntentan\Ntentan;
  */
 class View extends Presentation
 {
-    public $layout;
-    public $template;
-    public $defaultTemplatePath;
-    public $encoding;
-    public $cacheTimeout = false;
+    private $layout;
+    private $template;
+    private $encoding;
 
     public function __construct()
     {
-        $this->setContentType("text/html");
         $this->layout = "main.tpl.php";
         TemplateEngine::prependPath("views");
         TemplateEngine::prependPath("views/default");
@@ -63,32 +60,35 @@ class View extends Presentation
 
     public function out($viewData)
     {
-        try
+        if($this->template === false)
         {
-            if($this->template === false)
-            {
-                $data = null;
-            }
-            else
-            {
-                $data = TemplateEngine::render($this->template, $viewData, $this);
-            }
-
-            if($this->layout !== false && !Ntentan::isAjax())
-            {
-                $viewData['contents'] = $data;
-                $output = TemplateEngine::render($this->layout, $viewData, $this);
-            }
-            else
-            {
-                $output = $data;
-            }
+            $data = null;
         }
-        catch(Exception $e)
+        else
         {
-            print "Error!";
+            $data = TemplateEngine::render($this->template, $viewData, $this);
+        }
+
+        if($this->layout !== false && !Ntentan::isAjax())
+        {
+            $viewData['contents'] = $data;
+            $output = TemplateEngine::render($this->layout, $viewData, $this);
+        }
+        else
+        {
+            $output = $data;
         }
         
         return $output;
+    }
+    
+    public function setLayout($layout)
+    {
+        $this->layout = $layout;
+    }
+    
+    public function setTemplate($template)
+    {
+        $this->template = $template;
     }
 }

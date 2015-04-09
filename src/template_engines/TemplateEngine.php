@@ -2,7 +2,6 @@
 namespace ntentan\honam\template_engines;
 
 use ntentan\Ntentan;
-use ntentan\caching\Cache;
 
 abstract class TemplateEngine
 {
@@ -121,33 +120,26 @@ abstract class TemplateEngine
 
     public static function render($template, $templateData, $view = null)
     {
-        $cacheKey = "template_{$template}_" . TemplateEngine::getContext();
         $path = TemplateEngine::getPath();
-        if(Cache::exists($cacheKey) && Ntentan::$debug === false)
+        $extension = explode('.', $template);
+        $breakDown = explode('_', array_shift($extension));
+        $extension = implode(".", $extension);
+        for($i = 0; $i < count($breakDown); $i++)
         {
-            $templateFile = Cache::get($cacheKey);
-        }
-        else
-        {
-            $extension = explode('.', $template);
-            $breakDown = explode('_', array_shift($extension));
-            $extension = implode(".", $extension);
-            for($i = 0; $i < count($breakDown); $i++)
+            $testTemplate = implode("_", array_slice($breakDown, $i, count($breakDown) - $i)) . ".$extension";
+            foreach(TemplateEngine::getPath() as $path)
             {
-                $testTemplate = implode("_", array_slice($breakDown, $i, count($breakDown) - $i)) . ".$extension";
-                foreach(TemplateEngine::getPath() as $path)
+                $newTemplateFile = "$path/$testTemplate";
+                if(file_exists($newTemplateFile))
                 {
-                    $newTemplateFile = "$path/$testTemplate";
-                    if(file_exists($newTemplateFile))
-                    {
-                        Cache::add($cacheKey, $newTemplateFile);
-                        $templateFile = $newTemplateFile;
-                        break;
-                    }
+                    Cache::add($cacheKey, $newTemplateFile);
+                    $templateFile = $newTemplateFile;
+                    break;
                 }
-                if($templateFile != '') break;
             }
+            if($templateFile != '') break;
         }
+        
         if($templateFile == null)
         {
             $pathString = "[" . implode('; ', TemplateEngine::getPath()) . "]";
