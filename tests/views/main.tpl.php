@@ -1,0 +1,1 @@
+Layout says: <?= $contents ?>

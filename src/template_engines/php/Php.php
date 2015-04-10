@@ -1,37 +1,36 @@
 <?php
 namespace ntentan\honam\template_engines\php;
 
-use ntentan\Ntentan;
 use ntentan\honam\template_engines\TemplateEngine;
 
 /**
- * 
+ * The PHP engine is a template engine built into honam which uses raw PHP as
+ * the template language. By virtue of this, the PHP engine can boast of high
+ * performance. Since this engine uses PHP, it has access to all the language's
+ * features. This could sometimes create a problem since some of these features
+ * are not intended for templating use.
  */
 class Php extends TemplateEngine
 {
-    public function generate($templateData, $view)
+    public function generate($templateData)
     {
-        if(file_exists($this->template))
+        // Escape each variable by passing it through the variable class.
+        // Users would have to unescape them by calling the escape method directly
+        // on the variable.
+        foreach($templateData as $key => $value)
         {
-            foreach($templateData as $key => $value)
-            {
-                $$key = Variable::initialize($value);
-            }
-            
-            $helpers = $this->helpers;
-            $widgets = $this->widgets;       
-            
-            ob_start();
-            include $this->template;
-            return ob_get_clean();
+            $$key = Variable::initialize($value);
         }
-        else
-        {
-            echo Ntentan::message("Template file *{$this->template}* not found");
-        }
+
+        $helpers = $this->helpers;
+        $widgets = $this->widgets;       
+
+        ob_start();
+        include $this->template;
+        return ob_get_clean();
     }
 
-    public function strip_html($text)
+    public function strip($text)
     {
         return \ntentan\utils\Janitor::cleanHtml($text, true);
     }
@@ -43,11 +42,6 @@ class Php extends TemplateEngine
             $length--;
         }
         return mb_substr($text, 0, $length) . $terminator;
-    }
-
-    public function nl2br($text)
-    {
-        return str_replace("\n", '<br/>', $text);
     }
 }
 

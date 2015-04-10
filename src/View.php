@@ -33,8 +33,6 @@ namespace ntentan\honam;
 
 use ntentan\honam\template_engines\TemplateEngine;
 
-use ntentan\Ntentan;
-
 /**
  * An extension of the presentation class for the purposes of rendering views.
  * @author ekow
@@ -45,13 +43,6 @@ class View extends Presentation
     private $template;
     private $encoding;
 
-    public function __construct()
-    {
-        $this->layout = "main.tpl.php";
-        TemplateEngine::prependPath("views");
-        TemplateEngine::prependPath("views/default");
-    }
-
     public function setContentType($contentType, $encoding="UTF-8")
     {
         $this->encoding = $encoding;
@@ -60,7 +51,7 @@ class View extends Presentation
 
     public function out($viewData)
     {
-        if($this->template === false)
+        if($this->template == null)
         {
             $data = null;
         }
@@ -69,14 +60,14 @@ class View extends Presentation
             $data = TemplateEngine::render($this->template, $viewData, $this);
         }
 
-        if($this->layout !== false && !Ntentan::isAjax())
+        if($this->layout == null)
         {
-            $viewData['contents'] = $data;
-            $output = TemplateEngine::render($this->layout, $viewData, $this);
+            $output = $data;
         }
         else
         {
-            $output = $data;
+            $viewData['contents'] = $data;
+            $output = TemplateEngine::render($this->layout, $viewData, $this);
         }
         
         return $output;

@@ -1,12 +1,10 @@
 <?php
 namespace ntentan\honam\template_engines;
 
-use ntentan\Ntentan;
-
 abstract class TemplateEngine
 {
     private static $loadedInstances;
-    public $template;
+    protected $template;
     private $widgetsLoader;
     private $helpersLoader;
     private static $path = array();
@@ -43,8 +41,9 @@ abstract class TemplateEngine
         $engine = end($last);
         if(!isset(TemplateEngine::$loadedInstances[$engine]))
         {
-            $engineClass = "ntentan\\honam\\template_engines\\$engine\\" . Ntentan::camelize($engine);
-            try{
+            $engineClass = "ntentan\\honam\\template_engines\\$engine\\" . ucfirst($engine);
+            try
+            {
                 $engineInstance = new $engineClass();
             }
             catch(\Exception $e)
@@ -120,6 +119,7 @@ abstract class TemplateEngine
 
     public static function render($template, $templateData, $view = null)
     {
+        $templateFile = '';
         $path = TemplateEngine::getPath();
         $extension = explode('.', $template);
         $breakDown = explode('_', array_shift($extension));
@@ -132,7 +132,6 @@ abstract class TemplateEngine
                 $newTemplateFile = "$path/$testTemplate";
                 if(file_exists($newTemplateFile))
                 {
-                    Cache::add($cacheKey, $newTemplateFile);
                     $templateFile = $newTemplateFile;
                     break;
                 }
@@ -143,8 +142,7 @@ abstract class TemplateEngine
         if($templateFile == null)
         {
             $pathString = "[" . implode('; ', TemplateEngine::getPath()) . "]";
-            Ntentan::error("Could not find a suitable template file for the current request <b><code>{$template}</code></b>. Template path <b>$pathString</b>");
-            die();
+            throw new \ntentan\honam\HonamException ("Could not find a suitable template file for the current request {$template}. Template path $pathString");
         }
         else
         {
@@ -152,5 +150,5 @@ abstract class TemplateEngine
         }
     }
 
-    abstract public function generate($data, $view);
+    abstract protected function generate($data);
 }

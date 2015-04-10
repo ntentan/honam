@@ -1,0 +1,1 @@
+<?= $this->strip("Hello world") ?>
