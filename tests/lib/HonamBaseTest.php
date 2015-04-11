@@ -9,7 +9,7 @@ class HonamBaseTest extends \PHPUnit_Framework_TestCase
     
     public static function setUpBeforeClass() 
     {
-        TemplateEngine::appendPath('tests/views');
+        TemplateEngine::appendPath('tests/files/views');
     }    
     
     public function setUp() 

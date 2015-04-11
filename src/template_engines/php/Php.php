@@ -31,7 +31,14 @@ class Php extends TemplateEngine
         // Start trapping the output buffer and include the PHP template for
         // execution.
         ob_start();
-        include $this->template;
+        try{
+            include $this->template;
+        }
+        catch(\Exception $e)
+        {
+            ob_get_flush();
+            throw $e;
+        }
         return ob_get_clean();
     }
 

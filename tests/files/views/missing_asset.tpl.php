@@ -1,0 +1,1 @@
+<?= load_asset('some/asset/bi/css') ?>

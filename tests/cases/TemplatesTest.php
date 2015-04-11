@@ -15,13 +15,13 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
         );
         $this->assertEquals("Layout says: Hello World! I am James Ainooson.", $output);
         
-        TemplateEngine::prependPath("tests/views/secondary");
+        TemplateEngine::prependPath("tests/files/views/secondary");
         $output = $this->view->out(
             array('firstname'=>'James', 'lastname'=>'Ainooson')
         );
         $this->assertEquals("Layout says: Hello World Again! I am James Ainooson.", $output);
         TemplateEngine::reset();
-        TemplateEngine::appendPath('tests/views');
+        TemplateEngine::appendPath('tests/files/views');
     }
     
     public function testSubPathTemplateLoading()
@@ -31,11 +31,11 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
         $output = $this->view->out(array());
         $this->assertEquals("This is a Login Page?", $output);
         
-        TemplateEngine::prependPath("tests/views/secondary");
+        TemplateEngine::prependPath("tests/files/views/secondary");
         $output = $this->view->out(array());
         $this->assertEquals("Is this another Login Page?", $output);
         TemplateEngine::reset();
-        TemplateEngine::appendPath('tests/views');
+        TemplateEngine::appendPath('tests/files/views');
     }
     
     /**
@@ -86,14 +86,41 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
         $this->assertEquals("Layout says: ", $output);
     }
     
+    /**
+     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
+     */
+    public function testAssetFileException()
+    {
+        vfsStream::setup('public');
+        TemplateEngine::setAssetsBaseDir('tests/files/assets');
+        TemplateEngine::setPublicBaseDir(vfsStream::url('public'));        
+        $this->view->setTemplate('missing_asset.tpl.php');
+        $this->view->out(array());
+    }    
+
+    /**
+     * @expectedException \ntentan\honam\exceptions\FilePermissionException
+     */
+    public function testPublicDirectoryException()
+    {
+        vfsStream::setup('public', 0444);
+        TemplateEngine::setAssetsBaseDir('tests/files/assets');
+        TemplateEngine::setPublicBaseDir(vfsStream::url('public'));        
+        $this->view->setTemplate('assets.tpl.php');
+        $this->view->out(array());
+    }        
+    
     public function testAssetLoading()
     {
         vfsStream::setup('public');
-        TemplateEngine::setAssetsBaseDir('tests/assets');
+        TemplateEngine::setAssetsBaseDir('tests/files/assets');
         TemplateEngine::setPublicBaseDir(vfsStream::url('public'));
+        touch(vfsStream::url('public/existing.css'));
+        
         $this->view->setTemplate('assets.tpl.php');
         $output = $this->view->out(array());
-        $this->assertEquals("vfs://public/some.css", $output);
-        $this->assertFileExists($output);
+        $this->assertEquals("vfs://public/some.css\nvfs://public/another.css\nvfs://public/existing.css", $output);
+        $this->assertFileExists(vfsStream::url('public/some.css'));
+        $this->assertFileExists(vfsStream::url('public/another.css'));        
     }
 }

@@ -46,11 +46,6 @@ abstract class TemplateEngine
         TemplateEngine::$loadedInstances[$engine]->template = $template;
         return TemplateEngine::$loadedInstances[$engine];
     }
-    
-    public static function loadAssetWithUrl($asset, $copyFrom = null)
-    {
-        return Ntentan::getUrl(self::loadAsset($asset, $copyFrom));
-    }
 
     public static function loadAsset($asset, $copyFrom = null)
     {
@@ -58,7 +53,7 @@ abstract class TemplateEngine
         $publicPath = self::$publicBase . "/$asset";
         $publicDirectory = dirname($publicPath);
         
-        if(file_exists($publicPath) && !Ntentan::$debug) 
+        if(file_exists($publicPath)) 
         {
             return $publicPath;
         }
@@ -66,10 +61,6 @@ abstract class TemplateEngine
         if(file_exists($assetPath) && file_exists($publicDirectory) && is_writable($publicDirectory))
         {
             copy($assetPath, $publicPath);
-        }
-        else if(file_exists($copyFrom) && is_writable($publicDirectory))
-        {
-            copy($copyFrom, $publicPath);
         }
         else
         {
@@ -82,11 +73,11 @@ abstract class TemplateEngine
     {
         if(!file_exists($assetPath))
         {
-            Ntentan::error("File not found [$assetPath]");
+            throw new \ntentan\honam\exceptions\FileNotFoundException("File not found [$assetPath]");
         }
         else if(!is_writable($publicPath))
         {
-            Ntentan::error("Destination [$publicPath] is not writable");
+            throw new \ntentan\honam\exceptions\FilePermissionException("Destination [$publicPath] is not writable");
         }        
     }
 
@@ -102,7 +93,7 @@ abstract class TemplateEngine
                     $this->widgetsLoader = new WidgetsLoader();
                 }
                 $loader = $this->widgetsLoader;
-
+                break;
 
             case "helpers":
                 if($this->helpersLoader == null)
@@ -110,6 +101,7 @@ abstract class TemplateEngine
                     $this->helpersLoader = new HelpersLoader();
                 }
                 $loader = $this->helpersLoader;
+                break;
         }
         
         return $loader;

@@ -1,0 +1,1 @@
+<?= load_asset('some.css') . "\n" . load_asset('another.css', 'tests/files/other_assets/someother.css') . "\n" . load_asset('existing.css');?>
