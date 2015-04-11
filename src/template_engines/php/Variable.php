@@ -26,7 +26,7 @@ class Variable implements \ArrayAccess, \Iterator
                 return $data;
                 
             default:
-                \ntentan\Ntentan::error("Cannot handle the $type type in templates");
+                throw new \ntentan\honam\HonamException("Cannot handle the $type type in templates");
         }
     }
 
@@ -54,7 +54,7 @@ class Variable implements \ArrayAccess, \Iterator
 
     public function valid() 
     {
-        return isset($this->data[$this->keys[$this->position]]);
+        return @isset($this->data[$this->keys[$this->position]]);
     }    
 
     public function current() 

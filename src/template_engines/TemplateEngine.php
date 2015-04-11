@@ -8,7 +8,6 @@ abstract class TemplateEngine
     private $widgetsLoader;
     private $helpersLoader;
     private static $path = array();
-    private static $context = 'default';
 
     public static function appendPath($path)
     {
@@ -25,30 +24,20 @@ abstract class TemplateEngine
         return self::$path;
     }
 
-    public static function setContext($context)
-    {
-        self::$context = $context;
-    }
-
-    public static function getContext()
-    {
-        return self::$context;
-    }
-
-    public static function getEngineInstance($template)
+    private static function getEngineInstance($template)
     {
     	$last = explode(".", $template);
         $engine = end($last);
         if(!isset(TemplateEngine::$loadedInstances[$engine]))
         {
             $engineClass = "ntentan\\honam\\template_engines\\$engine\\" . ucfirst($engine);
-            try
+            if(class_exists($engineClass))
             {
                 $engineInstance = new $engineClass();
             }
-            catch(\Exception $e)
+            else
             {
-                throw new \ntentan\exceptions\ClassNotFoundException("Could not load template engine class [$engineClass] for $template");
+                throw new \ntentan\honam\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass] for $template");
             }
             TemplateEngine::$loadedInstances[$engine] = $engineInstance;
         }
@@ -142,12 +131,19 @@ abstract class TemplateEngine
         if($templateFile == null)
         {
             $pathString = "[" . implode('; ', TemplateEngine::getPath()) . "]";
-            throw new \ntentan\honam\HonamException ("Could not find a suitable template file for the current request {$template}. Template path $pathString");
+            throw new \ntentan\honam\exceptions\TemplateFileNotFoundException(
+                "Could not find a suitable template file for the current request {$template}. Template path $pathString"
+            );
         }
         else
         {
             return TemplateEngine::getEngineInstance($templateFile)->generate($templateData, $view);
         }
+    }
+    
+    public static function reset()
+    {
+        self::$path = array();
     }
 
     abstract protected function generate($data);

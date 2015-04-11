@@ -1,0 +1,1 @@
+<?= $this->truncate('The quick brown fox jumped over the lazy Dog!', 12) ?>

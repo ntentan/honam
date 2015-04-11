@@ -1,1 +1,1 @@
-<?= $this->strip("Hello world") ?>
+<?= $this->strip("<p>This should strip</p>") ?>

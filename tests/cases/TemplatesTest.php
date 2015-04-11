@@ -1,23 +1,10 @@
 <?php
-use ntentan\honam\template_engines\TemplateEngine;
+namespace ntentan\honam\tests\cases;
 
-class TemplatesTest extends PHPUnit_Framework_TestCase
+class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
 {
-    private $view;
-    
-    public static function setUpBeforeClass() 
-    {
-        TemplateEngine::appendPath('tests/views');
-    }
-    
-    public function setUp() 
-    {
-        $this->view = new \ntentan\honam\View();
-    }
-    
     public function testTemplateLoading()
     {
-        
         $this->view->setTemplate('hello.tpl.php');
         $this->view->setLayout('main.tpl.php');
         $output = $this->view->out(
@@ -25,6 +12,42 @@ class TemplatesTest extends PHPUnit_Framework_TestCase
         );
         $this->assertEquals("Layout says: Hello World! I am James Ainooson.", $output);
     }
+    
+    public function testSubPathTemplateLoading()
+    {
+        $this->view->setLayout(false);
+        $this->view->setTemplate('some_login.tpl.php');
+        $output = $this->view->out(array());
+        $this->assertEquals("This is a Login Page?", $output);
+    }
+    
+    /**
+     * @expectedException \ntentan\honam\exceptions\TemplateFileNotFoundException
+     */
+    public function testLayoutLoadFailure()
+    {
+        $this->view->setLayout('arbitrary.tpl.php');
+        $this->view->out(array());
+    }
+    
+    /**
+     * @expectedException \ntentan\honam\exceptions\TemplateFileNotFoundException
+     */
+    public function testTemplateLoadFailure()
+    {
+        $this->view->setTemplate('arbitrary.tpl.php');
+        $this->view->out(array());
+    }
+    
+    /**
+     * @expectedException \ntentan\honam\exceptions\TemplateEngineNotFoundException
+     */    
+    public function testEngineLoadFailure()
+    {
+        $this->view->setTemplate('arbitrary.tpl.noengine');
+        $this->view->out(array());
+    }
+    
      
     public function testLayoutExclusion()
     {

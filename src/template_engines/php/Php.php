@@ -22,19 +22,41 @@ class Php extends TemplateEngine
             $$key = Variable::initialize($value);
         }
 
+        // Expose helpers and widgets
         $helpers = $this->helpers;
         $widgets = $this->widgets;       
 
+        // Start trapping the output buffer and include the PHP template for
+        // execution.
         ob_start();
         include $this->template;
         return ob_get_clean();
     }
 
+    /**
+     * A utility function to strip the text of all HTML code. This function
+     * removes all HTML tags instead of escaping them.
+     * 
+     * @param string $text
+     * @return string
+     */
     public function strip($text)
     {
-        return \ntentan\utils\Janitor::cleanHtml($text, true);
+        return Janitor::cleanHtml($text, true);
     }
 
+    /**
+     * A utility function to cut long pieces of text into meaningful short
+     * chunks. The function is very good in cases where you want to show just
+     * a short preview snippet of a long text. The function cuts the long string
+     * without cutting through words and appends some sort of ellipsis
+     * terminator to the text.
+     * 
+     * @param string $text The text to be truncated.
+     * @param string $length The maximum lenght of the truncated string. Might return a shorter string if the lenght ends in the middle of a word.
+     * @param string $terminator The ellipsis terminator to use for the text.
+     * @return string
+     */
     public function truncate($text, $length, $terminator = ' ...')
     {
         while(mb_substr($text, $length, 1) != ' ' && $length > 0)
