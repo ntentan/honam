@@ -1,6 +1,9 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
+use ntentan\honam\template_engines\TemplateEngine;
+use org\bovigo\vfs\vfsStream;
+
 class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
 {
     public function testTemplateLoading()
@@ -11,6 +14,14 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
             array('firstname'=>'James', 'lastname'=>'Ainooson')
         );
         $this->assertEquals("Layout says: Hello World! I am James Ainooson.", $output);
+        
+        TemplateEngine::prependPath("tests/views/secondary");
+        $output = $this->view->out(
+            array('firstname'=>'James', 'lastname'=>'Ainooson')
+        );
+        $this->assertEquals("Layout says: Hello World Again! I am James Ainooson.", $output);
+        TemplateEngine::reset();
+        TemplateEngine::appendPath('tests/views');
     }
     
     public function testSubPathTemplateLoading()
@@ -19,10 +30,16 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
         $this->view->setTemplate('some_login.tpl.php');
         $output = $this->view->out(array());
         $this->assertEquals("This is a Login Page?", $output);
+        
+        TemplateEngine::prependPath("tests/views/secondary");
+        $output = $this->view->out(array());
+        $this->assertEquals("Is this another Login Page?", $output);
+        TemplateEngine::reset();
+        TemplateEngine::appendPath('tests/views');
     }
     
     /**
-     * @expectedException \ntentan\honam\exceptions\TemplateFileNotFoundException
+     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
      */
     public function testLayoutLoadFailure()
     {
@@ -31,7 +48,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
     }
     
     /**
-     * @expectedException \ntentan\honam\exceptions\TemplateFileNotFoundException
+     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
      */
     public function testTemplateLoadFailure()
     {
@@ -67,5 +84,16 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
             array('firstname'=>'James', 'lastname'=>'Ainooson')
         );
         $this->assertEquals("Layout says: ", $output);
+    }
+    
+    public function testAssetLoading()
+    {
+        vfsStream::setup('public');
+        TemplateEngine::setAssetsBaseDir('tests/assets');
+        TemplateEngine::setPublicBaseDir(vfsStream::url('public'));
+        $this->view->setTemplate('assets.tpl.php');
+        $output = $this->view->out(array());
+        $this->assertEquals("vfs://public/some.css", $output);
+        $this->assertFileExists($output);
     }
 }

@@ -3,6 +3,8 @@ namespace ntentan\honam\template_engines\php;
 
 use ntentan\honam\template_engines\TemplateEngine;
 
+require_once 'functions.php';
+
 /**
  * The PHP engine is a template engine built into honam which uses raw PHP as
  * the template language. By virtue of this, the PHP engine can boast of high
@@ -53,7 +55,8 @@ class Php extends TemplateEngine
      * terminator to the text.
      * 
      * @param string $text The text to be truncated.
-     * @param string $length The maximum lenght of the truncated string. Might return a shorter string if the lenght ends in the middle of a word.
+     * @param string $length The maximum lenght of the truncated string. Might 
+     *      return a shorter string if the lenght ends in the middle of a word.
      * @param string $terminator The ellipsis terminator to use for the text.
      * @return string
      */

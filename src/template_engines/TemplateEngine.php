@@ -8,6 +8,8 @@ abstract class TemplateEngine
     private $widgetsLoader;
     private $helpersLoader;
     private static $path = array();
+    private static $assetsBase = 'assets';
+    private static $publicBase = 'public';
 
     public static function appendPath($path)
     {
@@ -52,19 +54,18 @@ abstract class TemplateEngine
 
     public static function loadAsset($asset, $copyFrom = null)
     {
-        $assetPath = ($copyFrom==null ? "assets/$asset" : $copyFrom);
-        $publicPath = "public/$asset";
+        $assetPath = ($copyFrom==null ? self::$assetsBase . "/$asset" : $copyFrom);
+        $publicPath = self::$publicBase . "/$asset";
         $publicDirectory = dirname($publicPath);
         
-        if(file_exists($publicPath) && !Ntentan::$debug) return $publicPath;
+        if(file_exists($publicPath) && !Ntentan::$debug) 
+        {
+            return $publicPath;
+        }
         
         if(file_exists($assetPath) && file_exists($publicDirectory) && is_writable($publicDirectory))
         {
             copy($assetPath, $publicPath);
-        }
-        else if(file_exists(Ntentan::getFilePath("assets/$asset")) && file_exists($publicDirectory) && is_writable($publicDirectory))
-        {
-            copy(Ntentan::getFilePath("assets/$asset"), $publicPath);
         }
         else if(file_exists($copyFrom) && is_writable($publicDirectory))
         {
@@ -72,21 +73,27 @@ abstract class TemplateEngine
         }
         else
         {
-            if(!file_exists($assetPath))
-            {
-                Ntentan::error("File not found <b><code>$assetPath</code></b>");
-            }
-            else if(!is_writable($publicPath))
-            {
-                Ntentan::error("Destination <b><code>public/$asset</code></b> is not writable");
-            }
-            die();
+            self::throwTemplateEngineExceptions($assetPath, $publicPath);
         }
         return $publicPath;
+    }
+    
+    private function throwTemplateEngineExceptions($assetPath, $publicPath)
+    {
+        if(!file_exists($assetPath))
+        {
+            Ntentan::error("File not found [$assetPath]");
+        }
+        else if(!is_writable($publicPath))
+        {
+            Ntentan::error("Destination [$publicPath] is not writable");
+        }        
     }
 
     public function __get($property)
     {
+        $loader = null;
+        
         switch($property)
         {
             case "widgets":
@@ -94,7 +101,7 @@ abstract class TemplateEngine
                 {
                     $this->widgetsLoader = new WidgetsLoader();
                 }
-                return $this->widgetsLoader;
+                $loader = $this->widgetsLoader;
 
 
             case "helpers":
@@ -102,8 +109,10 @@ abstract class TemplateEngine
                 {
                     $this->helpersLoader = new HelpersLoader();
                 }
-                return $this->helpersLoader;
+                $loader = $this->helpersLoader;
         }
+        
+        return $loader;
     }
 
     public static function render($template, $templateData, $view = null)
@@ -131,7 +140,7 @@ abstract class TemplateEngine
         if($templateFile == null)
         {
             $pathString = "[" . implode('; ', TemplateEngine::getPath()) . "]";
-            throw new \ntentan\honam\exceptions\TemplateFileNotFoundException(
+            throw new \ntentan\honam\exceptions\FileNotFoundException(
                 "Could not find a suitable template file for the current request {$template}. Template path $pathString"
             );
         }
@@ -144,6 +153,16 @@ abstract class TemplateEngine
     public static function reset()
     {
         self::$path = array();
+    }
+    
+    public static function setAssetsBaseDir($assetsBase)
+    {
+        self::$assetsBase = $assetsBase;
+    }
+    
+    public static function setPublicBaseDir($publicBase)
+    {
+        self::$publicBase = $publicBase;
     }
 
     abstract protected function generate($data);
