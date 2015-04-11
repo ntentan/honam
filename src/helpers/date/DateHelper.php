@@ -48,7 +48,7 @@ class DateHelper extends Helper
      * The UNIX timestamp which represents the most recently parsed date.
      * @var integer
      */
-	private $timestamp;
+    private $timestamp;
 
     private function internalParse($date)
     {

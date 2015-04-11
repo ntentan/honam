@@ -81,6 +81,13 @@ abstract class TemplateEngine
         }        
     }
 
+    /**
+     * 
+     * @property widgets
+     * @property helpers
+     * @param type $property
+     * @return type
+     */
     public function __get($property)
     {
         $loader = null;
