@@ -25,12 +25,13 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  * 
  * @author James Ainooson <jainooson@gmail.com>
- * @copyright Copyright 2010 James Ekow Abaka Ainooson
+ * @copyright Copyright 2010, 2015 James Ekow Abaka Ainooson
  * @license MIT
  */
 
 namespace ntentan\honam\helpers\form\api;
-use ntentan\honam\helpers\form\FormHelper;
+
+use ntentan\honam\template_engines\TemplateEngine;
 
 /**
  * The form class. This class represents the overall form class. This
@@ -38,19 +39,21 @@ use ntentan\honam\helpers\form\FormHelper;
  */
 class Form extends Container
 {
-    public $submitValues = array();
-    public $showSubmit = true;
+    protected $submitValues = array();
+    protected $showSubmit = true;
     protected $method = "POST";
     private $action;
     
     private static $numForms;
 
-
     public function __construct($id="", $method="POST")
     {
         $this->setId($id);
         $this->method = $method;
-        $this->action = $_SERVER["REQUEST_URI"];
+        if(isset($_SERVER['REQUEST_URI']))
+        {
+            $this->action = $_SERVER["REQUEST_URI"];
+        }
     }
 
     public function action($action)
@@ -67,31 +70,17 @@ class Form extends Container
         $this->addAttribute('action', $this->action);
         $this->addAttribute('accept-charset', 'utf-8');
         
-        return '<form '.$this->getAttributes().'>' . FormHelper::getRendererInstance()->head();
+        return TemplateEngine::render('form_head.tpl.php', array('element' => $this));
     }
 
     public function renderFoot()
     {
-        $ret = "";
-        if($this->showSubmit)
-        {
-            $ret .= '<div class="form-submit-area">';
-            foreach($this->submitValues as $submitValue)
-            {
-                if(is_array($submitValue))
-                {
-                    $submitValue = $submitValue?("value='{$submitValue['value']}' name='{$submitValue['name']}' id='{$submitValue['id']}'"):"";
-                }
-                else
-                {
-                    $submitValue = $submitValue?("value='$submitValue'"):"";
-                }
-                $ret .= sprintf('<input class="form-submit" type="submit" %s />',$submitValue);
-            }
-            $ret .= '</div>';
-        }
-        $ret .= '</form>';
-        return FormHelper::getRendererInstance()->foot() . $ret;
+        return TemplateEngine::render('form_foot.tpl.php',
+            array(
+                'show_submit' => $this->showSubmit,
+                'submit_values' => $this->submitValues,
+            )
+        );
     }
 
     public function setShowFields($show_field)
@@ -104,5 +93,15 @@ class Form extends Container
     {
         parent::id($id == "" ? "form" . Form::$numForms++ : $id);
         return $this;
+    }
+    
+    public function setShowSubmit($showSubmit)
+    {
+        $this->showSubmit = $showSubmit;
+    }
+    
+    public function setSubmitValues($submitValues)
+    {
+        $this->submitValues = $submitValues;
     }
 }

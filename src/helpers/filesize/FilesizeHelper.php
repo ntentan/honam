@@ -31,6 +31,7 @@ class FilesizeHelper extends Helper
     
     public function __toString() 
     {
+        $output = null;
         $scales = array(
             array(0, 1024, 'Byte', 'Byte', false),
             array(1024, 1048576, 'Kilobyte', 'KB', true),

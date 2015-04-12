@@ -367,12 +367,7 @@ abstract class Element
             case Element::SCOPE_ELEMENT: $attributes = $this->attributes; break;
             case Element::SCOPE_WRAPPER: $attributes = $this->wrapperAttributes; break;
         }
-        $ret = "";
-        foreach($attributes as $key => $value)
-        {
-            $ret .= $key . '="' . $value . '" ';
-        }
-        return $ret;
+        return $attributes;
     }
     
     public function setErrors($errors)

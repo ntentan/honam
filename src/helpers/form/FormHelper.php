@@ -53,7 +53,7 @@ class FormHelper extends Helper
     public function __construct()
     {
         \ntentan\honam\template_engines\TemplateEngine::appendPath(
-            Ntentan::getFilePath("lib/views/helpers/forms/views")
+            __DIR__ . "/../../../templates/forms"
         );
     }
     
@@ -169,7 +169,7 @@ class FormHelper extends Helper
         }
     }
     
-    public static function getRendererInstance()
+    /*public static function getRendererInstance()
     {
         if(self::$rendererInstance == null || self::$renderer != self::$rendererInstance->type())
         {
@@ -177,7 +177,7 @@ class FormHelper extends Helper
             self::$rendererInstance = new $rendererClass();
         }
         return self::$rendererInstance;
-    }
+    }*/
     
     public function help($arguments)
     {
@@ -201,20 +201,37 @@ class FormHelper extends Helper
             return $this;
         }
     }
+    
+    public function open($formId = '')
+    {
+        $this->container = new api\Form();
+        if($formId != '')
+        {
+            $this->container->setId($formId[0]);
+        }
+        $this->container->rendererMode = 'head';
+        return $this->container;        
+    }
+    
+    public function close($submit = 'Submit')
+    {
+        $arguments = func_get_args();
+        $this->container->setSubmitValues($arguments);
+        if($submit === false)
+        {
+            $this->container->setShowSubmit(false);
+        }
+        else if(count($arguments) == 0)
+        {
+            $this->container->setSubmitValues(array('Submit'));
+        }
+        $this->container->rendererMode = 'foot';
+        return $this->container;        
+    }
 
     public function __call($function, $arguments)
     {
-        if($function == "open")
-        {
-            $this->container = new api\Form();
-            if($arguments[0] != '')
-            {
-                $this->container->setId($arguments[0]);
-            }
-            $this->container->rendererMode = 'head';
-            $return = $this->container;
-        }
-        else if($function == "get")
+        if($function == "get")
         {
             $name = $arguments[0]['name'];
             $elementObject = $this->createModelField($arguments[0]);
@@ -224,23 +241,6 @@ class FormHelper extends Helper
                 $elementObject->setErrors($this->errors[$name]);
             }
             $return = $elementObject;
-        }
-        else if($function == "close")
-        {
-            if($arguments[0] != "")
-            {
-                foreach($arguments as $argument)
-                {
-                    $this->container->submitValues[] = $argument;
-                }
-            }
-            elseif($arguments[0] === false)
-            {
-                $this->container->showSubmit = false;
-            }
-            $this->container->rendererMode = 'foot';
-            $return = self::getRendererInstance()->foot();
-            $return .= $this->container;
         }
         else if(substr($function, 0, 5) == "open_")
         {
