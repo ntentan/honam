@@ -128,55 +128,99 @@ class DateHelper extends Helper
         
         $future = $elapsed < 0;
         $elapsed = abs($elapsed);
+        $englishDate = '';
         
-        if($elapsed < 10)
+        $timeFrames = array(
+            array(
+                'min' => 0,
+                'max' => 10,
+                'scale' => 'now',
+                'plurals' => false,
+                'divisor' => 1,
+                'has_future' => false,
+                'show_elapsed' => false
+            ),
+            array(
+                'min' => 10,
+                'max' => 60,
+                'scale' => 'second',
+                'plurals' => true,
+                'divisor' => 1,
+                'has_future' => false,
+                'show_elapsed' => true
+            ),            
+            array(
+                'min' => 60,
+                'max' => 3600,
+                'scale' => 'minute',
+                'plurals' => true,
+                'divisor' => 60,
+                'has_future' => false,
+                'show_elapsed' => true
+            ),                        
+            array(
+                'min' => 3600,
+                'max' => 86400,
+                'scale' => 'hour',
+                'plurals' => true,
+                'divisor' => 3600,
+                'has_future' => false,
+                'show_elapsed' => true
+            ),    
+            array(
+                'min' => 86400,
+                'max' => 172800,
+                'scale' => array('yesterday', 'tomorrow'),
+                'has_future' => true,
+                'plurals' => false,
+                'divisor' => 86400,
+                'show_elapsed' => false
+            ),  
+            array(
+                'min' => 172800,
+                'max' => 604800,
+                'scale' => 'day',
+                'plurals' => true,
+                'divisor' => 86400,
+                'has_future' => false,
+                'show_elapsed' => true
+            ),              
+            array(
+                'min' => 604800,
+                'max' => 2419200,
+                'scale' => 'week',
+                'plurals' => true,
+                'divisor' => 604800,
+                'has_future' => false,
+                'show_elapsed' => true
+            ),              
+            array(
+                'min' => 2419200,
+                'max' => 31536000,
+                'scale' => 'month',
+                'plurals' => true,
+                'divisor' => 2419200,
+                'has_future' => false,
+                'show_elapsed' => true
+            ),   
+            array(
+                'min' => 31536000,
+                'max' => 0,
+                'scale' => 'year',
+                'plurals' => true,
+                'divisor' => 31536000,
+                'has_future' => false,
+                'show_elapsed' => true
+            ),               
+        );
+        
+        foreach($timeFrames as $timeFrame)
         {
-            $englishDate = 'now';
-        }
-        elseif($elapsed >= 10 && $elapsed < 60)
-        {
-            $englishDate = "$elapsed seconds";
-        }
-        elseif($elapsed >= 60 && $elapsed < 3600)
-        {
-            $minutes = floor($elapsed / 60);
-            $englishDate = "$minutes minute" . ($minutes > 1 ? 's' : '');
-        }
-        elseif($elapsed >= 3600 && $elapsed < 86400)
-        {
-            $hours = floor($elapsed / 3600);
-            $englishDate = "$hours hour" . ($hours > 1 ? 's' : '');
-        }
-        elseif($elapsed >= 86400 && $elapsed < 172800)
-        {
-            if($future)
+            if(($elapsed >= $timeFrame['min'] && $elapsed < $timeFrame['max']) || ($elapsed >= $timeFrame['min'] && $timeFrame['max'] === 0))
             {
-                $englishDate = "tomorrow";
+                $value = floor($elapsed / $timeFrame['divisor']);
+                $englishDate = $this->getEnglishDate($timeFrame, $value, $future);
             }
-            else
-            {
-                $englishDate = "yesterday";
-            }
-        }
-        elseif($elapsed >= 172800 && $elapsed < 604800)
-        {
-            $days = floor($elapsed / 86400);
-            $englishDate = "$days day" . ($days > 1 ? 's' : '');
-        }
-        elseif($elapsed >= 604800 && $elapsed < 2419200)
-        {
-            $weeks = floor($elapsed / 604800);
-            $englishDate = "$weeks week" . ($weeks > 1 ? 's' : '');
-        }
-        elseif($elapsed >= 2419200 && $elapsed < 31536000)
-        {
-            $months = floor($elapsed / 2419200);
-            $englishDate = "$months month" . ($months > 1 ? 's' : '');
-        }
-        elseif($elapsed >= 31536000)
-        {
-            $years = floor($elapsed / 31536000);
-            $englishDate = "$years year" . ($years > 1 ? 's' : '');
         }
 
         if($englishDate != 'now' && $englishDate != 'yesterday' && $englishDate != 'today' && $ago)
@@ -192,6 +236,13 @@ class DateHelper extends Helper
         }
 
         return $englishDate;
+    }
+    
+    private function getEnglishDate($timeFrame, $value, $future)
+    {
+        return ($timeFrame['show_elapsed'] ?  "$value " : '') .
+            ($timeFrame['has_future'] ? ($future ? $timeFrame['scale'][1] : $timeFrame['scale'][0]) : "{$timeFrame['scale']}") . 
+            ($timeFrame['plurals'] && $value > 1 ? 's' : '');        
     }
     
     public function __toString() {
