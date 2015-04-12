@@ -82,4 +82,9 @@ class View extends Presentation
     {
         $this->template = $template;
     }
+    
+    public function getTemplate()
+    {
+        return $this->template;
+    }
 }

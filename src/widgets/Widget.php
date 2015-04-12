@@ -143,7 +143,7 @@ abstract class Widget extends Presentation
 
     private function getCacheKey()
     {
-        return ($this->alias == '' ? $this->name : "{$this->alias}_{$this->name}_" ) . TemplateEngine::getContext() . '_widget';
+        return ($this->alias == '' ? $this->name : "{$this->alias}_{$this->name}_" ) . '_widget';
     }
 
     public function cached()
