@@ -219,6 +219,7 @@ class DateHelper extends Helper
             {
                 $value = floor($elapsed / $timeFrame['divisor']);
                 $englishDate = $this->getEnglishDate($timeFrame, $value, $future);
+                break;
             }
         }
 

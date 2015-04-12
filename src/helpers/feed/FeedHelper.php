@@ -7,6 +7,7 @@ class FeedHelper extends Helper
 {
     private $items;
     private $properties = array();
+    private $format = 'rss';
     
     public function help($items)
     {
@@ -44,10 +45,10 @@ class FeedHelper extends Helper
         return $this;
     }
 
-    public function generate($format)
+    public function __toString()
     {
-        $generatorClassName = ucfirst($format) . "Feed";
-        $generatorClass = "\\ntentan\\honam\\helpers\\feed\\generators\\$format\\$generatorClassName";
+        $generatorClassName = ucfirst($this->format) . "Feed";
+        $generatorClass = "\\ntentan\\honam\\helpers\\feed\\generators\\{$this->format}\\$generatorClassName";
         $generator = new $generatorClass();
         $generator->setup($this->properties, $this->items);
         return $generator->generate();

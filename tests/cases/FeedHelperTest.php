@@ -28,8 +28,7 @@ class FeedHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         ->title('Test RSS Feed')
         ->url('http://someurl.net')
         ->updated('2014-12-01 14:23:36')
-        ->description('The blog of honam tests')
-        ->generate('rss');
+        ->description('The blog of honam tests');
         
         $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/feeds/rss_feed.xml'), $rssFeed);
     }
