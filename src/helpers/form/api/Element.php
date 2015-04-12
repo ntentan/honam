@@ -308,11 +308,9 @@ abstract class Element
             {
                 case Element::SCOPE_ELEMENT:
                     return $this->attributes[$key];
-                    break;
 
                 case Element::SCOPE_WRAPPER: 
                     return $this->wrapperAttributes[$key];
-                    break;
             }
         }
         else
@@ -362,6 +360,7 @@ abstract class Element
      */
     public function getAttributes($scope=Element::SCOPE_ELEMENT)
     {
+        $attributes = array();
         switch($scope)
         {
             case Element::SCOPE_ELEMENT: $attributes = $this->attributes; break;
