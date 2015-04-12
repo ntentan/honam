@@ -44,8 +44,7 @@ class FormHelper extends Helper
 {
     private $container;
     public $id;
-    private static $rendererInstance;
-    public static $renderer = "inline";
+    private static $layout = "inline";
     private static $data = array();
     private $errors = array();
     public $echo = false;
@@ -73,7 +72,7 @@ class FormHelper extends Helper
     
     public function stylesheet()
     {
-        return __DIR__ . '/css/forms.css';
+        return __DIR__ . '/../../../assets/forms/css/forms.css';
     }
     
     public static function create()
@@ -169,16 +168,6 @@ class FormHelper extends Helper
         }
     }
     
-    /*public static function getRendererInstance()
-    {
-        if(self::$rendererInstance == null || self::$renderer != self::$rendererInstance->type())
-        {
-            $rendererClass = __NAMESPACE__ . "\\api\\renderers\\" . Ntentan::camelize(self::$renderer);
-            self::$rendererInstance = new $rendererClass();
-        }
-        return self::$rendererInstance;
-    }*/
-    
     public function help($arguments)
     {
         
@@ -207,7 +196,7 @@ class FormHelper extends Helper
         $this->container = new api\Form();
         if($formId != '')
         {
-            $this->container->setId($formId[0]);
+            $this->container->setId($formId);
         }
         $this->container->rendererMode = 'head';
         return $this->container;        
@@ -291,5 +280,10 @@ class FormHelper extends Helper
         {
             return $return;
         }
+    }
+    
+    public static function getLayout()
+    {
+        return self::$layout;
     }
 }

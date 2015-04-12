@@ -32,6 +32,7 @@
 namespace ntentan\honam\helpers\form\api;
 
 use ntentan\honam\helpers\form\FormHelper;
+use ntentan\honam\template_engines\TemplateEngine;
 
 /**
  * The form element class. An element can be anything from the form
@@ -123,7 +124,7 @@ abstract class Element
      */
     public $name;
 
-    public $renderLabel = true;
+    protected $renderLabel = true;
 
     private static $count;
 
@@ -278,7 +279,7 @@ abstract class Element
 
     public function __toString()
     {
-        return FormHelper::getRendererInstance()->element($this);
+        return TemplateEngine::render(FormHelper::getLayout() . "_layout_element.tpl.php", array('element' => $this));
     }
 
     //! Returns an array of all the CSS classes associated with this
@@ -399,5 +400,20 @@ abstract class Element
     {
         return $this->showField;
     }
+    
+    public function getRenderLabel()
+    {
+        return $this->renderLabel;
+    }
+    
+    public function setRenderLabel($renderLabel)
+    {
+        $this->renderLabel = $renderLabel;
+    }
+    
+    public function isContainer()
+    {
+        return false;
+    }    
 }
 

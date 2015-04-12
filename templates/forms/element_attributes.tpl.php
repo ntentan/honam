@@ -1,1 +1,1 @@
-<?php foreach($attributes as $key => $value):?> <?=$key?>="<?= $value ?>"<?php endforeach; ?>
+<?php foreach($attributes as $key => $value):?><?php if($value != ''): ?> <?=$key?>="<?= $value ?>"<?php endif; ?><?php endforeach; ?>

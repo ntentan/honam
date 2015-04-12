@@ -1,0 +1,1 @@
+<input<?= t('element_attributes.tpl.php', array('attributes' => $element->getAttributes())) ?> />

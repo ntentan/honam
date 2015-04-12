@@ -31,13 +31,15 @@
 
 namespace ntentan\honam\helpers\form\api;
 
+use ntentan\honam\template_engines\TemplateEngine;
+
 /**
  * The form field class. This class represents a form field element.
  * Sublcasses of this class are to be used to capture information from
  * the user of the application.
  * \ingroup Form_API
  */
-abstract class Field extends Element
+class Field extends Element
 {
     /**
      * A flag for setting the required state of the form. If this value
@@ -143,5 +145,10 @@ abstract class Field extends Element
     public function getOptions()
     {
         return array();
+    }
+    
+    public function render()
+    {
+        return TemplateEngine::render("input_element.tpl.php", array('element' => $this));
     }
 }

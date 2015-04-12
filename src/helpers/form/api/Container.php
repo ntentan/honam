@@ -54,8 +54,6 @@ abstract class Container extends Element
      */
     protected $showfields = true;
 
-    public $isContainer = true;
-    
     public $rendererMode = 'all';
 
     private function addElement($element)
@@ -228,5 +226,10 @@ abstract class Container extends Element
     public function __toString()
     {
         return $this->render();
+    }
+    
+    public function isContainer()
+    {
+        return true;
     }
 }

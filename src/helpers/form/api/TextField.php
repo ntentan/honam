@@ -38,26 +38,14 @@ namespace ntentan\honam\helpers\form\api;
  */
 class TextField extends Field
 {
-    protected $max_length;
-    protected $type;
-    protected $max_val;
-    protected $min_val;
-    protected $regexp;
 
     public function __construct($label="",$name="",$description="",$value="")
     {
         Field::__construct($name,$value);
         Element::__construct($label, $description);
-        $this->type = "TEXT";
         $this->addAttribute("type","text");
-    }
-
-    public function render()
-    {
         $this->addAttribute("class", "textfield ".$this->getCSSClasses());
         $this->addAttribute("name", $this->getName());
-        //$this->addAttribute("id", $this->id());
         $this->addAttribute("value", $this->getValue());
-        return "<input {$this->getAttributes()} />";
     }
 }
