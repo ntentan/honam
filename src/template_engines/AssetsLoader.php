@@ -28,7 +28,7 @@ class AssetsLoader
         return $publicPath;
     }
     
-    private function throwTemplateEngineExceptions($assetPath, $publicPath)
+    private static function throwTemplateEngineExceptions($assetPath, $publicPath)
     {
         if(!file_exists($assetPath))
         {

@@ -29,22 +29,9 @@ class FeedsHelper extends Helper
     {
         $generatorClassName = Ntentan::camelize($format) . "Feed";
         require "generators/$format/" . $generatorClassName . ".php";
-        $generatorClass = "\\ntentan\\views\\helpers\\feeds\\generators\\$format\\$generatorClassName";
+        $generatorClass = "\\ntentan\\honam\\helpers\\feeds\\generators\\$format\\$generatorClassName";
         $generator = new $generatorClass();
         $generator->setup($this->properties, $this->items);
         return $generator->execute();
-    }
-    
-    public function __get($property)
-    {
-        switch($property)
-        {
-            case 'rss':
-            case 'atom':
-                $this->generate($property);
-                break;
-            default:
-                return $this->properties[$property];
-        }
     }
 }

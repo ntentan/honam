@@ -35,8 +35,6 @@ namespace ntentan\honam\helpers\date;
 
 use ntentan\honam\helpers\Helper;
 
-error_reporting(E_ALL ^ E_NOTICE);
-
 /**
  * A view helper for formatting dates.
  *
@@ -49,54 +47,7 @@ class DateHelper extends Helper
      * @var integer
      */
     private $timestamp;
-
-    /**
-     * @todo replace this fully with strtotime
-     * @param string $date
-     * @return integer
-     */
-    private function internalParse($date)
-    {
-        $hours = 0;
-        $minutes = 0;
-        $seconds = 0;
-        if(preg_match(
-            "/(?<year>\d{4})-(?<first>\d{2})-(?<second>\d{2}) " .
-            "(?<hours>\d{2}):(?<minutes>\d{2}):(?<seconds>\d{2})/",
-            $date, $matches))
-        {
-            $year = $matches['year'];
-            if($matches['first'] > 12)
-            {
-                $day = $matches['first'];
-                $month = $matches['second'];
-            }
-            else
-            {
-                $day = $matches['second'];
-                $month = $matches['first'];
-            }
-            $hours = $matches['hours'];
-            $minutes = $matches['minutes'];
-            $seconds = $matches['seconds'];
-        }
-        else if(preg_match("/(?<year>\d{4})-(?<first>\d{2})-(?<second>\d{2})/", $date, $matches))
-        {
-            $year = $matches['year'];
-            if($matches['first'] > 12)
-            {
-                $day = $matches['first'];
-                $month = $matches['second'];
-            }
-            else
-            {
-                $day = $matches['second'];
-                $month = $matches['first'];
-            }
-        }
-        return strtotime("$year-$month-$day") + ($hours * 3600) + ($minutes * 60) + $seconds;
-    }
-
+    
     /**
      * Internal utility method for selecting a timestamp. This method returns
      * the DatesHelper::timestamp variable if the date parameter is null. This
@@ -109,7 +60,7 @@ class DateHelper extends Helper
      */
     private function selectTimestamp($date = null)
     {
-        return $date == null ? $this->timestamp : $this->internalParse($date);
+        return $date == null ? $this->timestamp : strtotime($date);
     }
 
     /**
@@ -122,7 +73,7 @@ class DateHelper extends Helper
      */
     public function help($time)
     {
-        $this->timestamp =$this->internalParse($time);
+        $this->timestamp =strtotime($time);
         return $this;
     }
 
@@ -165,18 +116,17 @@ class DateHelper extends Helper
      * @endcode
      * 
      * @todo Base on date object instead of doing math with time.
-     * @param array $options
-     * @param string $date
+     * @param boolean $ago
      * @param string $referenceDate
      * @return string
      */
-    public function sentence($options = null, $referenceDate = null)
+    public function sentence($ago = false, $referenceDate = null)
     {
         $timestamp = $this->selectTimestamp();
-        $now = $referenceDate == null ? time() : $this->internalParse($referenceDate);
+        $now = $referenceDate == null ? time() : strtotime($referenceDate);
         $elapsed = $now - $timestamp;
         
-        if($elapsed < 0) $future = true; else $future = false;
+        $future = $elapsed < 0;
         $elapsed = abs($elapsed);
         
         if($elapsed < 10)
@@ -185,7 +135,7 @@ class DateHelper extends Helper
         }
         elseif($elapsed >= 10 && $elapsed < 60)
         {
-            $englishDate = "$elapsed second" . ($elapsed > 1 ? 's' : '');
+            $englishDate = "$elapsed seconds";
         }
         elseif($elapsed >= 60 && $elapsed < 3600)
         {
@@ -229,16 +179,22 @@ class DateHelper extends Helper
             $englishDate = "$years year" . ($years > 1 ? 's' : '');
         }
 
-        switch($options['elaborate_with'])
+        if($englishDate != 'now' && $englishDate != 'yesterday' && $englishDate != 'today' && $ago)
         {
-            case 'ago':
-                if($englishDate != 'now' && $englishDate != 'yesterday' && $englishDate != 'today')
-                {
-                    if($future) $englishDate = 'in '. $englishDate; else $englishDate .= ' ago';
-                }
-                break;
+            if($future) 
+            {
+                $englishDate = 'in '. $englishDate;
+            }
+            else 
+            {
+                $englishDate .= ' ago';
+            }
         }
 
         return $englishDate;
+    }
+    
+    public function __toString() {
+        return $this->format();
     }
 }

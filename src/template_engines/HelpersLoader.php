@@ -32,8 +32,6 @@
 
 namespace ntentan\honam\template_engines;
 
-use ntentan\Ntentan;
-
 /**
  * A class for loading the helpers in views.
  */
@@ -52,18 +50,12 @@ class HelpersLoader
     {
         if(!isset($this->loadedHelpers[$this->plugin . $helper]))
         {
-            $camelizedHelper = Ntentan::camelize($helper) . "Helper";
-            $helperFile = Ntentan::$modulesPath . "/helpers/$helper/$camelizedHelper.php";
-            if(file_exists($helperFile))
-            {
-                require_once $helperFile;
-                $helperClass = "\\" . Ntentan::$namespace . "\\helpers\\$helper\\$camelizedHelper";
-            }
-            else if($this->pluginMode)
+            $camelizedHelper = ucfirst($helper) . "Helper";
+            if($this->pluginMode)
             {
                 $helperClass = "\\ntentan\\extensions\\{$this->plugin}\\helpers\\$helper\\$camelizedHelper";
             }
-            else if(file_exists("vendor/ntentan/honam/src/helpers/$helper"))
+            else if(file_exists(__DIR__ . "/../helpers/$helper"))
             {
                 $helperClass = "\\ntentan\\honam\\helpers\\$helper\\$camelizedHelper";                
             }
