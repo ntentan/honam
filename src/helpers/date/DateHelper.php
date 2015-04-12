@@ -50,6 +50,11 @@ class DateHelper extends Helper
      */
     private $timestamp;
 
+    /**
+     * @todo replace this fully with strtotime
+     * @param string $date
+     * @return integer
+     */
     private function internalParse($date)
     {
         $hours = 0;
@@ -159,6 +164,7 @@ class DateHelper extends Helper
      * $this->date->parse(date('Y-m-d))->sentence(array('elaborate_with'=>'ago'));
      * @endcode
      * 
+     * @todo Base on date object instead of doing math with time.
      * @param array $options
      * @param string $date
      * @param string $referenceDate
@@ -166,7 +172,7 @@ class DateHelper extends Helper
      */
     public function sentence($options = null, $referenceDate = null)
     {
-        $timestamp = $this->selectTimestamp($date);
+        $timestamp = $this->selectTimestamp();
         $now = $referenceDate == null ? time() : $this->internalParse($referenceDate);
         $elapsed = $now - $timestamp;
         

@@ -1,7 +1,7 @@
 <?php
-use ntentan\honam\template_engines\TemplateEngine;
+use ntentan\honam\template_engines\AssetsLoader;
 
 function load_asset($asset, $copyFrom = null)
 {
-    return TemplateEngine::loadAsset($asset, $copyFrom);
+    return AssetsLoader::load($asset, $copyFrom);
 }

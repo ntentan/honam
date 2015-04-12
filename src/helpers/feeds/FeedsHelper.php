@@ -1,7 +1,6 @@
 <?php
 namespace ntentan\honam\helpers\feeds;
 
-use ntentan\Ntentan;
 use ntentan\honam\helpers\Helper;
 
 class FeedsHelper extends Helper

@@ -33,8 +33,6 @@
 namespace ntentan\honam\widgets;
 
 use ntentan\honam\template_engines\TemplateEngine;
-use ntentan\Ntentan;
-use ntentan\honam\Presentation;
 use ntentan\caching\Cache;
 
 /**
@@ -42,7 +40,7 @@ use ntentan\caching\Cache;
  * @author ekow
  * @todo Look at the possibility of renaming blocks to widgets
  */
-abstract class Widget extends Presentation
+abstract class Widget
 {
     protected $data = array();
     protected $template;

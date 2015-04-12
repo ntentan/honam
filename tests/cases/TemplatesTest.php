@@ -2,6 +2,8 @@
 namespace ntentan\honam\tests\cases;
 
 use ntentan\honam\template_engines\TemplateEngine;
+use ntentan\honam\template_engines\AssetsLoader;
+
 use org\bovigo\vfs\vfsStream;
 
 class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
@@ -92,8 +94,8 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
     public function testAssetFileException()
     {
         vfsStream::setup('public');
-        TemplateEngine::setAssetsBaseDir('tests/files/assets');
-        TemplateEngine::setPublicBaseDir(vfsStream::url('public'));        
+        AssetsLoader::setSourceDir('tests/files/assets');
+        AssetsLoader::setDestinationDir(vfsStream::url('public'));   
         $this->view->setTemplate('missing_asset.tpl.php');
         $this->view->out(array());
     }    
@@ -104,8 +106,8 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
     public function testPublicDirectoryException()
     {
         vfsStream::setup('public', 0444);
-        TemplateEngine::setAssetsBaseDir('tests/files/assets');
-        TemplateEngine::setPublicBaseDir(vfsStream::url('public'));        
+        AssetsLoader::setSourceDir('tests/files/assets');
+        AssetsLoader::setDestinationDir(vfsStream::url('public'));   
         $this->view->setTemplate('assets.tpl.php');
         $this->view->out(array());
     }        
@@ -113,8 +115,8 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
     public function testAssetLoading()
     {
         vfsStream::setup('public');
-        TemplateEngine::setAssetsBaseDir('tests/files/assets');
-        TemplateEngine::setPublicBaseDir(vfsStream::url('public'));
+        AssetsLoader::setSourceDir('tests/files/assets');
+        AssetsLoader::setDestinationDir(vfsStream::url('public'));
         touch(vfsStream::url('public/existing.css'));
         
         $this->view->setTemplate('assets.tpl.php');

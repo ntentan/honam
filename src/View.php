@@ -34,21 +34,51 @@ namespace ntentan\honam;
 use ntentan\honam\template_engines\TemplateEngine;
 
 /**
- * An extension of the presentation class for the purposes of rendering views.
+ * The view class represents the main entry point for the honam template library.
+ * A view contains a layout and a template. The layout is intended to remain
+ * constant throughout several pages on your site. As its name suggests, it would
+ * be the layout of the pages on your site. The template on the other hand helps 
+ * render specific content for specific pages. Content rendered with templates 
+ * are by default wrapped by the layout assigned to the view. Apart from templates,
+ * layouts can also contain widgets which are in themselves tiny little embedded 
+ * views.
+ * 
  * @author ekow
  */
-class View extends Presentation
+class View
 {
+    /**
+     * A reference to the layout of this view.
+     * @var string
+     */
     private $layout;
+    
+    /**
+     * A reference to the template of this view.
+     * @var string
+     */
     private $template;
-    private $encoding;
 
+    /**
+     * When used to generate content to be served directly to a browser, this
+     * method could be used to set the http content-type header.
+     * 
+     * @param string $contentType
+     * @param string $encoding
+     */
     public function setContentType($contentType, $encoding="UTF-8")
     {
-        $this->encoding = $encoding;
     	header("Content-type: $contentType;charset=$encoding");
     }
 
+    /**
+     * Renders the output by loading and rendering the template files for the 
+     * layout and the page template. 
+     * 
+     * @param array $viewData An associative array which represents the various
+     *      variables assignable in the view.
+     * @return string
+     */
     public function out($viewData)
     {
         if($this->template == null)
@@ -73,16 +103,31 @@ class View extends Presentation
         return $output;
     }
     
+    /**
+     * Sets a reference to the layout template.
+     * 
+     * @param string $layout
+     */
     public function setLayout($layout)
     {
         $this->layout = $layout;
     }
     
+    /**
+     * Sets a reference to the page template.
+     * 
+     * @param string $template
+     */
     public function setTemplate($template)
     {
         $this->template = $template;
     }
     
+    /**
+     * Gets the reference to the page template.
+     * 
+     * @return string
+     */
     public function getTemplate()
     {
         return $this->template;
