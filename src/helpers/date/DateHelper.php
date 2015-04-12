@@ -30,7 +30,6 @@
  */
 
 
-
 namespace ntentan\honam\helpers\date;
 
 use ntentan\honam\helpers\Helper;
@@ -112,10 +111,10 @@ class DateHelper extends Helper
      * (two days ago, one month ago, now, yesterday, three minutes ago ...)
      *
      * @code
-     * $this->date->parse(date('Y-m-d))->sentence(array('elaborate_with'=>'ago'));
+     * $helpers->date('2015-01-01')->sentence(true);
      * @endcode
      * 
-     * @todo Base on date object instead of doing math with time.
+     * 
      * @param boolean $ago
      * @param string $referenceDate
      * @return string
@@ -123,7 +122,7 @@ class DateHelper extends Helper
     public function sentence($ago = false, $referenceDate = null)
     {
         $timestamp = $this->selectTimestamp();
-        $now = $referenceDate == null ? time() : strtotime($referenceDate);
+        $now = $referenceDate === null ? time() : strtotime($referenceDate);
         $elapsed = $now - $timestamp;
         
         $future = $elapsed < 0;

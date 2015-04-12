@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\honam\helpers\feeds\generators;
+namespace ntentan\honam\helpers\feed\generators;
 
 abstract class Generator
 {
@@ -12,5 +12,5 @@ abstract class Generator
         $this->properties = $properties;
     }
 
-    public abstract function execute();
+    public abstract function generate();
 }
