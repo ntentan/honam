@@ -90,6 +90,7 @@ class FormHelper extends Helper
         {
             $elementClass = new ReflectionMethod(__NAMESPACE__ . "\\FormHelper", 'create');
             $element = $elementClass->invokeArgs(null, $args);
+            $this->getCotainer();
             $this->container->add($element);
         }
         return $element;
@@ -178,19 +179,6 @@ class FormHelper extends Helper
         $this->container->addAttribute($key, $value);
     }
     
-    public function renderer($renderer = false)
-    {
-        if($renderer === false)
-        {
-            return self::$renderer; 
-        }
-        else 
-        {
-            self::$renderer = $renderer;
-            return $this;
-        }
-    }
-    
     public function open($formId = '')
     {
         $this->container = new api\Form();
@@ -205,14 +193,13 @@ class FormHelper extends Helper
     public function close($submit = 'Submit')
     {
         $arguments = func_get_args();
-        $this->container->setSubmitValues($arguments);
         if($submit === false)
         {
             $this->container->setShowSubmit(false);
         }
-        else if(count($arguments) == 0)
+        else if(count($arguments) > 0)
         {
-            $this->container->setSubmitValues(array('Submit'));
+            $this->container->setSubmitValues($arguments);
         }
         $this->container->rendererMode = 'foot';
         return $this->container;        
@@ -285,5 +272,14 @@ class FormHelper extends Helper
     public static function getLayout()
     {
         return self::$layout;
+    }
+    
+    public function getCotainer()
+    {
+        if($this->container === null)
+        {
+            $this->container = new api\Form();
+        }
+        return $this->container;
     }
 }

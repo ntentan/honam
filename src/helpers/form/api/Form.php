@@ -39,7 +39,7 @@ use ntentan\honam\template_engines\TemplateEngine;
  */
 class Form extends Container
 {
-    protected $submitValues = array();
+    protected $submitValues = array('Submit');
     protected $showSubmit = true;
     protected $method = "POST";
     private $action;
@@ -53,7 +53,7 @@ class Form extends Container
         if(isset($_SERVER['REQUEST_URI']))
         {
             $this->action = $_SERVER["REQUEST_URI"];
-        }
+        }     
     }
 
     public function action($action)

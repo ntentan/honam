@@ -31,8 +31,7 @@
 
 namespace ntentan\honam\helpers\form\api;
 
-use ntentan\honam\helpers\form\Forms;
-use ntentan\Ntentan;
+use \ntentan\honam\template_engines\TemplateEngine;
 use \Exception;
 
 /**
@@ -55,15 +54,17 @@ abstract class Container extends Element
     protected $showfields = true;
 
     public $rendererMode = 'all';
+    
+    abstract protected function renderHead();
+    abstract protected function renderFoot();    
 
     private function addElement($element)
     {
         //Check if the element has a parent. If it doesnt then add it
         //to this container. If it does throw an exception.
-        if($element->parent==null)
+        if($element->parent === null)
         {
             $this->elements[] = $element;
-            $element->setShowFields($this->getShowField());
             $element->parent = $this;
         }
         else
@@ -112,8 +113,8 @@ abstract class Container extends Element
             {
                 $this->addElement($element);
             }
-            }
-            return $this;
+        }
+        return $this;
     }
 
     /**
@@ -138,27 +139,6 @@ abstract class Container extends Element
         return __CLASS__;
     }
 
-    /**
-     * Render all the elements currently contained in this container. This method
-     * would initialize the renderer class and use it to layout the elements
-     * on the form.
-     */
-    private function renderElements()
-    {
-        $renderer = Forms::getRendererInstance();
-        $this->onRender();
-        $ret = $renderer->head();
-        foreach($this->elements as $element)
-        {
-                $ret .= $renderer->element($element);
-        }
-        $ret .= $renderer->foot();
-        return $ret;
-    }
-
-    abstract protected function renderHead();
-    abstract protected function renderFoot();
-
     public function render()
     {
         switch($this->rendererMode)
@@ -167,20 +147,14 @@ abstract class Container extends Element
                 return $this->renderHead();
             case 'foot':
                 return $this->renderFoot();
-            case 'elements':
-                return $this->renderElements();
-        }
-    }
-
-    //! Sets whether the fields should be exposed for editing. If this
-    //! field is set as true then the values of the fields as retrieved
-    //! from the database are showed.
-    public function setShowFields($showfield)
-    {
-        Element::setShowFields($showfield);
-        foreach($this->getElements() as $element)
-        {
-            $element->setShowFields($showfield);
+            default:
+                return 
+                $this->renderHead().
+                TemplateEngine::render(
+                    'elements.tpl.php', 
+                    array('elements' => $this->elements)
+                ).
+                $this->renderFoot();
         }
     }
 
@@ -188,28 +162,6 @@ abstract class Container extends Element
     public function getElements()
     {
         return $this->elements;
-    }
-
-    //! Returns an element in the container with a particular name.
-    //! \param $name The name of the element to be retrieved.
-    public function getElementByName($name)
-    {
-        foreach($this->getElements() as $element)
-        {
-            if($element->getType()!="Container")
-            {
-                if($element->getName(false)==$name) return $element;
-            }
-            else
-            {
-                try
-                {
-                    return $element->getElementByName($name);
-                }
-                catch(Exception $e){}
-            }
-        }
-        throw new Exception("No element with name $name found in array");
     }
 
     public function setErrors($errors)
