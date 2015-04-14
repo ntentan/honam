@@ -43,13 +43,10 @@ class Form extends Container
     protected $showSubmit = true;
     protected $method = "POST";
     private $action;
-    
-    private static $numForms;
 
-    public function __construct($id="", $method="POST")
+    public function __construct()
     {
-        $this->setId($id);
-        $this->method = $method;
+        parent::__construct();
         if(isset($_SERVER['REQUEST_URI']))
         {
             $this->action = $_SERVER["REQUEST_URI"];
@@ -81,18 +78,6 @@ class Form extends Container
                 'submit_values' => $this->submitValues,
             )
         );
-    }
-
-    public function setShowFields($show_field)
-    {
-        Container::setShowField($show_field);
-        $this->setShowSubmit($show_field);
-    }
-
-    public function setId($id)
-    {
-        parent::id($id == "" ? "form" . Form::$numForms++ : $id);
-        return $this;
     }
     
     public function setShowSubmit($showSubmit)

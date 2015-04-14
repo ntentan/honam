@@ -149,6 +149,8 @@ class Field extends Element
     
     public function render()
     {
+        $this->addAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");
+        $this->addAttribute("name", $this->getName());
         return TemplateEngine::render("input_element.tpl.php", array('element' => $this));
     }
 }

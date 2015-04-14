@@ -31,11 +31,17 @@
 
 namespace ntentan\honam\helpers\form\api;
 
+use ntentan\honam\template_engines\TemplateEngine;
+
 /**
  * A regular checkbox with a label.
  */
-class RadioButton extends CheckableField
+class CheckableField extends Field
 {
+    /**
+     * The value that this field should contain if this checkbox is checked.
+     */
+    protected $checkedValue;
 
     /**
      * Constructor for the checkbox.
@@ -47,8 +53,47 @@ class RadioButton extends CheckableField
      */
     public function __construct($label="", $name="", $value="", $description="")
     {
-        parent::__construct($label, $name, $value, $description);
-        $this->addAttribute('type', 'radio');
+        Element::__construct($label, $description);
+        parent::__construct($name);
+        $this->setCheckedValue($value);
+        $this->setRenderLabel(false);
+    }
+
+    /**
+     * Sets the value that should be assigned as the checked value for
+     * this check box.
+     * @param $checkedValue The value to be assigned.
+     * @return Checkbox
+     */
+    public function setCheckedValue($checkedValue)
+    {
+        $this->checkedValue = $checkedValue;
+        return $this;
+    }
+
+    /**
+     * Gets and returns the checkedValue for the check box.
+     * @return string
+     */
+    public function getCheckedValue()
+    {
+        return $this->checkedValue;
+    }
+
+    public function render()
+    {
+        if($this->getCheckedValue() === $this->getValue())
+        {
+            $this->addAttribute('checked', 'checked');
+        }
+        
+        $this->addAttribute("name", $this->getName());
+        $this->addAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");        
+        $this->setValue($this->getCheckedValue());
+        return TemplateEngine::render(
+            'input_checkable_element.tpl.php', 
+            array('element' => $this)
+        );
     }
 }
 

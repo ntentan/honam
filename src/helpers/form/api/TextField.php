@@ -44,8 +44,5 @@ class TextField extends Field
         Field::__construct($name,$value);
         Element::__construct($label, $description);
         $this->addAttribute("type","text");
-        $this->addAttribute("class", "textfield ".$this->getCSSClasses());
-        $this->addAttribute("name", $this->getName());
-        $this->addAttribute("value", $this->getValue());
     }
 }

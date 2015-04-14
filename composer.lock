@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "29c63b54c65406577a6e198369cdefc7",
+    "hash": "83febcdf799e56be19d92c028f8eb3c2",
     "packages": [
         {
             "name": "natxet/CssMin",
@@ -47,6 +47,42 @@
                 "minify"
             ],
             "time": "2013-07-02 20:53:35"
+        },
+        {
+            "name": "ntentan/utils",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ntentan/utils.git",
+                "reference": "d2134223a7acc8264f419836c02f7a45da7f08f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ntentan/utils/zipball/d2134223a7acc8264f419836c02f7a45da7f08f0",
+                "reference": "d2134223a7acc8264f419836c02f7a45da7f08f0",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "ntentan\\utils\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ekow Abaka Ainooson",
+                    "email": "jainooson@gmail.com"
+                }
+            ],
+            "description": "Common utility functions shared accross the ntentan framework.",
+            "time": "2015-04-12 16:00:14"
         },
         {
             "name": "tedivm/jshrink",
@@ -1102,7 +1138,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "ntentan/utils": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

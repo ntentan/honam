@@ -181,7 +181,6 @@ abstract class Element
         else
         {
             $this->name = $name;
-            $this->setValue(FormHelper::getDataField($this->name));
             return $this;
         }
     }
@@ -368,6 +367,12 @@ abstract class Element
             case Element::SCOPE_WRAPPER: $attributes = $this->wrapperAttributes; break;
         }
         return $attributes;
+    }
+    
+    public function getAttribute($attribute, $scope = Element::SCOPE_ELEMENT)
+    {
+        $attributes = $this->getAttributes($scope);
+        return @$attributes[$attribute];
     }
     
     public function setErrors($errors)

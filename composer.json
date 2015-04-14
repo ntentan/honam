@@ -10,7 +10,8 @@
     ],
     "require": {
         "natxet/cssmin":"3.*",
-        "tedivm/jshrink":"1.*"        
+        "tedivm/jshrink":"1.*",
+        "ntentan/utils":"dev-master"
     },
     "require-dev" : {
         "phpunit/phpunit":"4.*",

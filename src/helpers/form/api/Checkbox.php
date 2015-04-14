@@ -34,56 +34,21 @@ namespace ntentan\honam\helpers\form\api;
 /**
  * A regular checkbox with a label.
  */
-class Checkbox extends Field
+class Checkbox extends CheckableField
 {
-        public $renderLabel = false;
-    
-	/**
-	 * The value that this field should contain if this checkbox is checked.
-	 */
-	protected $checkedValue;
 
-	/**
-	 * Constructor for the checkbox.
-	 *
-	 * @param $label The label of the checkbox.
-	 * @param $name The name of the checkbox used for the name='' attribute of the HTML output
-	 * @param $description A description of the field.
-	 * @param $value A value to assign to this checkbox.
-	 */
-	public function __construct($label="", $name="", $description="", $value="1")
-	{
-		Element::__construct($label, $description);
-		parent::__construct($name);
-		$this->setCheckedValue($value);
-	}
-
-	/**
-	 * Sets the value that should be assigned as the checked value for
-	 * this check box.
-	 * @param $checkedValue The value to be assigned.
-	 * @return Checkbox
-	 */
-	public function setCheckedValue($checkedValue)
-	{
-		$this->checkedValue = $checkedValue;
-		$this->addAttribute("id", $this->id());
-		return $this;
+    /**
+     * Constructor for the checkbox.
+     *
+     * @param $label The label of the checkbox.
+     * @param $name The name of the checkbox used for the name='' attribute of the HTML output
+     * @param $description A description of the field.
+     * @param $value A value to assign to this checkbox.
+     */
+    public function __construct($label="", $name="", $value="1", $description="")
+    {
+        parent::__construct($label, $name, $value, $description);
+        $this->addAttribute('type', 'checkbox');
     }
-
-	/**
-	 * Gets and returns the checkedValue for the check box.
-	 * @return string
-	 */
-	public function getCheckedValue()
-	{
-		return $this->checkedValue;
-    }
-
-	public function render()
-	{
-            return "<label class='nostretch'><input class='form-checkbox' type='checkbox' name='{$this->getName()}' value='{$this->getCheckedValue()}'" .
-                  (($this->getValue()==$this->getCheckedValue())? "checked='checked'":"").' '.$this->getAttributes().' /> ' . $this->getLabel() . '</label>';
-	}
 }
 

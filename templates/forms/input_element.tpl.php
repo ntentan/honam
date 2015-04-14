@@ -1,1 +1,1 @@
-<input<?= t('element_attributes.tpl.php', array('attributes' => $element->getAttributes())) ?> />
+<?php $value = $element->getValue() ?><input<?= t('element_attributes.tpl.php', array('attributes' => $element->getAttributes())) ?><?php if($value): ?> value="<?= $value ?>"<?php endif; ?>/>

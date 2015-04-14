@@ -36,31 +36,8 @@ class DateField extends TextField
     public function __construct($label="",$name="",$description="")
     {
         parent::__construct($label,$name,$description);
-    }
-
-    public function render()
-    {
-    	$this->addCSSClass("fapi-textfield");
-    	$this->addAttribute("class" , "form-date ".$this->getCSSClasses());
-    	$this->addAttribute("id" , $this->id());
-    	$this->addAttribute("name" , $this->getName());
-    	$this->addAttribute("value" , $this->getValue()!==""?date("Y-m-d",(int)$this->getValue()) : "" );
     	$this->setAttribute('type', 'date');
-    	$id = $this->id();
-        return "<input ".$this->getAttributes()." />";
-    }
-
-    public function setValue($value)
-    {
-        if(is_numeric($value))
-		{
-			parent::setValue($value);
-		}
-		else
-		{
-			if(strlen($value)>0) parent::setValue(strtotime($value)); else parent::setValue("");
-		}
-		return $this;
+        $this->setAttribute("class", "datefield ".$this->getCSSClasses());
     }
 }
 

@@ -27,9 +27,67 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         ); 
     }
     
-    public function testMultipleSubmit()
+    public function testSetErrors()
     {
+        $this->helpers->form->setErrors(
+            array(
+                'username' => array(
+                    'Invalid username or password',
+                    'Username must be unique'
+                ),
+                'password' => array(
+                    'Password must contain six or more characters'
+                )
+            )
+        );
         
+        $this->assertXmlStringEqualsXmlString(
+            file_get_contents('tests/files/markup/login_errors.html'),
+            (string)$this->helpers->form->open() . 
+            (string)$this->helpers->form->get_text_field('Username', 'username') .
+            (string)$this->helpers->form->get_password_field('Password', 'password').
+            (string)$this->helpers->form->close('Login')
+        );
+    }
+    
+    public function testSetData()
+    {
+        $this->helpers->form->setData(
+            array(
+                'textfield' => 'Text Field',
+                'datefield' => '2012-01-01',
+                'hiddenfield' => 'Some Hidden Text',
+                'checkbox' => '1',
+                'password' => 'This should be hidden',
+                'radio_button' => 'selected',
+                'select' => 'selected',
+                'textarea' => 'Blah blah blah'
+            )
+        );
+        
+        $this->assertXmlStringEqualsXmlString(
+            file_get_contents('tests/files/markup/big_form.html'), 
+            (string)$this->helpers->form->open().
+            (string)$this->helpers->form->get_text_field('TextField', 'textfield')->setDescription('A sample text field').
+            (string)$this->helpers->form->get_date_field('DateField', 'datefield')->setDescription('A sample date field').
+            (string)$this->helpers->form->get_hidden_field('HiddenField', 'hiddenfield')->setDescription('A sample hidden field').
+            (string)$this->helpers->form->get_checkbox('Something worth checking', 'checkbox')->setDescription('A sample checkbox').
+            (string)$this->helpers->form->get_password_field('Password', 'password')->setDescription('A sample password field').
+            (string)$this->helpers->form->get_radio_button('Option 1', 'radio_button', 'selected')->setDescription('A sample radio button').
+            (string)$this->helpers->form->get_radio_button('Option 2', 'radio_button', 'not_selected')->setDescription('Another sample radio button').
+            (string)$this->helpers->form->get_selection_list('Select', 'select')
+                ->option('Selected', 'selected')
+                ->option('Not Selected', 'not_selected')
+                ->options(
+                    array(
+                        'one' => 'One',
+                        'two' => 'Two',
+                    ),
+                    true
+                )->setMultiple(true)->initial('one').
+            (string)$this->helpers->form->get_text_area('Text', 'textarea').
+            (string)$this->helpers->form->close()
+        );
     }
     
     public function testFormCSS()
@@ -48,6 +106,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
     
     public function testFormAdd()
     {
+        $this->helpers->form->id('login-form');
         $this->helpers->form->add('TextField', 'Username', 'username');
         $this->helpers->form->add('PasswordField', 'Password', 'password');
         $this->assertXmlStringEqualsXmlString(

@@ -117,18 +117,18 @@ class SelectionList extends Field
         array_unshift($this->options, $this->default);
         $this->options = array_combine($keys, $this->options);
         
-        $ret = "<select {$this->getAttributes()} class='fapi-list ".$this->getCSSClasses()."' name='".$this->getName()."' ".($this->multiple?"multiple='multiple'":"").">";
+        $this->addAttribute('name', $this->name);
         
-        // get the element and force it to be a string
-        $elementValue = $this->getValue();
-        if(is_object($elementValue)) $elementValue = (string)($elementValue);
-        
-        foreach($this->options as $value => $label)
+        if($this->multiple)
         {
-            $ret .= "<option value='$value' ".($elementValue == $value?"selected='selected'":"").">$label</option>";
+            $this->addAttribute('multiple', 'multiple');
         }
-        $ret .= "</select>";
-        return $ret;
+        $this->addAttribute('class', "select {$this->getCSSClasses()}");
+        
+        return \ntentan\honam\template_engines\TemplateEngine::render(
+            'select_element.tpl.php', 
+            array('element' => $this)
+        );
     }
 
     /**
@@ -169,6 +169,6 @@ class SelectionList extends Field
      */
     public function getOptions()
     {
-        return $options;
+        return $this->options;
     }
 }

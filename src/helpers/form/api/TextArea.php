@@ -44,9 +44,13 @@ class TextArea extends Field
     {
         $this->addAttribute('rows', 10);
         $this->addAttribute('cols', 80);
-        $this->addAttribute('class', 'fapi-textarea');
+        $this->addAttribute('class', "textarea {$this->getCSSClasses()}");
         $this->addAttribute('name', $this->getName());
-        return "<textarea ".$this->getAttributes().$this->getCSSClasses().">".
-               $this->getValue()."</textarea>";
+        return \ntentan\honam\template_engines\TemplateEngine::render(
+            "textarea_element.tpl.php",
+            array(
+                'element' => $this
+            )
+        );
     }
 }

@@ -33,6 +33,7 @@ namespace ntentan\honam\helpers\form;
 
 use ntentan\honam\helpers\Helper;
 use ntentan\Ntentan;
+use ntentan\utils\CamelCase;
 use \ReflectionMethod;
 use \ReflectionClass;
 use \Exception;
@@ -45,7 +46,7 @@ class FormHelper extends Helper
     private $container;
     public $id;
     private static $layout = "inline";
-    private static $data = array();
+    private $data = array();
     private $errors = array();
     public $echo = false;
     
@@ -62,12 +63,18 @@ class FormHelper extends Helper
      */
     public function __toString()
     {
-        $this->container->setId($this->id);
-        $this->container->setData(self::$data);
+        $this->container->id($this->id);
+        $this->container->setData($this->data);
         $this->container->setErrors($this->errors);
         $return = (string)$this->container;
-        $this->container = new api\Form();
+        $this->container = null;
         return $return;
+    }
+    
+    public function id($id)
+    {
+        $this->getCotainer()->id($id);
+        return $this;
     }
     
     public function stylesheet()
@@ -90,10 +97,9 @@ class FormHelper extends Helper
         {
             $elementClass = new ReflectionMethod(__NAMESPACE__ . "\\FormHelper", 'create');
             $element = $elementClass->invokeArgs(null, $args);
-            $this->getCotainer();
-            $this->container->add($element);
+            $this->getCotainer()->add($element);
         }
-        return $element;
+        return $this;
     }
     
     public function setErrors($errors)
@@ -101,72 +107,9 @@ class FormHelper extends Helper
         $this->errors = $errors;
     }
     
-    public static function setData($data)
+    public function setData($data)
     {
-        self::$data = $data;
-    }
-    
-    public static function getDataField($field)
-    {
-        return self::$data[$field];
-    }
-    
-    public function createModelField($field)
-    {
-        switch($field["type"])
-        {
-            case "double":
-                $element = new api\TextField(ucwords(str_replace("_", " ", $field["name"])), $field["name"]);
-                break;
-
-            case "integer":
-                if($field["foreign_key"]===true)
-                {
-                    $element = new api\ModelField(ucwords(str_replace("_", " ", substr($field["name"], 0, strlen($field["name"])-3))), $field["model"]);
-                    $element->name = $field["name"];
-                }
-                else
-                {
-                    $element = new api\TextField(ucwords(str_replace("_", " ", $field["name"])), $field["name"]);
-                }
-                break;
-
-            case "string":
-                $element = new api\TextField(Ntentan::toSentence($field["name"]), $field["name"]);
-                break;
-            case "text":
-                $element = new api\TextArea(Ntentan::toSentence($field["name"]), $field["name"]);
-                break;
-            case "boolean":
-                $element = new api\Checkbox(Ntentan::toSentence($field["name"]), $field["name"], "", 1);
-                break;
-            case "datetime":
-            case "date":
-                $element = new api\DateField(Ntentan::toSentence($field["name"]), $field["name"]);
-                break;
-            
-            case "":
-                throw new \Exception("Empty data type for {$field['name']}");
-                
-            default:
-                throw new \Exception("Unknown data type {$field["type"]}");
-        }
-        if($field["required"]) $element->setRequired(true);
-        $element->setDescription($field["comment"]);
-        return $element;
-    }
-    
-    public function addModelField($field, $return = false)
-    {
-        $element = $this->createModelField($field);
-        if($return)
-        {
-            return $element;
-        }
-        else
-        {
-            $this->container->add($element);
-        }
+        $this->data = $data;
     }
     
     public function help($arguments)
@@ -184,7 +127,7 @@ class FormHelper extends Helper
         $this->container = new api\Form();
         if($formId != '')
         {
-            $this->container->setId($formId);
+            $this->container->id($formId);
         }
         $this->container->rendererMode = 'head';
         return $this->container;        
@@ -207,40 +150,29 @@ class FormHelper extends Helper
 
     public function __call($function, $arguments)
     {
-        if($function == "get")
+        if(substr($function, 0, 5) == "open_")
         {
-            $name = $arguments[0]['name'];
-            $elementObject = $this->createModelField($arguments[0]);
-            $elementObject->setValue(self::$data[$name]);
-            if(isset($this->errors[$name]))
-            {
-                $elementObject->setErrors($this->errors[$name]);
-            }
-            $return = $elementObject;
-        }
-        else if(substr($function, 0, 5) == "open_")
-        {
-            $container = __NAMESPACE__ . "\\api\\" . Ntentan::camelize(substr($function, 5, strlen($function)));
+            $container = __NAMESPACE__ . "\\api\\" . CamelCase::ucamelize(substr($function, 5, strlen($function)));
             $containerClass = new ReflectionClass($container);
             $containerObject = $containerClass->newInstanceArgs($arguments);
             $return = $containerObject->renderHead();
         }
         elseif(substr($function, 0, 6) == "close_")
         {
-            $container = __NAMESPACE__ . "\\api\\" . Ntentan::camelize(substr($function, 6, strlen($function)));
+            $container = __NAMESPACE__ . "\\api\\" . CamelCase::ucamelize(substr($function, 6, strlen($function)));
             $containerClass = new ReflectionClass($container);
             $containerObject = $containerClass->newInstanceArgs($arguments);
             $return = $containerObject->renderFoot();
         }
         elseif(substr($function, 0, 4) == "get_")
         {
-            $element = __NAMESPACE__ . "\\api\\" . Ntentan::camelize(substr($function, 4, strlen($function)));
+            $element = __NAMESPACE__ . "\\api\\" . CamelCase::ucamelize(substr($function, 4, strlen($function)));
             $elementClass = new ReflectionClass($element);
             $elementObject = $elementClass->newInstanceArgs($arguments);
             $name = $elementObject->getName();
-            if(isset(self::$data[$name])) 
+            if(isset($this->data[$name])) 
             {
-                $elementObject->setValue(self::$data[$name]);
+                $elementObject->setValue($this->data[$name]);
             }
             if(isset($this->errors[$name]))
             {
@@ -250,7 +182,7 @@ class FormHelper extends Helper
         }
         elseif(substr($function, 0, 4) == "add_")
         {
-            $element = "ntentan\\views\\helpers\\forms\\api\\" . Ntentan::camelize(substr($function, 4, strlen($function)));
+            $element = "ntentan\\views\\helpers\\forms\\api\\" . CamelCase::ucamelize(substr($function, 4, strlen($function)));
             $elementClass = new ReflectionClass($element);
             $elementObject = $elementClass->newInstanceArgs($arguments);
             $return = $this->container->add($elementObject);
@@ -259,14 +191,8 @@ class FormHelper extends Helper
         {
             throw new Exception("Function *$function* not found in form helper.");
         }
-        if($this->echo)
-        {
-            echo $return;
-        }
-        else
-        {
-            return $return;
-        }
+        
+        return $return;
     }
     
     public static function getLayout()
