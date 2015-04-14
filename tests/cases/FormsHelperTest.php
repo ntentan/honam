@@ -114,4 +114,25 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
             $this->helpers->form
         );
     }
+    
+    public function testFormAdd2()
+    {
+        $this->helpers->form->id('login-form');
+        $this->helpers->form->add_text_field('Username', 'username');
+        $this->helpers->form->add_password_field('Password', 'password');
+        $this->assertXmlStringEqualsXmlString(
+            file_get_contents('tests/files/markup/login_form.html'),
+            $this->helpers->form
+        );
+    }    
+    
+    public function testFieldSet()
+    {
+        echo (string)$this->helpers->form->open() . 
+        (string)$this->helpers->form->open_field_set("Login").
+        (string)$this->helpers->form->get_text_field('Username', 'username') .
+        (string)$this->helpers->form->get_password_field('Password', 'password').
+        (string)$this->helpers->form->close_field_set().
+        (string)$this->helpers->form->close('Login');
+    }      
 }

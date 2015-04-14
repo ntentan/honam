@@ -182,7 +182,7 @@ class FormHelper extends Helper
         }
         elseif(substr($function, 0, 4) == "add_")
         {
-            $element = "ntentan\\views\\helpers\\forms\\api\\" . CamelCase::ucamelize(substr($function, 4, strlen($function)));
+            $element = __NAMESPACE__ . "\\api\\" . CamelCase::ucamelize(substr($function, 4, strlen($function)));
             $elementClass = new ReflectionClass($element);
             $elementObject = $elementClass->newInstanceArgs($arguments);
             $return = $this->container->add($elementObject);

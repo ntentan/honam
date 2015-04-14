@@ -18,11 +18,11 @@ class Variable implements \ArrayAccess, \Iterator
             case 'array':
                 return new Variable($data, array_keys($data));
                 
-            case 'object':
             case 'boolean':
             case 'integer':
             case 'double':
             case 'NULL':
+            case 'object':
                 return $data;
                 
             default:
