@@ -117,13 +117,13 @@ class SelectionList extends Field
         array_unshift($this->options, $this->default);
         $this->options = array_combine($keys, $this->options);
         
-        $this->addAttribute('name', $this->name);
+        $this->setAttribute('name', $this->name);
         
         if($this->multiple)
         {
-            $this->addAttribute('multiple', 'multiple');
+            $this->setAttribute('multiple', 'multiple');
         }
-        $this->addAttribute('class', "select {$this->getCSSClasses()}");
+        $this->setAttribute('class', "select {$this->getCSSClasses()}");
         
         return \ntentan\honam\template_engines\TemplateEngine::render(
             'select_element.tpl.php', 

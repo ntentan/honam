@@ -69,7 +69,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
             file_get_contents('tests/files/markup/big_form.html'), 
             (string)$this->helpers->form->open().
             (string)$this->helpers->form->get_text_field('TextField', 'textfield')->setDescription('A sample text field').
-            (string)$this->helpers->form->get_date_field('DateField', 'datefield')->setDescription('A sample date field').
+            (string)$this->helpers->form->get_date_field('DateField', 'datefield')->setDescription('A sample date field')->setRequired(true).
             (string)$this->helpers->form->get_hidden_field('HiddenField', 'hiddenfield')->setDescription('A sample hidden field').
             (string)$this->helpers->form->get_checkbox('Something worth checking', 'checkbox')->setDescription('A sample checkbox').
             (string)$this->helpers->form->get_password_field('Password', 'password')->setDescription('A sample password field').
@@ -97,7 +97,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
     
     public function testFormCreate()
     {
-        $element = $this->helpers->form->create('TextField', 'Test', 'test')->description('A test form');
+        $element = $this->helpers->form->create('TextField', 'Test', 'test')->setDescription('A test form');
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/text_field.html'),   
             $element
@@ -106,7 +106,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
     
     public function testFormAdd()
     {
-        $this->helpers->form->id('login-form');
+        $this->helpers->form->setId('login-form');
         $this->helpers->form->add('TextField', 'Username', 'username');
         $this->helpers->form->add('PasswordField', 'Password', 'password');
         $this->assertXmlStringEqualsXmlString(
@@ -117,7 +117,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
     
     public function testFormAdd2()
     {
-        $this->helpers->form->id('login-form');
+        $this->helpers->form->setId('login-form');
         $this->helpers->form->add_text_field('Username', 'username');
         $this->helpers->form->add_password_field('Password', 'password');
         $this->assertXmlStringEqualsXmlString(
@@ -143,7 +143,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
     {
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/form_attributes.html'),    
-            (string)$this->helpers->form->open()->addAttribute('target', '_blank') . (string)$this->helpers->form->close()
+            (string)$this->helpers->form->open()->setAttribute('target', '_blank') . (string)$this->helpers->form->close()
         );
     }
     

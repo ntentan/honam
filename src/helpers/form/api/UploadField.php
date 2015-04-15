@@ -37,6 +37,6 @@ class UploadField extends Field
     {
         Field::__construct($name);
         Element::__construct($label, $description);
-        $this->addAttribute("type","file");
+        $this->setAttribute("type","file");
     }
 }

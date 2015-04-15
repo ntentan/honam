@@ -1,9 +1,10 @@
 <?php 
 $attributes = $element->getAttributes(\ntentan\honam\helpers\form\api\Element::SCOPE_WRAPPER);
+$id = $element->getId();
 if($element->getType() === 'ntentan\honam\helpers\form\api\HiddenField'):?>
     <?= $element->render(); ?>
 <?php else: ?>
-    <div class="form-element-div" <?php if($element->id() != ''): ?>id="<?= $element->id() ?>_wrapper"<?php endif; ?> <?= t("element_attributes.tpl.php", array('attributes' => $attributes)) ?>>
+    <div class="form-element-div" <?php if($id != ''): ?>id="<?= $id ?>_wrapper"<?php endif; ?> <?= t("element_attributes.tpl.php", array('attributes' => $attributes)) ?>>
         <?php
             if(!$element->isContainer() && $element->getRenderLabel())
             {
@@ -12,7 +13,7 @@ if($element->getType() === 'ntentan\honam\helpers\form\api\HiddenField'):?>
         ?>  
         <?= $element->render() ?>
         <?php if($element->getDescription() != ""): ?>
-            <div <?=($element->id()==""?"":"id='".$element->id()."_desc'") ?> class='form-description'> <?= $element->getDescription() ?> </div>
+            <div <?php if($id!=""): ?>id="<?= $id ?>_desc"<?php endif; ?> class='form-description'> <?= $element->getDescription() ?> </div>
         <?php endif; ?>
 
         <?php if($element->hasError()):

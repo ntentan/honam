@@ -94,19 +94,6 @@ class Field extends Element
         return $this;
     }
 
-    public function required($required = null)
-    {
-        if($required === null)
-        {
-            return $this->required;
-        }
-        else
-        {
-            $this->required = $required;
-            return $this;
-        }
-    }
-
     /**
      * Returns the required status of the field.
      *
@@ -136,21 +123,16 @@ class Field extends Element
 
     public function getCSSClasses()
     {
-        $classes=parent::getCSSClasses();
+        $classes = parent::getCSSClasses();
         if($this->error) $classes.="error ";
         if($this->getRequired()) $classes .="required ";
         return trim($classes);
     }
-
-    public function getOptions()
-    {
-        return array();
-    }
     
     public function render()
     {
-        $this->addAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");
-        $this->addAttribute("name", $this->getName());
+        $this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");
+        $this->setAttribute("name", $this->getName());
         return TemplateEngine::render("input_element.tpl.php", array('element' => $this));
     }
 }

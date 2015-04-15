@@ -126,29 +126,25 @@ abstract class Element
 
     protected $renderLabel = true;
 
-    private static $count;
-
     public function __construct($label="", $description="", $id="")
     {
         $this->setLabel($label);
-        $this->description($description);
-        $this->id($id);
-    }
-
-    public function id($id = false)
-    {
-        if($id === false)
-        {
-            return $this->id;
-        }
-        else
-        {
-            $this->id = str_replace(".","_",$id);
-            $this->attribute('id', $this->id);
-            return $this;
-        }
+        $this->setDescription($description);
+        $this->setId($id);
     }
     
+    public function setId($id)
+    {
+        $this->id = str_replace(".","_",$id);
+        $this->setAttribute('id', $this->id);
+        return $this;        
+    }
+    
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
      * Public accessor for setting the name property of the field.
      *
@@ -157,7 +153,7 @@ abstract class Element
      */
     public function setName($name)
     {
-        $this->name($name);
+        $this->name = $name;
         return $this;
     }
 
@@ -172,19 +168,6 @@ abstract class Element
         return $this->name;
     }
 
-    public function name($name = false)
-    {
-        if($name === false)
-        {
-            return $this->name;
-        }
-        else
-        {
-            $this->name = $name;
-            return $this;
-        }
-    }
-
     //! Sets the label which is attached to this element.
     public function setLabel($label)
     {
@@ -196,19 +179,6 @@ abstract class Element
     public function getLabel()
     {
         return $this->label;
-    }
-
-    public function label($label = null)
-    {
-        if($label === null)
-        {
-            return $this->label;
-        }
-        else
-        {
-            $this->label = $label;
-            return $this;
-        }
     }
 
     /**
@@ -236,18 +206,6 @@ abstract class Element
         return $this;
     }
 
-    public function description($description = null)
-    {
-        if($description === false)
-        {
-            return $this->description;
-        }
-        else
-        {
-            $this->description = $description;
-            return $this;
-        }
-    }
     /**
      * Returns all the arrays associated with this document.
      *
@@ -300,40 +258,11 @@ abstract class Element
         return $this;
     }
 
-    public function attribute($key, $value = false, $scope = Element::SCOPE_ELEMENT)
-    {
-        if($value === false)
-        {
-            switch($scope)
-            {
-                case Element::SCOPE_ELEMENT:
-                    return $this->attributes[$key];
-
-                case Element::SCOPE_WRAPPER: 
-                    return $this->wrapperAttributes[$key];
-            }
-        }
-        else
-        {
-            switch($scope)
-            {
-                case Element::SCOPE_ELEMENT:
-                    $this->attributes[$key] = $value;
-                    break;
-
-                case Element::SCOPE_WRAPPER:
-                    $this->wrapperAttributes[$key] = $value;
-                    break;
-            }
-            return $this;
-        }
-    }
-
     //! Adds an attribute to the list of attributes of this element.
     //! This method internally creates a new Attribute object and appends
     //! it to the list of attributes.
     //! \see Attribute
-    public function addAttribute($attribute,$value,$scope = Element::SCOPE_ELEMENT)
+    public function setAttribute($attribute,$value,$scope = Element::SCOPE_ELEMENT)
     {
         // Force the setting of the attribute.
         if($scope == Element::SCOPE_ELEMENT)
@@ -344,13 +273,6 @@ abstract class Element
         {
             $this->wrapperAttributes[$attribute] = $value;
         }
-        return $this;
-    }
-
-    //! Sets the value for a particular attribute.
-    public function setAttribute($attribute,$value)
-    {
-        $this->attributes[$attribute] = $value;
         return $this;
     }
 
@@ -381,29 +303,10 @@ abstract class Element
         $this->error = true;
     }
 
-    public function addErrors($error)
-    {
-        if(is_array($error))
-        {
-            $this->errors = array_merge($this->errors, $error);
-            $this->error = true;
-        }
-        else
-        {
-            $this->error = true;
-            $this->errors[] = $error;
-        }
-    }
-
     public function clearErrors()
     {
         $this->error = false;
         $this->errors = array();
-    }
-    
-    public function getShowField()
-    {
-        return $this->showField;
     }
     
     public function getRenderLabel()

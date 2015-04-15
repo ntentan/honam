@@ -48,7 +48,7 @@ class RadioButton extends CheckableField
     public function __construct($label="", $name="", $value="", $description="")
     {
         parent::__construct($label, $name, $value, $description);
-        $this->addAttribute('type', 'radio');
+        $this->setAttribute('type', 'radio');
     }
 }
 

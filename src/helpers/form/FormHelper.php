@@ -63,18 +63,12 @@ class FormHelper extends Helper
      */
     public function __toString()
     {
-        $this->container->id($this->id);
+        //$this->container->setId($this->id);
         $this->container->setData($this->data);
         $this->container->setErrors($this->errors);
         $return = (string)$this->container;
         $this->container = null;
         return $return;
-    }
-    
-    public function id($id)
-    {
-        $this->getCotainer()->id($id);
-        return $this;
     }
     
     public function stylesheet()
@@ -88,6 +82,11 @@ class FormHelper extends Helper
         $element = __NAMESPACE__ . "\\api\\" . array_shift($args);
         $element = new ReflectionClass($element);
         return $element->newInstanceArgs($args==null?array():$args);
+    }
+    
+    public function setId($id)
+    {
+        $this->getCotainer()->setId($id);
     }
         
     public function add()
@@ -112,17 +111,12 @@ class FormHelper extends Helper
         $this->data = $data;
     }
     
-    public function help($arguments)
-    {
-        
-    }
-    
     public function open($formId = '')
     {
         $this->container = new api\Form();
         if($formId != '')
         {
-            $this->container->id($formId);
+            $this->container->setId($formId);
         }
         $this->container->rendererMode = 'head';
         return $this->container;        

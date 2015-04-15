@@ -45,7 +45,7 @@ class Fieldset extends Container
 
     public function renderHead()
     {
-        $this->addAttribute('class', "fieldset {$this->getCSSClasses()}");
+        $this->setAttribute('class', "fieldset {$this->getCSSClasses()}");
         return \ntentan\honam\template_engines\TemplateEngine::render(
             'fieldset_head.tpl.php', 
             array(

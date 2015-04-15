@@ -47,12 +47,6 @@ abstract class Container extends Element
      */
     protected $elements = array();
 
-    /** 
-     * When set to false the fields are not shown for editing.
-     * @var boolean
-     */
-    protected $showfields = true;
-
     public $rendererMode = 'all';
     
     abstract protected function renderHead();
@@ -60,17 +54,8 @@ abstract class Container extends Element
 
     private function addElement($element)
     {
-        //Check if the element has a parent. If it doesnt then add it
-        //to this container. If it does throw an exception.
-        if($element->parent === null)
-        {
-            $this->elements[] = $element;
-            $element->parent = $this;
-        }
-        else
-        {
-            throw new Exception("Element added already has a parent");
-        }
+        $this->elements[] = $element;
+        $element->parent = $this;
     }
 
     /**
@@ -80,39 +65,9 @@ abstract class Container extends Element
     public function add()
     {
         $arguments = func_get_args();
-
-        if(is_array($arguments[0]))
+        foreach($arguments as $element)
         {
-            foreach($arguments[0] as $elementString)
-            {
-                $this->addElement(
-                    Element::createFromString
-                    (
-                        $elementString[0],
-                        $elementString[1],
-                        $elementString[2],
-                        $elementString[3]
-                    )
-                );
-            }
-        }
-        else if(is_string($arguments[0]))
-        {
-            $this->addElement(
-                Element::createFromString
-                (
-                    $arguments[0],
-                    $arguments[1],
-                    $arguments[2],
-                    $arguments[3])
-                );
-        }
-        else
-        {
-            foreach(func_get_args() as $element)
-            {
-                $this->addElement($element);
-            }
+            $this->addElement($element);
         }
         return $this;
     }
@@ -134,11 +89,6 @@ abstract class Container extends Element
         return $this;
     }
 
-    public function getType()
-    {
-        return __CLASS__;
-    }
-
     public function render()
     {
         switch($this->rendererMode)
@@ -152,7 +102,7 @@ abstract class Container extends Element
                 $this->renderHead().
                 TemplateEngine::render(
                     'elements.tpl.php', 
-                    array('elements' => $this->elements)
+                    array('elements' => $this->getElements())
                 ).
                 $this->renderFoot();
         }
@@ -162,17 +112,6 @@ abstract class Container extends Element
     public function getElements()
     {
         return $this->elements;
-    }
-
-    public function setErrors($errors)
-    {
-        if(is_array($errors))
-        {
-            foreach($errors as $field => $error)
-            {
-                $this->getElementByName($field)->addErrors($error);
-            }
-        }
     }
 
     public function __toString()

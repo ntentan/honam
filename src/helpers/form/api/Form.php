@@ -61,11 +61,10 @@ class Form extends Container
     
     public function renderHead()
     {
-        $this->addAttribute("method", $this->method);
-        $this->addAttribute("id", $this->id());
-        $this->addAttribute("class", "fapi-form");
-        $this->addAttribute('action', $this->action);
-        $this->addAttribute('accept-charset', 'utf-8');
+        $this->setAttribute("method", $this->method);
+        $this->setAttribute("class", "fapi-form");
+        $this->setAttribute('action', $this->action);
+        $this->setAttribute('accept-charset', 'utf-8');
         
         return TemplateEngine::render('form_head.tpl.php', array('element' => $this));
     }

@@ -84,11 +84,11 @@ class CheckableField extends Field
     {
         if($this->getCheckedValue() === $this->getValue())
         {
-            $this->addAttribute('checked', 'checked');
+            $this->setAttribute('checked', 'checked');
         }
         
-        $this->addAttribute("name", $this->getName());
-        $this->addAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");        
+        $this->setAttribute("name", $this->getName());
+        $this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");        
         $this->setValue($this->getCheckedValue());
         return TemplateEngine::render(
             'input_checkable_element.tpl.php', 

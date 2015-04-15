@@ -42,10 +42,10 @@ class TextArea extends Field
 
     public function render()
     {
-        $this->addAttribute('rows', 10);
-        $this->addAttribute('cols', 80);
-        $this->addAttribute('class', "textarea {$this->getCSSClasses()}");
-        $this->addAttribute('name', $this->getName());
+        $this->setAttribute('rows', 10);
+        $this->setAttribute('cols', 80);
+        $this->setAttribute('class', "textarea {$this->getCSSClasses()}");
+        $this->setAttribute('name', $this->getName());
         return \ntentan\honam\template_engines\TemplateEngine::render(
             "textarea_element.tpl.php",
             array(

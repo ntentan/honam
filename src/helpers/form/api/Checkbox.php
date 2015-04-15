@@ -48,7 +48,7 @@ class Checkbox extends CheckableField
     public function __construct($label="", $name="", $value="1", $description="")
     {
         parent::__construct($label, $name, $value, $description);
-        $this->addAttribute('type', 'checkbox');
+        $this->setAttribute('type', 'checkbox');
     }
 }
 

@@ -43,6 +43,6 @@ class TextField extends Field
     {
         Field::__construct($name,$value);
         Element::__construct($label, $description);
-        $this->addAttribute("type","text");
+        $this->setAttribute("type","text");
     }
 }
