@@ -128,11 +128,30 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
     
     public function testFieldSet()
     {
-        echo (string)$this->helpers->form->open() . 
-        (string)$this->helpers->form->open_field_set("Login").
-        (string)$this->helpers->form->get_text_field('Username', 'username') .
-        (string)$this->helpers->form->get_password_field('Password', 'password').
-        (string)$this->helpers->form->close_field_set().
-        (string)$this->helpers->form->close('Login');
-    }      
+        $this->assertXmlStringEqualsXmlString(
+            file_get_contents('tests/files/markup/login_fieldset.html'),        
+            (string)$this->helpers->form->open() . 
+            (string)$this->helpers->form->open_field_set("Login").
+            (string)$this->helpers->form->get_text_field('Username', 'username') .
+            (string)$this->helpers->form->get_password_field('Password', 'password').
+            (string)$this->helpers->form->close_field_set().
+            (string)$this->helpers->form->close('Login')
+        );
+    }   
+    
+    public function testFormAttributes()
+    {
+        $this->assertXmlStringEqualsXmlString(
+            file_get_contents('tests/files/markup/form_attributes.html'),    
+            (string)$this->helpers->form->open()->addAttribute('target', '_blank') . (string)$this->helpers->form->close()
+        );
+    }
+    
+    /**
+     * @expectedException \ntentan\honam\exceptions\HelperException
+     */
+    public function testWrongMethod()
+    {
+        $this->helpers->form->fail();
+    }
 }

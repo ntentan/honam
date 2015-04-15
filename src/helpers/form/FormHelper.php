@@ -117,11 +117,6 @@ class FormHelper extends Helper
         
     }
     
-    public function addAttribute($key, $value)
-    {
-        $this->container->addAttribute($key, $value);
-    }
-    
     public function open($formId = '')
     {
         $this->container = new api\Form();
@@ -189,7 +184,7 @@ class FormHelper extends Helper
         }
         else
         {
-            throw new Exception("Function *$function* not found in form helper.");
+            throw new \ntentan\honam\exceptions\HelperException("Function *$function* not found in form helper.");
         }
         
         return $return;
