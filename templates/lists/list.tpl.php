@@ -1,10 +1,10 @@
 <?php  ?>
 <table class='item-table'>
-    <?php if($has_headers === true): ?>
+    <?php if(count($headers->unescape()) > 0): ?>
     <thead>
         <tr>
             <?php foreach($headers as $header):?>
-            <th><?php echo s($header) ?></th>
+            <th><?= $header ?></th>
             <?php endforeach;?>
         </tr>
     </thead>

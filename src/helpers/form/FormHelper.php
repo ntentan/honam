@@ -32,11 +32,9 @@
 namespace ntentan\honam\helpers\form;
 
 use ntentan\honam\helpers\Helper;
-use ntentan\Ntentan;
 use ntentan\utils\CamelCase;
 use \ReflectionMethod;
 use \ReflectionClass;
-use \Exception;
 
 /**
  * Forms helper for rendering forms.
@@ -44,11 +42,9 @@ use \Exception;
 class FormHelper extends Helper
 {
     private $container;
-    public $id;
     private static $layout = "inline";
     private $data = array();
     private $errors = array();
-    public $echo = false;
     
     public function __construct()
     {
@@ -73,7 +69,7 @@ class FormHelper extends Helper
     
     public function stylesheet()
     {
-        return __DIR__ . '/../../../assets/forms/css/forms.css';
+        return __DIR__ . '/../../../assets/css/forms/forms.css';
     }
     
     public static function create()

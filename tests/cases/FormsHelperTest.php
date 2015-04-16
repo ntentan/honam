@@ -86,6 +86,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
                     true
                 )->setMultiple(true)->initial('one').
             (string)$this->helpers->form->get_text_area('Text', 'textarea').
+            (string)$this->helpers->form->get_upload_field('File', 'upload').
             (string)$this->helpers->form->close()
         );
     }

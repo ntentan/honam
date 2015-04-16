@@ -1,5 +1,5 @@
 <tr><?php
-foreach($row as $index => $column)
+foreach($row->unescape() as $index => $column)
 {
     $cell_template = $cell_templates[$index] == null ?
     $default_cell_template : $cell_templates[$index];

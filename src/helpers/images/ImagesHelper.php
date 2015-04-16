@@ -7,7 +7,7 @@ use ntentan\honam\helpers\Helper;
  * 
  * 
  * @todo Completely rewrite this helper to make it more efficient. Expose the
- * interfaces as they are. 
+ * interfaces as they are. Consider using Image Magick.
  */
 class ImagesHelper extends Helper
 {
@@ -151,11 +151,7 @@ class ImagesHelper extends Helper
     
     public function quality($quality)
     {
+        $this->quality = $quality;
         return $this;
-    }
-
-    public function help($arguments)
-    {
-
     }
 }

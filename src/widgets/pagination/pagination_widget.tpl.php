@@ -1,5 +1,5 @@
 <div class='item-pages-list'>
     <?php foreach ($pages as $page):?>
-    <a <?php echo $page['selected'] ? "class='selected'" : "" ?> href='<?php echo $page["link"] ?>'><?php echo $page["label"] ?></a>
+    <a <?= $page['selected'] ? "class='selected'" : "" ?> href='<?= $page["link"] ?>'><?= $page["label"] ?></a>
     <?php endforeach;?>
 </div>

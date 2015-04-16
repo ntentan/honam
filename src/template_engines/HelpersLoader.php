@@ -93,7 +93,7 @@ class HelpersLoader
         $helper = $this->getHelper($helperName);
         if($helper === false)
         {
-            throw new \Exception("Cannot load helper with [$helperName]");
+            throw new \ntentan\honam\exceptions\HelperException("Cannot load helper with [$helperName]");
         }
         else
         {

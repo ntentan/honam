@@ -42,9 +42,9 @@
     }
 $id = isset($item['id']) ? $item['id'] : 'menu-item' . str_replace("/","-",strtolower($item["url"]));
 ?>
-<li <?php echo $params ?> id="<?= $id ?>" class='menu-item <?php echo $item['selected'] ? "menu-selected " : ""; echo $id; echo $item['fully_matched'] ? ' menu-fully-matched ' : ''?>'>
+<li <?= $params ?> id="<?= $id ?>" class='menu-item <?= $item['selected'] ? "menu-selected " : ""; echo $id; echo $item['fully_matched'] ? ' menu-fully-matched ' : ''?>'>
 <?php if($has_links == true):?>
-<a <?php if($item['url'] !== false): ?>href='<?php echo isset($item["url"]) ? $item["url"] : str_replace(" ", "_", strtolower($item["label"]))?>'<?php endif; ?>><?php echo $item["label"]?></a>
+<a <?php if($item['url'] !== false): ?>href='<?= isset($item["url"]) ? $item["url"] : str_replace(" ", "_", strtolower($item["label"]))?>'<?php endif; ?>><?= $item["label"]?></a>
 <?php endif?>
 </li>
 <?php endforeach;?>
