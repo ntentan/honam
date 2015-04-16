@@ -154,4 +154,10 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
     {
         $this->helpers->form->fail();
     }
+    
+    public function testContainers()
+    {
+        $fieldset = new \ntentan\honam\helpers\form\api\Fieldset();
+        $this->assertEquals(true, $fieldset->isContainer());
+    }
 }
