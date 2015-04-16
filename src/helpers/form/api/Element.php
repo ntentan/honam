@@ -149,7 +149,6 @@ abstract class Element
      * Public accessor for setting the name property of the field.
      *
      * @param  $name The name to assign to the form element.
-     * @deprecated
      */
     public function setName($name)
     {
@@ -161,7 +160,6 @@ abstract class Element
      * Public accessor for getting the name property of the field.
      *
      * @return The name of the form field.
-     * @deprecated
      */
     public function getName()
     {
@@ -185,7 +183,6 @@ abstract class Element
      * Gets the description which is attached to this element. The description
      * is normally displayed under the element when rendering HTML.
      *
-     * @deprecated
      * @return string
      */
     public function getDescription()
@@ -197,7 +194,6 @@ abstract class Element
      * Sets the description which is attached to this element. The description
      * is normally displayed under the element when rendering HTML.
      *
-     * @deprecated
      * @return string
      */
     public function setDescription($description)
