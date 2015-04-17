@@ -49,4 +49,9 @@ class AssetsLoader
     {
         self::$publicBase = $publicBase;
     }    
+    
+    public static function getDestinationDir()
+    {
+        return self::$publicBase;
+    }
 }

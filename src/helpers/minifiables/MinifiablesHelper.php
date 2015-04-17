@@ -2,14 +2,14 @@
 namespace ntentan\honam\helpers\minifiables;
 
 use ntentan\honam\helpers\Helper;
-use ntentan\Ntentan;
-use ntentan\honam\template_engines\TemplateEngine;
+use ntentan\honam\template_engines\AssetsLoader;
 
 abstract class MinifiablesHelper extends Helper
 {
     private $minifiableScripts = array();
     private $otherScripts = array();
     private $context = 'default';
+    private $combine = false;
 
     protected abstract function getExtension();
     protected abstract function getMinifier();
@@ -17,23 +17,30 @@ abstract class MinifiablesHelper extends Helper
     
     public function __toString()
     {
-        $filename = "public/".$this->getExtension()."/bundle_{$this->context}." . $this->getExtension();
-        if(!file_exists($filename) || Ntentan::$debug === true)
+        $minifiedScript = '';
+        $tags = '';
+        $filename = AssetsLoader::getDestinationDir() . "/".$this->getExtension()."/combined_{$this->context}." . $this->getExtension();
+        if(!file_exists($filename) && $this->combine === true)
         {
             foreach($this->minifiableScripts as $script)
             {
                 $minifiedScript .= file_get_contents($script);
             }
             file_put_contents($filename, Minifier::minify($minifiedScript, $this->getMinifier()));
+            $tags = $this->getTag($filename);
         }
-        if(Ntentan::$debug === false)
+        else if($this->combine == false)
         {
-            $tags = $this->getTag(Ntentan::getUrl($filename));
+            foreach($this->minifiableScripts as $script)
+            {
+                $public = AssetsLoader::load($this->getExtension() . "/" . basename($script), $script);
+                $tags .= $this->getTag($public);
+            }
         }
         
         foreach($this->otherScripts as $script)
         {
-            $tags .= $this->getTag(Ntentan::getUrl($script));
+            $tags .= $this->getTag($script);
         }
         return $tags;
     }
@@ -77,4 +84,9 @@ abstract class MinifiablesHelper extends Helper
         return $this;
     }
     
+    public function combine($combine)
+    {
+        $this->combine = $combine;
+        return $this;
+    }    
 }

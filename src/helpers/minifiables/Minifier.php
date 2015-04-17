@@ -1,8 +1,6 @@
 <?php
 namespace ntentan\honam\helpers\minifiables;
 
-use ntentan\Ntentan;
-
 abstract class Minifier
 {
     public abstract function performMinification($script);
@@ -15,7 +13,7 @@ abstract class Minifier
     private static function getMinifier($minifier)
     {
         $minifierName = end(explode('.', $minifier));
-        $class = "ntentan\\views\\helpers\\minifiables\\minifiers\\" . str_replace(".", "\\", $minifier) . '\\' . Ntentan::camelize($minifierName) . "Minifier";
+        $class = __NAMESPACE__ . "\\minifiers\\" . str_replace(".", "\\", $minifier) . '\\' . \ntentan\utils\CamelCase::ucamelize($minifierName) . "Minifier";
         $instance = new $class();
         return $instance;
     }
