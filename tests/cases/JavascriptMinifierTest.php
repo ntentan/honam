@@ -9,22 +9,22 @@ class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
     public function setUp() 
     {
         vfsStream::setup('public');
+        mkdir(vfsStream::url('public/js'));
         parent::setUp();
         AssetsLoader::setSourceDir('tests/files/assets');
         AssetsLoader::setDestinationDir(vfsStream::url('public'));
     }
     
     /**
-     * @expectedException ntentan\honam\exceptions\FilePermissionException
+     * @expectedException ntentan\honam\exceptions\FileNotFoundException
      */
     public function testException()
     {
-        $this->helpers->javascript->add(load_asset('js/fapi.js'));
+        $this->helpers->javascripts->add('js/fap.js')->__toString();
     }
     
     public function testOpen()
     {
-        mkdir(vfsStream::url('public/js'));
         $this->assertEquals(file_get_contents('tests/files/markup/javascript_non_minified.html'), 
             (string)$this->helpers->javascripts
                 ->add('tests/files/assets/js/fapi.js')
@@ -36,7 +36,6 @@ class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
     
     public function testOpenArray()
     {
-        mkdir(vfsStream::url('public/js'));
         $this->assertEquals(file_get_contents('tests/files/markup/javascript_non_minified.html'), 
             (string)$this->helpers->javascripts
                 ->add(
@@ -52,7 +51,6 @@ class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
     
     public function testMinifies()
     {
-        mkdir(vfsStream::url('public/js'));
         $this->assertEquals(
             "<script type='text/javascript' src='vfs://public/js/combined_default.js' charset='utf-8'></script>",
             (string)$this->helpers->javascripts
@@ -65,7 +63,6 @@ class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
     
     public function testMinifiesContext()
     {
-        mkdir(vfsStream::url('public/js'));
         $this->assertEquals(
             "<script type='text/javascript' src='vfs://public/js/combined_admin.js' charset='utf-8'></script>",
             (string)$this->helpers->javascripts
@@ -79,7 +76,6 @@ class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
 
     public function testMinifiesArray()
     {
-        mkdir(vfsStream::url('public/js'));
         $this->assertEquals(
             "<script type='text/javascript' src='vfs://public/js/combined_default.js' charset='utf-8'></script>",
             (string)$this->helpers->javascripts
@@ -95,7 +91,6 @@ class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
     
     public function testOtherScripts()
     {
-        mkdir(vfsStream::url('public/js'));
         $this->assertEquals(file_get_contents('tests/files/markup/javascript_non_minified.html'), 
             (string)$this->helpers->javascripts(
                     array(
@@ -110,7 +105,6 @@ class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
 
     public function testMinifiesHelp()
     {
-        mkdir(vfsStream::url('public/js'));
         $this->assertEquals(
             file_get_contents('tests/files/markup/javascript_non_minified.html'), 
             $this->helpers->javascripts('tests/files/assets/js/fapi.js')->__toString().

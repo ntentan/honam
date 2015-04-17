@@ -25,18 +25,4 @@ class JavascriptsHelper extends MinifiablesHelper
     {
         return "<script type='text/javascript' src='$url' charset='utf-8'></script>";
     }
-
-    public function ntentan()
-    {
-        $urlPrefix = Ntentan::$prefix;
-        return "<script type='text/javascript'>
-            var ntentan = {
-            prefix : '$urlPrefix',
-            url : function(route)
-            {
-                return ('$urlPrefix' == '' ? '' : '/$urlPrefix') + '/' + route;
-            }
-        }
-        </script>";
-    }
 }

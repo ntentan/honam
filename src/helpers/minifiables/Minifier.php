@@ -12,7 +12,8 @@ abstract class Minifier
 
     private static function getMinifier($minifier)
     {
-        $minifierName = end(explode('.', $minifier));
+        $array = explode('.', $minifier);
+        $minifierName = end($array);
         $class = __NAMESPACE__ . "\\minifiers\\" . str_replace(".", "\\", $minifier) . '\\' . \ntentan\utils\CamelCase::ucamelize($minifierName) . "Minifier";
         $instance = new $class();
         return $instance;
