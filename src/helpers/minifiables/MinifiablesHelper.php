@@ -15,6 +15,21 @@ abstract class MinifiablesHelper extends Helper
     protected abstract function getMinifier();
     protected abstract function getTag($url);
     
+    private function makePublic($file)
+    {
+        return $this->getTag(AssetsLoader::load($this->getExtension() . "/" . basename($file), $file));        
+    }
+    
+    private function writeTags($files)
+    {
+        $tags = '';
+        foreach($files as $script)
+        {
+            $tags .= $this->makePublic($script);
+        }
+        return $tags;
+    }
+    
     public function __toString()
     {
         $minifiedScript = '';
@@ -31,17 +46,14 @@ abstract class MinifiablesHelper extends Helper
         }
         else if($this->combine == false)
         {
-            foreach($this->minifiableScripts as $script)
-            {
-                $public = AssetsLoader::load($this->getExtension() . "/" . basename($script), $script);
-                $tags .= $this->getTag($public);
-            }
+            $tags .= $this->writeTags($this->minifiableScripts);
         }
         
-        foreach($this->otherScripts as $script)
-        {
-            $tags .= $this->getTag($script);
-        }
+        $tags .= $this->writeTags($this->otherScripts);
+        
+        $this->minifiableScripts = array();
+        $this->otherScripts = array();
+        
         return $tags;
     }
 
