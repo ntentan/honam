@@ -29,9 +29,8 @@
  * @copyright 2010-2012 James Ainooson
  * @license MIT
  */
-?>
-<?php if(count($items) > 0):?>
-<ul class='menu <?= $alias ?> <?= implode(' ', $css_classes->unescape()) ?>' id="<?= $alias ?>-menu">
+
+if(count($items) > 0):?><ul class='menu <?= implode(' ', $css_classes->unescape()) ?>' <?php if($alias != ''): ?>id="<?= $alias ?>-menu"<?php endif; ?>>
 <?php foreach($items as $item): ?>
     <?php
     $params = '';
@@ -40,7 +39,7 @@
         if($key == 'url' || $key == 'label' || $key == 'selected' || $key == 'id') continue;
         $params .= "$key = '$value' ";
     }
-$id = isset($item['id']) ? $item['id'] : 'menu-item' . str_replace("/","-",strtolower($item["url"]));
+$id = isset($item['id']) ? $item['id'] : 'menu-item-' . str_replace("/","-",strtolower($item["url"]));
 ?>
 <li <?= $params ?> id="<?= $id ?>" class='menu-item <?= $item['selected'] ? "menu-selected " : ""; echo $id; echo $item['fully_matched'] ? ' menu-fully-matched ' : ''?>'>
 <?php if($has_links == true):?>

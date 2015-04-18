@@ -45,7 +45,6 @@ abstract class TemplateEngine
      */
     private static $loadedInstances;
     protected $template;
-    private $widgetsLoader;
     private $helpersLoader;
     private static $path = array();
 
@@ -92,30 +91,13 @@ abstract class TemplateEngine
      * @param type $property
      * @return type
      */
-    public function __get($property)
+    public function getHelpersLoader()
     {
-        $loader = null;
-        
-        switch($property)
+        if($this->helpersLoader == null)
         {
-            case "widgets":
-                if($this->widgetsLoader == null)
-                {
-                    $this->widgetsLoader = new WidgetsLoader();
-                }
-                $loader = $this->widgetsLoader;
-                break;
-
-            case "helpers":
-                if($this->helpersLoader == null)
-                {
-                    $this->helpersLoader = new HelpersLoader();
-                }
-                $loader = $this->helpersLoader;
-                break;
+            $this->helpersLoader = new HelpersLoader();
         }
-        
-        return $loader;
+        return $this->helpersLoader;
     }
 
     public static function render($template, $templateData, $view = null)

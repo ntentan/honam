@@ -31,23 +31,31 @@
  */
 
 
-namespace ntentan\honam\widgets\menu;
+namespace ntentan\honam\helpers\menu;
 
-use ntentan\Ntentan;
-use ntentan\honam\widgets\Widget;
+use ntentan\honam\helpers\Helper;
 
 /**
  * Standard menu widget which ships with the menu widget.
  */
-class MenuWidget extends Widget
+class MenuHelper extends Helper
 {
-    public $hasLinks = true;
-    public $items = array();
-    public $cssClasses = array();
+    private $items = array();
+    private $cssClasses = array();
+    private $currentUrl;
+    private $alias;
+    private $hasLinks = true;
+    
+    public function __construct() {
+        \ntentan\honam\template_engines\TemplateEngine::appendPath(
+            __DIR__ . "/../../../templates/menu"
+        );
+    }    
 
-    public function init($items = null)
+    public function help($items = null)
     {
         $this->items = $items;
+        return $this;
     }
     
     public function addCssClass($class)
@@ -56,15 +64,29 @@ class MenuWidget extends Widget
         return $this;
     }
     
-    public function execute()
+    public function setAlias($alias)
+    {
+        $this->alias = $alias;
+        return $this;
+    }
+    
+    public function setCurrentUrl($currentUrl)
+    {
+        $this->currentUrl = $currentUrl;
+        return $this;
+    }
+    
+    public function setHasLinks($hasLinks)
+    {
+        $this->hasLinks = $hasLinks;
+    }
+    
+    public function __toString()
     {
         $menuItems = array();
         $selected = false;
         $default = false;
         $fullyMatched = false;
-        
-        $route = Ntentan::getUrl(Ntentan::$route);
-        $requestedRoute = Ntentan::getUrl(Ntentan::$requestedRoute);
         
         foreach($this->items as $index => $item)
         {
@@ -72,17 +94,16 @@ class MenuWidget extends Widget
             {
                 $item = array(
                     'label' => $item,
-                    'url' => Ntentan::getUrl(strtolower(str_replace(' ', '_', $item)))
+                    'url' => strtolower(str_replace(' ', '_', $item)),
+                    'default' => null
                 );
             }
             
-            
             $item['selected'] = (
-                $item['url'] == substr($route, 0, strlen($item['url'])) || 
-                $item['url'] == substr($requestedRoute, 0, strlen($item['url']))
+                $item['url'] == substr($this->currentUrl, 0, strlen($item['url']))
             );
             
-            $item['fully_matched'] = $item['url'] == $requestedRoute || $item['url'] == $route;
+            $item['fully_matched'] = $item['url'] == $this->currentUrl;
             
             if($item['selected'] === true) $selected = true;
             if($item['fully_matched'] === true) $fullyMatched = true;
@@ -97,12 +118,14 @@ class MenuWidget extends Widget
             $menuItems[$default]['fully_matched'] = true;
         }
         
-        $this->set('items', $menuItems);
-        $this->set('css_classes', $this->cssClasses);
-    }
-    
-    public function preRender()
-    {
-        $this->set('has_links', $this->hasLinks);
+        return \ntentan\honam\template_engines\TemplateEngine::render(
+            'menu.tpl.php',
+            array(
+                'items' => $menuItems,
+                'css_classes' => $this->cssClasses,
+                'has_links' => $this->hasLinks,
+                'alias' => $this->alias 
+            )
+        );
     }
 }

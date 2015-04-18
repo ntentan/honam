@@ -24,9 +24,8 @@ class Php extends TemplateEngine
             $$key = Variable::initialize($value);
         }
 
-        // Expose helpers and widgets
-        $helpers = $this->helpers;
-        $widgets = $this->widgets;       
+        // Expose helpers
+        $helpers = $this->getHelpersLoader();   
 
         // Start trapping the output buffer and include the PHP template for
         // execution.
