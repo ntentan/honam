@@ -30,30 +30,43 @@
  * @license MIT
  */
 
-namespace ntentan\honam\hepers\pagination;
+namespace ntentan\honam\helpers\pagination;
+
 use ntentan\honam\helpers\Helper;
 use ntentan\honam\template_engines\TemplateEngine;
+use ntentan\utils\Input;
 
 class PaginationHelper extends Helper
 {
-    private $pageNumber;
+    /*private $pageNumber;
     private $numberOfPages;
     private $baseRoute;
     private $numberOfLinks;
+    private $query;*/
+    
+    private $parameters = array(
+        'query' => null,
+        'number_of_links' => 21,
+        'number_of_pages' => null,
+        'base_url' => null,
+        'page_number' => 1
+    );
     private $halfNumberOfLinks;
-    private $query;
-
-    public function help($params = null)
+    
+    public function __construct()
     {
-        $this->pageNumber = is_object($params['page_number']) ? $params['page_number']->unescape() : $params['page_number'];
-        $this->numberOfPages = $params['number_of_pages'];
-        $this->baseRoute = $params['base_route'];
-        $this->numberOfLinks = isset($params['number_of_links']) ? $params['number_of_links'] : 21;
-        $this->halfNumberOfLinks = ceil($params['number_of_links'] / 2);
-        $this->query = $params['query'];
-        if($this->query != '')
+        \ntentan\honam\template_engines\TemplateEngine::appendPath(
+            __DIR__ . "/../../../templates/pagination"
+        );
+    } 
+
+    public function help($params = array())
+    {
+        $this->parameters = array_merge($this->parameters, $params);
+        $this->halfNumberOfLinks = ceil($this->parameters['number_of_links'] / 2);
+        if($this->parameters['query'] != '')
         {
-            $this->pageNumber = $_GET[$this->query] == '' ? 1 : $_GET[$this->query];
+            $this->parameters['page_number'] = Input::get($this->parameters['query']) == '' ? 1 : Input::get($this->parameters['query']);
         }
         return $this;
     }
@@ -61,72 +74,76 @@ class PaginationHelper extends Helper
     
     private function getLink($index)
     {
-        if($this->query == '')
+        if($this->parameters['query'] == '')
         {
-            $link = $this->baseRoute . $index;
+            $link = $this->parameters['base_url'] . $index;
         }
         else
         {
-            $link = $this->baseRouteGo . '?';
-            foreach($_GET as $key => $value)
+            $link = $this->parameters['base_url'] . '?';
+            $get = Input::get();
+            foreach($get as $key => $value)
             {
-                if($key == $this->query) continue;
+                if($key == $this->parameters['query']) continue;
                 $link .= "$key=" . urlencode($value) . '&';
             }
-            $link .= "{$this->query}=$index";
+            $link .= "{$this->parameters['query']}=$index";
         }
         return $link;
     }
 
     public function __toString()
     {
-        if($this->pageNumber > 1)
+        $pagingLinks = array();
+        if($this->parameters['page_number']> 1)
         {
             $pagingLinks[] = array(
-                "link" => $this->getLink($this->pageNumber - 1),
-                "label" => "< Prev"
+                "link" => $this->getLink($this->parameters['page_number']- 1),
+                "label" => "< Prev",
+                "selected" => false
             );
         }
 
-        if($this->numberOfPages <= $this->numberOfLinks || $this->pageNumber < $this->halfNumberOfLinks)
+        if($this->parameters['number_of_pages'] <= $this->parameters['number_of_links'] || $this->parameters['page_number']< $this->halfNumberOfLinks)
         {
-            for($i = 1; $i <= ($this->numberOfPages > $this->numberOfLinks ? $this->numberOfLinks : $this->numberOfPages) ; $i++)
+            for($i = 1; $i <= ($this->parameters['number_of_pages'] > $this->parameters['number_of_links'] ? $this->parameters['number_of_links'] : $this->parameters['number_of_pages']) ; $i++)
             {
                 
                 $pagingLinks[] = array(
                     "link" => $this->getLink($i),
                     "label" => "$i",
-                    "selected" => $this->pageNumber == $i
+                    "selected" => $this->parameters['page_number']== $i
                 );
             }
         }
         else
         {
-            if($this->numberOfPages - $this->pageNumber < $this->halfNumberOfLinks)
+            if($this->parameters['number_of_pages'] - $this->parameters['page_number']< $this->halfNumberOfLinks)
             {
-                $startOffset = $this->pageNumber - (($this->numberOfLinks - 1) - ($this->numberOfPages - $this->pageNumber));
-                $endOffset = $this->pageNumber + ($this->numberOfPages - $this->pageNumber);
+                $startOffset = $this->parameters['page_number']- (($this->parameters['number_of_links'] - 1) - ($this->parameters['number_of_pages'] - $this->parameters['page_number']));
+                $endOffset = $this->parameters['page_number']+ ($this->parameters['number_of_pages'] - $this->parameters['page_number']);
             }
             else
             {
-                $startOffset = $this->pageNumber - ($this->halfNumberOfLinks - 1);
-                $endOffset = $this->pageNumber + ($this->halfNumberOfLinks - 1);
+                $startOffset = $this->parameters['page_number']- ($this->halfNumberOfLinks - 1);
+                $endOffset = $this->parameters['page_number']+ ($this->halfNumberOfLinks - 1);
             }
             for($i = $startOffset ; $i <= $endOffset; $i++)
             {
                 $pagingLinks[] = array(
                     "link" => $this->getLink($i),
                     "label" => "$i",
-                    "selected" => $this->pageNumber == $i
+                    "selected" => $this->parameters['page_number']== $i
                 );
             }
         }
 
-        if($this->pageNumber < $this->numberOfPages)
+        if($this->parameters['page_number']< $this->parameters['number_of_pages'])
         {
             $pagingLinks[] = array(
-                "link" => $this->getLink($this->pageNumber + 1),
-                "label" => "Next >"
+                "link" => $this->getLink($this->parameters['page_number']+ 1),
+                "label" => "Next >",
+                "selected" => false
             );
         }
         

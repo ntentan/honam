@@ -79,13 +79,11 @@ class HelpersLoader
             {
                 $this->pluginMode = true;
                 $this->plugin = $helper;
-                return $this;
+                $helperInstance = $this;
             }
         }
-        else
-        {
-            return $helperInstance;
-        }
+        
+        return $helperInstance;
     }
 
     public function __call($helperName, $arguments)

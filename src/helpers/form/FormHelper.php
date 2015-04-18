@@ -32,7 +32,7 @@
 namespace ntentan\honam\helpers\form;
 
 use ntentan\honam\helpers\Helper;
-use ntentan\utils\CamelCase;
+use ntentan\utils\Text;
 use \ReflectionMethod;
 use \ReflectionClass;
 
@@ -137,21 +137,21 @@ class FormHelper extends Helper
     {
         if(substr($function, 0, 5) == "open_")
         {
-            $container = __NAMESPACE__ . "\\api\\" . CamelCase::ucamelize(substr($function, 5, strlen($function)));
+            $container = __NAMESPACE__ . "\\api\\" . Text::ucamelize(substr($function, 5, strlen($function)));
             $containerClass = new ReflectionClass($container);
             $containerObject = $containerClass->newInstanceArgs($arguments);
             $return = $containerObject->renderHead();
         }
         elseif(substr($function, 0, 6) == "close_")
         {
-            $container = __NAMESPACE__ . "\\api\\" . CamelCase::ucamelize(substr($function, 6, strlen($function)));
+            $container = __NAMESPACE__ . "\\api\\" . Text::ucamelize(substr($function, 6, strlen($function)));
             $containerClass = new ReflectionClass($container);
             $containerObject = $containerClass->newInstanceArgs($arguments);
             $return = $containerObject->renderFoot();
         }
         elseif(substr($function, 0, 4) == "get_")
         {
-            $element = __NAMESPACE__ . "\\api\\" . CamelCase::ucamelize(substr($function, 4, strlen($function)));
+            $element = __NAMESPACE__ . "\\api\\" . Text::ucamelize(substr($function, 4, strlen($function)));
             $elementClass = new ReflectionClass($element);
             $elementObject = $elementClass->newInstanceArgs($arguments);
             $name = $elementObject->getName();
@@ -167,7 +167,7 @@ class FormHelper extends Helper
         }
         elseif(substr($function, 0, 4) == "add_")
         {
-            $element = __NAMESPACE__ . "\\api\\" . CamelCase::ucamelize(substr($function, 4, strlen($function)));
+            $element = __NAMESPACE__ . "\\api\\" . Text::ucamelize(substr($function, 4, strlen($function)));
             $elementClass = new ReflectionClass($element);
             $elementObject = $elementClass->newInstanceArgs($arguments);
             $return = $this->container->add($elementObject);
