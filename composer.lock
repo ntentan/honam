@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ntentan/utils.git",
-                "reference": "d2134223a7acc8264f419836c02f7a45da7f08f0"
+                "reference": "6ffd158f6338d7754cf7cf9252c8623b043220b9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ntentan/utils/zipball/d2134223a7acc8264f419836c02f7a45da7f08f0",
-                "reference": "d2134223a7acc8264f419836c02f7a45da7f08f0",
+                "url": "https://api.github.com/repos/ntentan/utils/zipball/6ffd158f6338d7754cf7cf9252c8623b043220b9",
+                "reference": "6ffd158f6338d7754cf7cf9252c8623b043220b9",
                 "shasum": ""
             },
             "require-dev": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Common utility functions shared accross the ntentan framework.",
-            "time": "2015-04-12 16:00:14"
+            "time": "2015-04-18 15:08:19"
         },
         {
             "name": "tedivm/jshrink",
