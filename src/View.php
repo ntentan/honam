@@ -60,18 +60,6 @@ class View
     private $template;
 
     /**
-     * When used to generate content to be served directly to a browser, this
-     * method could be used to set the http content-type header.
-     * 
-     * @param string $contentType
-     * @param string $encoding
-     */
-    public function setContentType($contentType, $encoding="UTF-8")
-    {
-    	header("Content-type: $contentType;charset=$encoding");
-    }
-
-    /**
      * Renders the output by loading and rendering the template files for the 
      * layout and the page template. 
      * 

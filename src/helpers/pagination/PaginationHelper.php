@@ -30,11 +30,11 @@
  * @license MIT
  */
 
-namespace ntentan\honam\widgets\pagination;
-use ntentan\honam\widgets\Widget;
-use ntentan\Ntentan;
+namespace ntentan\honam\hepers\pagination;
+use ntentan\honam\helpers\Helper;
+use ntentan\honam\template_engines\TemplateEngine;
 
-class PaginationWidget extends Widget
+class PaginationHelper extends Helper
 {
     private $pageNumber;
     private $numberOfPages;
@@ -43,7 +43,7 @@ class PaginationWidget extends Widget
     private $halfNumberOfLinks;
     private $query;
 
-    public function init($params = null)
+    public function help($params = null)
     {
         $this->pageNumber = is_object($params['page_number']) ? $params['page_number']->unescape() : $params['page_number'];
         $this->numberOfPages = $params['number_of_pages'];
@@ -55,6 +55,7 @@ class PaginationWidget extends Widget
         {
             $this->pageNumber = $_GET[$this->query] == '' ? 1 : $_GET[$this->query];
         }
+        return $this;
     }
     
     
@@ -62,11 +63,11 @@ class PaginationWidget extends Widget
     {
         if($this->query == '')
         {
-            $link = Ntentan::getUrl($this->baseRoute . $index);
+            $link = $this->baseRoute . $index;
         }
         else
         {
-            $link = Ntentan::getUrl($this->baseRoute) . '?';
+            $link = $this->baseRouteGo . '?';
             foreach($_GET as $key => $value)
             {
                 if($key == $this->query) continue;
@@ -77,7 +78,7 @@ class PaginationWidget extends Widget
         return $link;
     }
 
-    public function execute()
+    public function __toString()
     {
         if($this->pageNumber > 1)
         {
@@ -129,6 +130,6 @@ class PaginationWidget extends Widget
             );
         }
         
-        $this->set("pages", $pagingLinks);
+        return TemplateEngine::render("links.tpl.php", array('links' => $pagingLinks));
     }
 }
