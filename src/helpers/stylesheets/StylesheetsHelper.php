@@ -17,6 +17,6 @@ class StylesheetsHelper extends MinifiablesHelper
 
     protected function getTag($url)
     {
-        return "<link type='text/css' rel='stylesheet' href='$url'>";
+        return "<link type='text/css' rel='stylesheet' href='$url' />";
     }
 }

@@ -21,16 +21,28 @@ class CssMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
     public function testException()
     {
         $this->helpers->stylesheets->add('js/fapi.css')->__toString();
-    }    
+    }
     
-    /*public function testOpen()
+    public function testOpen()
     {
-        $this->assertEquals(file_get_contents('tests/files/markup/stylesheet_non_minified.html'), 
-            (string)$this->helpers->javascripts
-                ->add('tests/files/assets/js/fapi.js')
-                ->add('tests/files/assets/js/wyf.js')
+        $this->assertEquals(file_get_contents('tests/files/markup/css_non_minified.html'), 
+            (string)$this->helpers->stylesheets
+                ->add('tests/files/assets/css/fapi.css')
+                ->add('tests/files/assets/css/tapi.css')
         );
-        $this->assertFileExists(vfsStream::url('public/js/fapi.js'));
-        $this->assertFileExists(vfsStream::url('public/js/wyf.js'));
-    }*/    
+        $this->assertFileExists(vfsStream::url('public/css/fapi.css'));
+        $this->assertFileExists(vfsStream::url('public/css/tapi.css'));
+    }
+
+    public function testMinifies()
+    {
+        $this->assertEquals(
+            "<link type='text/css' rel='stylesheet' href='vfs://public/css/combined_default.css' />",
+            (string)$this->helpers->stylesheets
+                ->add('tests/files/assets/css/fapi.css')
+                ->add('tests/files/assets/css/tapi.css')
+                ->combine(true)
+        );
+        $this->assertFileExists(vfsStream::url('public/css/combined_default.css'));
+    }    
 }
