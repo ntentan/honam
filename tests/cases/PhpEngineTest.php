@@ -1,7 +1,7 @@
 <?php
-namespace ntentan\honam\tests\cases;
+namespace ntentan\views\tests\cases;
 
-class PhpEngineTest extends \ntentan\honam\tests\lib\HonamBaseTest
+class PhpEngineTest extends \ntentan\views\tests\lib\ViewBaseTest
 {    
     public function testStrip()
     {

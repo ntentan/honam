@@ -29,7 +29,7 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form\api;
+namespace ntentan\views\helpers\form\api;
 
 class HiddenField extends Field
 {

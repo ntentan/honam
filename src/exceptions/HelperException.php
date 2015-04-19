@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\honam\exceptions;
+namespace ntentan\views\exceptions;
 
 class HelperException extends \Exception
 {

@@ -29,9 +29,9 @@
  * @license MIT
  */
 
-namespace ntentan\honam;
+namespace ntentan\views;
 
-use ntentan\honam\template_engines\TemplateEngine;
+use ntentan\views\template_engines\TemplateEngine;
 
 /**
  * The view class represents the main entry point for the honam template library.

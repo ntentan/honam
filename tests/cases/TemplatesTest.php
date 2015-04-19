@@ -1,12 +1,12 @@
 <?php
-namespace ntentan\honam\tests\cases;
+namespace ntentan\views\tests\cases;
 
-use ntentan\honam\template_engines\TemplateEngine;
-use ntentan\honam\template_engines\AssetsLoader;
+use ntentan\views\template_engines\TemplateEngine;
+use ntentan\views\template_engines\AssetsLoader;
 
 use org\bovigo\vfs\vfsStream;
 
-class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
+class TemplatesTest extends \ntentan\views\tests\lib\ViewBaseTest
 {
     public function testTemplateLoading()
     {
@@ -41,7 +41,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
     }
     
     /**
-     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
+     * @expectedException \ntentan\views\exceptions\FileNotFoundException
      */
     public function testLayoutLoadFailure()
     {
@@ -50,7 +50,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
     }
     
     /**
-     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
+     * @expectedException \ntentan\views\exceptions\FileNotFoundException
      */
     public function testTemplateLoadFailure()
     {
@@ -59,7 +59,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
     }
     
     /**
-     * @expectedException \ntentan\honam\exceptions\TemplateEngineNotFoundException
+     * @expectedException \ntentan\views\exceptions\TemplateEngineNotFoundException
      */    
     public function testEngineLoadFailure()
     {
@@ -89,7 +89,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
     }
     
     /**
-     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
+     * @expectedException \ntentan\views\exceptions\FileNotFoundException
      */
     public function testAssetFileException()
     {
@@ -101,7 +101,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\HonamBaseTest
     }    
 
     /**
-     * @expectedException \ntentan\honam\exceptions\FilePermissionException
+     * @expectedException \ntentan\views\exceptions\FilePermissionException
      */
     public function testPublicDirectoryException()
     {

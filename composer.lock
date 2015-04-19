@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "83febcdf799e56be19d92c028f8eb3c2",
+    "hash": "57eee1ddc2318e82d8b20fdaab2a55eb",
     "packages": [
         {
             "name": "natxet/CssMin",
@@ -54,12 +54,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ntentan/utils.git",
-                "reference": "6ffd158f6338d7754cf7cf9252c8623b043220b9"
+                "reference": "cada79a6d0adff5fae591e93a005fe233e77a8c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ntentan/utils/zipball/6ffd158f6338d7754cf7cf9252c8623b043220b9",
-                "reference": "6ffd158f6338d7754cf7cf9252c8623b043220b9",
+                "url": "https://api.github.com/repos/ntentan/utils/zipball/cada79a6d0adff5fae591e93a005fe233e77a8c1",
+                "reference": "cada79a6d0adff5fae591e93a005fe233e77a8c1",
                 "shasum": ""
             },
             "require-dev": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Common utility functions shared accross the ntentan framework.",
-            "time": "2015-04-18 15:08:19"
+            "time": "2015-04-19 09:04:32"
         },
         {
             "name": "tedivm/jshrink",

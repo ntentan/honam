@@ -1,7 +1,7 @@
 <?php
-namespace ntentan\honam\helpers\feed;
+namespace ntentan\views\helpers\feed;
 
-use ntentan\honam\helpers\Helper;
+use ntentan\views\helpers\Helper;
 
 class FeedHelper extends Helper
 {
@@ -48,7 +48,7 @@ class FeedHelper extends Helper
     public function __toString()
     {
         $generatorClassName = ucfirst($this->format) . "Feed";
-        $generatorClass = "\\ntentan\\honam\\helpers\\feed\\generators\\{$this->format}\\$generatorClassName";
+        $generatorClass = "\\ntentan\\views\\helpers\\feed\\generators\\{$this->format}\\$generatorClassName";
         $generator = new $generatorClass();
         $generator->setup($this->properties, $this->items);
         return $generator->generate();

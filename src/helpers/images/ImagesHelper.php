@@ -1,7 +1,7 @@
 <?php
-namespace ntentan\honam\helpers\images;
+namespace ntentan\views\helpers\images;
 
-use ntentan\honam\helpers\Helper;
+use ntentan\views\helpers\Helper;
 
 /**
  * 

@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\honam\template_engines\php;
+namespace ntentan\views\template_engines\php;
 
 class Variable implements \ArrayAccess, \Iterator
 {
@@ -26,7 +26,7 @@ class Variable implements \ArrayAccess, \Iterator
                 return $data;
                 
             default:
-                throw new \ntentan\honam\HonamException("Cannot handle the $type type in templates");
+                throw new \ntentan\views\ViewException("Cannot handle the $type type in templates");
         }
     }
 

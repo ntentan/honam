@@ -1,9 +1,9 @@
 <?php
-namespace ntentan\honam\tests\lib;
+namespace ntentan\views\tests\lib;
 
-use ntentan\honam\template_engines\TemplateEngine;
+use ntentan\views\template_engines\TemplateEngine;
 
-class HonamBaseTest extends \PHPUnit_Framework_TestCase
+class ViewBaseTest extends \PHPUnit_Framework_TestCase
 {
     protected $view;
     
@@ -14,7 +14,7 @@ class HonamBaseTest extends \PHPUnit_Framework_TestCase
     
     public function setUp() 
     {
-        $this->view = new \ntentan\honam\View();
+        $this->view = new \ntentan\views\View();
     }
     
     public static function tearDownAfterClass() 

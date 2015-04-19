@@ -30,9 +30,9 @@
  */
 
 
-namespace ntentan\honam\helpers\date;
+namespace ntentan\views\helpers\date;
 
-use ntentan\honam\helpers\Helper;
+use ntentan\views\helpers\Helper;
 
 /**
  * A view helper for formatting dates.

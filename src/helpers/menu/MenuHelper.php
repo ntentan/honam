@@ -31,9 +31,9 @@
  */
 
 
-namespace ntentan\honam\helpers\menu;
+namespace ntentan\views\helpers\menu;
 
-use ntentan\honam\helpers\Helper;
+use ntentan\views\helpers\Helper;
 use ntentan\utils\Input;
 
 /**
@@ -49,7 +49,7 @@ class MenuHelper extends Helper
     
     public function __construct()
     {
-        \ntentan\honam\template_engines\TemplateEngine::appendPath(
+        \ntentan\views\template_engines\TemplateEngine::appendPath(
             __DIR__ . "/../../../templates/menu"
         );
         $this->setCurrentUrl(Input::server('REQUEST_URI'));
@@ -109,7 +109,7 @@ class MenuHelper extends Helper
             $menuItems[$index] = $item;
         }
         
-        return \ntentan\honam\template_engines\TemplateEngine::render(
+        return \ntentan\views\template_engines\TemplateEngine::render(
             'menu.tpl.php',
             [
                 'items' => $menuItems,

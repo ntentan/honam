@@ -2,7 +2,7 @@
 /*
  * The view class for dealing with views
  * 
- * Honam Templating System
+ * View Templating System
  * Copyright (c) 2008-2015 James Ekow Abaka Ainooson
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
@@ -29,11 +29,11 @@
  * @license MIT
  */
 
-namespace ntentan\honam\template_engines;
+namespace ntentan\views\template_engines;
 
 /**
  * The TemplateEngine class does the work of resolving templates, loading templates,
- * loading template engines and rendering them. Honam takes a reference to a 
+ * loading template engines and rendering them. View takes a reference to a 
  * template and tries to find a specific template file to be used for the rendering. 
  * 
  */
@@ -69,14 +69,14 @@ abstract class TemplateEngine
         $engine = end($last);
         if(!isset(TemplateEngine::$loadedInstances[$engine]))
         {
-            $engineClass = "ntentan\\honam\\template_engines\\$engine\\" . ucfirst($engine);
+            $engineClass = "ntentan\\views\\template_engines\\$engine\\" . ucfirst($engine);
             if(class_exists($engineClass))
             {
                 $engineInstance = new $engineClass();
             }
             else
             {
-                throw new \ntentan\honam\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass] for $template");
+                throw new \ntentan\views\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass] for $template");
             }
             TemplateEngine::$loadedInstances[$engine] = $engineInstance;
         }
@@ -125,7 +125,7 @@ abstract class TemplateEngine
         if($templateFile == null)
         {
             $pathString = "[" . implode('; ', TemplateEngine::getPath()) . "]";
-            throw new \ntentan\honam\exceptions\FileNotFoundException(
+            throw new \ntentan\views\exceptions\FileNotFoundException(
                 "Could not find a suitable template file for the current request {$template}. Template path $pathString"
             );
         }

@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\honam\template_engines\php;
+namespace ntentan\views\template_engines\php;
 
 /**
  * A class which contains methods for cleaning out contents and making them

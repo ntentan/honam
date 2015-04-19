@@ -30,7 +30,7 @@
  * @license MIT
  */
 
-namespace ntentan\honam\template_engines;
+namespace ntentan\views\template_engines;
 
 /**
  * A class for loading the helpers in views.
@@ -57,7 +57,7 @@ class HelpersLoader
             }
             else if(file_exists(__DIR__ . "/../helpers/$helper"))
             {
-                $helperClass = "\\ntentan\\honam\\helpers\\$helper\\$camelizedHelper";                
+                $helperClass = "\\ntentan\\views\\helpers\\$helper\\$camelizedHelper";                
             }
             else
             {
@@ -91,7 +91,7 @@ class HelpersLoader
         $helper = $this->getHelper($helperName);
         if($helper === false)
         {
-            throw new \ntentan\honam\exceptions\HelperException("Cannot load helper with [$helperName]");
+            throw new \ntentan\views\exceptions\HelperException("Cannot load helper with [$helperName]");
         }
         else
         {

@@ -30,10 +30,10 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\pagination;
+namespace ntentan\views\helpers\pagination;
 
-use ntentan\honam\helpers\Helper;
-use ntentan\honam\template_engines\TemplateEngine;
+use ntentan\views\helpers\Helper;
+use ntentan\views\template_engines\TemplateEngine;
 use ntentan\utils\Input;
 
 class PaginationHelper extends Helper
@@ -55,7 +55,7 @@ class PaginationHelper extends Helper
     
     public function __construct()
     {
-        \ntentan\honam\template_engines\TemplateEngine::appendPath(
+        \ntentan\views\template_engines\TemplateEngine::appendPath(
             __DIR__ . "/../../../templates/pagination"
         );
     } 

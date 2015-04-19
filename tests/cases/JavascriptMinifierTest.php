@@ -1,10 +1,10 @@
 <?php
-namespace ntentan\honam\tests\cases;
+namespace ntentan\views\tests\cases;
 
-use ntentan\honam\template_engines\AssetsLoader;
+use ntentan\views\template_engines\AssetsLoader;
 use org\bovigo\vfs\vfsStream;
 
-class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
+class JavascriptMinifierTest extends \ntentan\views\tests\lib\HelperBaseTest
 {
     public function setUp() 
     {
@@ -16,7 +16,7 @@ class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
     }
     
     /**
-     * @expectedException ntentan\honam\exceptions\FileNotFoundException
+     * @expectedException ntentan\views\exceptions\FileNotFoundException
      */
     public function testException()
     {

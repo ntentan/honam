@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\honam\helpers\minifiables;
+namespace ntentan\views\helpers\minifiables;
 
 abstract class Minifier
 {

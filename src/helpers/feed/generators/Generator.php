@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\honam\helpers\feed\generators;
+namespace ntentan\views\helpers\feed\generators;
 
 abstract class Generator
 {

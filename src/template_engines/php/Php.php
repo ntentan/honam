@@ -1,7 +1,7 @@
 <?php
-namespace ntentan\honam\template_engines\php;
+namespace ntentan\views\template_engines\php;
 
-use ntentan\honam\template_engines\TemplateEngine;
+use ntentan\views\template_engines\TemplateEngine;
 
 require_once 'functions.php';
 

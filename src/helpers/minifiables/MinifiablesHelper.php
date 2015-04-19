@@ -1,8 +1,8 @@
 <?php
-namespace ntentan\honam\helpers\minifiables;
+namespace ntentan\views\helpers\minifiables;
 
-use ntentan\honam\helpers\Helper;
-use ntentan\honam\template_engines\AssetsLoader;
+use ntentan\views\helpers\Helper;
+use ntentan\views\template_engines\AssetsLoader;
 
 abstract class MinifiablesHelper extends Helper
 {

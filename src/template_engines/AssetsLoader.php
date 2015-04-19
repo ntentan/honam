@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\honam\template_engines;
+namespace ntentan\views\template_engines;
 
 class AssetsLoader
 {
@@ -32,11 +32,11 @@ class AssetsLoader
     {
         if(!file_exists($assetPath))
         {
-            throw new \ntentan\honam\exceptions\FileNotFoundException("File not found [$assetPath]");
+            throw new \ntentan\views\exceptions\FileNotFoundException("File not found [$assetPath]");
         }
         else if(!is_writable($publicPath))
         {
-            throw new \ntentan\honam\exceptions\FilePermissionException("Destination [$publicPath] is not writable");
+            throw new \ntentan\views\exceptions\FilePermissionException("Destination [$publicPath] is not writable");
         }        
     }    
     

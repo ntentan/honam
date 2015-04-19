@@ -1,7 +1,7 @@
 <?php
-namespace ntentan\honam\tests\cases;
+namespace ntentan\views\tests\cases;
 
-class ListingHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
+class ListingHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
 {
     public function testList()
     {
