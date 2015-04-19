@@ -52,7 +52,7 @@ class MenuHelper extends Helper
         \ntentan\honam\template_engines\TemplateEngine::appendPath(
             __DIR__ . "/../../../templates/menu"
         );
-        $this->currentUrl = Input::server('REQUEST_URI');
+        $this->setCurrentUrl(Input::server('REQUEST_URI'));
     }    
 
     public function help($items = null)
@@ -82,6 +82,7 @@ class MenuHelper extends Helper
     public function setHasLinks($hasLinks)
     {
         $this->hasLinks = $hasLinks;
+        return $this;
     }
     
     public function __toString()
@@ -113,12 +114,6 @@ class MenuHelper extends Helper
             if($item['default'] === true) $default = $index;
             
             $menuItems[$index] = $item;
-        }
-        
-        if(!$selected && $default !== false && !$fullyMatched !== false)
-        {
-            $menuItems[$default]['selected'] = true;
-            $menuItems[$default]['fully_matched'] = true;
         }
         
         return \ntentan\honam\template_engines\TemplateEngine::render(

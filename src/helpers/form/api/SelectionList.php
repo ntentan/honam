@@ -136,8 +136,6 @@ class SelectionList extends Field
      * a structured array.
      *
      * @param array $options An array of options
-     * @param boolean $merge If set to true the options in the array are merged
-     *                       with existing options
      * 
      * @return SelectionList
      */

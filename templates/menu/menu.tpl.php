@@ -30,9 +30,9 @@
  * @license MIT
  */
 
-if(count($items) > 0):?><ul class='menu <?= implode(' ', $css_classes->unescape()) ?>' <?php if($alias != ''): ?>id="<?= $alias ?>-menu"<?php endif; ?>>
-<?php foreach($items as $item): ?>
-    <?php
+if(count($items) > 0):?><ul class='menu <?= implode(' ', $css_classes->unescape()) ?>' <?php if($alias != ''): ?>id="<?= $alias ?>-menu"<?php endif; ?>><?php 
+
+foreach($items as $item):
     $params = '';
     foreach($item as $key => $value)
     {
@@ -40,12 +40,6 @@ if(count($items) > 0):?><ul class='menu <?= implode(' ', $css_classes->unescape(
         $params .= "$key = '$value' ";
     }
 $id = isset($item['id']) ? $item['id'] : 'menu-item-' . str_replace("/","-",strtolower($item["url"]));
-?>
-<li <?= $params ?> id="<?= $id ?>" class='menu-item <?= $item['selected'] ? "menu-selected " : ""; echo $id; echo $item['fully_matched'] ? ' menu-fully-matched ' : ''?>'>
-<?php if($has_links == true):?>
-<a <?php if($item['url'] !== false): ?>href='<?= isset($item["url"]) ? $item["url"] : str_replace(" ", "_", strtolower($item["label"]))?>'<?php endif; ?>><?= $item["label"]?></a>
-<?php endif?>
-</li>
-<?php endforeach;?>
-</ul>
-<?php endif ?>
+?><li <?= $params ?> id="<?= $id ?>" class='menu-item <?= $item['selected'] ? "menu-selected " : ""; echo $id; echo $item['fully_matched'] ? ' menu-fully-matched ' : ''?>'><?php 
+if($has_links == true):?><a <?php if($item['url'] !== false): ?>href='<?= isset($item["url"]) ? $item["url"] : str_replace(" ", "_", strtolower($item["label"]))?>'<?php endif; ?>><?= $item["label"]?></a><?php 
+else: echo $item['label']; endif;?></li><?php endforeach;?></ul><?php endif ?>
