@@ -88,9 +88,6 @@ class MenuHelper extends Helper
     public function __toString()
     {
         $menuItems = array();
-        $selected = false;
-        $default = false;
-        $fullyMatched = false;
         
         foreach($this->items as $index => $item)
         {
@@ -108,10 +105,6 @@ class MenuHelper extends Helper
             );
             
             $item['fully_matched'] = $item['url'] == $this->currentUrl;
-            
-            if($item['selected'] === true) $selected = true;
-            if($item['fully_matched'] === true) $fullyMatched = true;
-            if($item['default'] === true) $default = $index;
             
             $menuItems[$index] = $item;
         }
