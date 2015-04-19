@@ -34,6 +34,7 @@
 namespace ntentan\honam\helpers\menu;
 
 use ntentan\honam\helpers\Helper;
+use ntentan\utils\Input;
 
 /**
  * Standard menu widget which ships with the menu widget.
@@ -46,10 +47,12 @@ class MenuHelper extends Helper
     private $alias;
     private $hasLinks = true;
     
-    public function __construct() {
+    public function __construct()
+    {
         \ntentan\honam\template_engines\TemplateEngine::appendPath(
             __DIR__ . "/../../../templates/menu"
         );
+        $this->currentUrl = Input::server('REQUEST_URI');
     }    
 
     public function help($items = null)
@@ -120,12 +123,12 @@ class MenuHelper extends Helper
         
         return \ntentan\honam\template_engines\TemplateEngine::render(
             'menu.tpl.php',
-            array(
+            [
                 'items' => $menuItems,
                 'css_classes' => $this->cssClasses,
                 'has_links' => $this->hasLinks,
                 'alias' => $this->alias 
-            )
+            ]
         );
     }
 }
