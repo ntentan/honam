@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<rss version="2.0">
+    <channel>
+        <title>Test RSS Feed</title>
+        <link>http://someurl.net</link>
+        <lastBuildDate>Mon, 01 Dec 2014 14:23:36 +0000</lastBuildDate>
+        <description>The blog of honam tests</description>
+        <item>
+            <title>Some Item</title>
+            <description>This is a brief story for you to understand why we did this</description>
+            <author>author@honam.ntentan</author>
+            <category>Sports</category>
+            <pubDate>Mon, 01 Dec 2014 13:45:23 +0000</pubDate>
+            <guid isPermaLink="false">74d639118001ad832bc90a6a71cfbe63</guid>
+        </item>
+        <item>
+            <title>Some HTML Item</title>
+            <description>&lt;b&gt;Has HTML&lt;/b&gt;&lt;p&gt;This is a brief story for you to understand why we did this&lt;/p&gt;</description>
+            <author>author@honam.ntentan</author>
+            <category>Sports</category>
+            <pubDate>Tue, 02 Dec 2014 13:45:23 +0000</pubDate>
+            <guid isPermaLink="false">c2005e92a5fc437d1f1498105f03b9db</guid>
+        </item>
+    </channel>
+</rss>

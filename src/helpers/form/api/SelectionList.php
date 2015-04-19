@@ -141,25 +141,9 @@ class SelectionList extends Field
      * 
      * @return SelectionList
      */
-    public function setOptions($options, $merge = true)
+    public function setOptions($options = [])
     {
-        if($merge) 
-        {
-            foreach($options as $value => $label)
-            {
-                $this->addOption($label, $value);
-            }
-        }
-        else
-        {
-            $this->options = $options;
-        }
-        return $this;
-    }
-
-    public function options($options, $merge = true)
-    {
-        $this->setOptions($options, $merge);
+        $this->options = array_merge($this->options, $options);
         return $this;
     }
 

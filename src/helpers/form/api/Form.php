@@ -32,6 +32,7 @@
 namespace ntentan\honam\helpers\form\api;
 
 use ntentan\honam\template_engines\TemplateEngine;
+use ntentan\utils\Input;
 
 /**
  * The form class. This class represents the overall form class. This
@@ -47,13 +48,10 @@ class Form extends Container
     public function __construct()
     {
         parent::__construct();
-        if(isset($_SERVER['REQUEST_URI']))
-        {
-            $this->action = $_SERVER["REQUEST_URI"];
-        }     
+        $this->action = Input::server("REQUEST_URI");
     }
 
-    public function action($action)
+    public function setAction($action)
     {
         $this->action = $action;
         return $this;

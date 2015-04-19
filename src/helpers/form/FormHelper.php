@@ -59,7 +59,6 @@ class FormHelper extends Helper
      */
     public function __toString()
     {
-        //$this->container->setId($this->id);
         $this->container->setData($this->data);
         $this->container->setErrors($this->errors);
         $return = (string)$this->container;

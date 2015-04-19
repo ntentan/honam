@@ -78,7 +78,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
             (string)$this->helpers->form->get_selection_list('Select', 'select')
                 ->option('Selected', 'selected')
                 ->option('Not Selected', 'not_selected')
-                ->options(
+                ->setOptions(
                     array(
                         'one' => 'One',
                         'two' => 'Two',
@@ -115,6 +115,22 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
             $this->helpers->form
         );
     }
+    
+    public function testFormAddSetData()
+    {
+        $this->helpers->form->setId('login-form');
+        $this->helpers->form->setData(array(
+            'username' => 'james',
+            'password' => 'janice'
+            )
+        );
+        $this->helpers->form->add('TextField', 'Username', 'username');
+        $this->helpers->form->add('PasswordField', 'Password', 'password');
+        $this->assertXmlStringEqualsXmlString(
+            file_get_contents('tests/files/markup/login_form_values.html'),
+            $this->helpers->form
+        );
+    }    
     
     public function testFormAdd2()
     {
@@ -161,4 +177,29 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $fieldset = new \ntentan\honam\helpers\form\api\Fieldset();
         $this->assertEquals(true, $fieldset->isContainer());
     }
+    
+    public function testElements()
+    {
+        $form = new \ntentan\honam\helpers\form\api\Form();
+        $this->assertEquals("ntentan\\honam\\helpers\\form\\api\\Element", $form->getType());
+    }
+    
+    public function testStyling()
+    {
+        $form = $this->helpers->form->open() .
+            $this->helpers->form->get_text_field('Some Text', 'some_text')
+                ->setAttribute('style', 'border:1px solid green')
+                ->setAttribute('style', 'background-color:pink', '_wrapper')
+                ->addCSSClass('someclass').
+            $this->helpers->form->close();
+        $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/markup/form_styling.html'), $form);
+    }
+    
+    public function testActionAttribute()
+    {
+        $form = $this->helpers->form->open()->setAction("/some/form/processor") .
+            $this->helpers->form->get_text_field('Some Text', 'some_text').
+            $this->helpers->form->close();
+        $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/markup/form_action.html'), $form);
+    }    
 }

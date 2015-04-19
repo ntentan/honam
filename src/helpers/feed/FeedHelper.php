@@ -15,31 +15,31 @@ class FeedHelper extends Helper
         return $this;
     }
 
-    public function items($items)
+    public function setItems($items)
     {
         $this->items = $items;
         return $this;
     }
     
-    public function title($title)
+    public function setTitle($title)
     {
         $this->properties['title'] = $title;
         return $this;
     }
     
-    public function url($url)
+    public function setUrl($url)
     {
         $this->properties['url'] = $url;
         return $this;
     }
     
-    public function updated($updated)
+    public function setUpdated($updated)
     {
         $this->properties['updated'] = $updated;
         return $this;
     }
     
-    public function description($desccription)
+    public function setDescription($desccription)
     {
         $this->properties['description'] = $desccription;
         return $this;

@@ -239,12 +239,7 @@ abstract class Element
     //! element.
     public function getCSSClasses()
     {
-        $ret = "";
-        foreach($this->classes as $class)
-        {
-            $ret .= $class." ";
-        }
-        return $ret;
+        return implode(" ", $this->classes);
     }
 
     //! Adds a css class to this element.
@@ -297,12 +292,6 @@ abstract class Element
     {
         $this->errors = $errors;
         $this->error = true;
-    }
-
-    public function clearErrors()
-    {
-        $this->error = false;
-        $this->errors = array();
     }
     
     public function getRenderLabel()
