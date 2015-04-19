@@ -34,8 +34,20 @@ namespace ntentan\honam\helpers;
 
 class Helper
 {
+    private static $baseUrl;
+    
     public function help($arguments)
     {
-        
+        return $this;
+    }
+    
+    public static function setBaseUrl($url)
+    {
+        self::$baseUrl = $url;
+    }
+    
+    protected function makeFullUrl($url)
+    {
+        return self::$baseUrl . $url;
     }
 }

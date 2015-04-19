@@ -16,10 +16,16 @@ class ListingHelper extends Helper
           "variables"             =>  null
        );
     
-    public function __construct() {
+    public function __construct() 
+    {
         \ntentan\honam\template_engines\TemplateEngine::appendPath(
             __DIR__ . "/../../../templates/lists"
         );
+    }
+    
+    public function stylesheet()
+    {
+        return __DIR__ . '/../../../assets/css/lists/lists.css';
     }
     
     /**
