@@ -1,9 +1,7 @@
 <?php
-/**
- * Source file for the view helpers loader class
- * 
+/*
  * Ntentan Framework
- * Copyright (c) 2010-2012 James Ekow Abaka Ainooson
+ * Copyright (c) 2010-2015 James Ekow Abaka Ainooson
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -23,11 +21,6 @@
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
- * 
- * @category Template Engines
- * @author James Ainooson <jainooson@gmail.com>
- * @copyright 2010-2012 James Ainooson
- * @license MIT
  */
 
 namespace ntentan\views\template_engines;
@@ -42,9 +35,10 @@ class HelpersLoader
     private $loadedHelpers = array();
     
     /**
+     * Get the instance of a helper given the string name of the helper.
      * 
      * @param string $helper
-     * @return boolean|
+     * @return boolean|\ntentan\views\helpers\Helper
      */
     private function getHelper($helper)
     {

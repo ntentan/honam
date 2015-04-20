@@ -1,7 +1,5 @@
 <?php
-/*
- * The view class for dealing with views
- * 
+/* 
  * View Templating System
  * Copyright (c) 2008-2015 James Ekow Abaka Ainooson
  * 
@@ -23,46 +21,86 @@
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
- * 
- * @author James Ainooson <jainooson@gmail.com>
- * @copyright Copyright 2010-2015 James Ekow Abaka Ainooson
- * @license MIT
  */
 
 namespace ntentan\views\template_engines;
 
 /**
- * The TemplateEngine class does the work of resolving templates, loading templates,
- * loading template engines and rendering them. View takes a reference to a 
+ * The TemplateEngine class does the work of resolving templates, loading template files,
+ * loading template engines and rendering templates. The `ntentan/views` package takes a reference to a 
  * template and tries to find a specific template file to be used for the rendering. 
+ * `ntentan/views` does not expect to find all view templates in a single directory.
+ * It uses a heirachy of directories which it searches for the template to render.
+ * Templates in directories closer to the beginning of the array have a higher
+ * priority over those closer to the end of the array.
  * 
  */
 abstract class TemplateEngine
 {
     /**
-     * 
-     * @var type 
+     * An array of loaded template engine instances.
+     * @var array<\ntentan\views\template_engines\TemplateEngine>
      */
     private static $loadedInstances;
+    
+    /**
+     * The template file reference.
+     * @var string
+     */
     protected $template;
+    
+    /**
+     * An instance of the helpers loader used for loading the helpers.
+     * @var \ntentan\views\template_engines\HelpersLoader
+     */
     private $helpersLoader;
+    
+    /**
+     * The array which holds the template path heirachy.
+     * 
+     * @var array<string>
+     */
     private static $path = array();
 
+    /**
+     * Append a directory to the end of the template path heirachy.
+     * 
+     * @param string $path
+     */
     public static function appendPath($path)
     {
         self::$path[] = $path;
     }
 
+    /**
+     * Prepend a directory to the beginning of the template path heirachy.
+     * 
+     * @param string $path
+     */
     public static function prependPath($path)
     {
         array_unshift(self::$path, $path);
     }
 
+    /**
+     * Return the template hierachy as an array.
+     * 
+     * @return array<string>
+     */
     public static function getPath()
     {
         return self::$path;
     }
 
+    /**
+     * Loads a template engine instance to be used for rendering a given
+     * template file. It determines the engine to be loaded by using the filename.
+     * The extension of the file determines the engine to be loaded.
+     * 
+     * @param string $template The template file
+     * @return \ntentan\views\template_engines\TemplateEngine
+     * @throws \ntentan\views\exceptions\TemplateEngineNotFoundException
+     */
     private static function getEngineInstance($template)
     {
     	$last = explode(".", $template);
@@ -85,11 +123,10 @@ abstract class TemplateEngine
     }
 
     /**
+     * Returns the single instance of the helpers loader that is currently
+     * stored in this class.
      * 
-     * @property widgets
-     * @property helpers
-     * @param type $property
-     * @return type
+     * @return \ntentan\views\template_engines\HelpersLoader
      */
     public function getHelpersLoader()
     {
@@ -100,7 +137,18 @@ abstract class TemplateEngine
         return $this->helpersLoader;
     }
 
-    public static function render($template, $templateData, $view = null)
+    /**
+     * Renders a given template file with associated template data. This render
+     * function combs through the template directory heirachy to find a template
+     * file which matches the given template reference and uses it for the purpose
+     * of rendering the view.
+     * 
+     * @param string $template The template reference file.
+     * @param array $templateData The data to be passed to the template.
+     * @return string
+     * @throws \ntentan\views\exceptions\FileNotFoundException
+     */
+    public static function render($template, $templateData)
     {
         $templateFile = '';
         $path = TemplateEngine::getPath();
@@ -131,14 +179,20 @@ abstract class TemplateEngine
         }
         else
         {
-            return TemplateEngine::getEngineInstance($templateFile)->generate($templateData, $view);
+            return TemplateEngine::getEngineInstance($templateFile)->generate($templateData);
         }
     }
     
+    /**
+     * Resets the path heirachy.
+     */
     public static function reset()
     {
         self::$path = array();
     }
 
+    /**
+     * Passes the data to be rendered to the template engine instance.
+     */
     abstract protected function generate($data);
 }

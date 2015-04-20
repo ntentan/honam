@@ -1,9 +1,7 @@
 <?php
-/**
- * The view class for dealing with views
- * 
+/*
  * Ntentan Framework
- * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
+ * Copyright (c) 2008-2015 James Ekow Abaka Ainooson
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -24,9 +22,6 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  * 
- * @author James Ainooson <jainooson@gmail.com>
- * @copyright Copyright 2010 James Ekow Abaka Ainooson
- * @license MIT
  */
 
 namespace ntentan\views;
@@ -34,7 +29,7 @@ namespace ntentan\views;
 use ntentan\views\template_engines\TemplateEngine;
 
 /**
- * The view class represents the main entry point for the honam template library.
+ * The view class represents the main entry point for the template library.
  * A view contains a layout and a template. The layout is intended to remain
  * constant throughout several pages on your site. As its name suggests, it would
  * be the layout of the pages on your site. The template on the other hand helps 
@@ -42,8 +37,6 @@ use ntentan\views\template_engines\TemplateEngine;
  * are by default wrapped by the layout assigned to the view. Apart from templates,
  * layouts can also contain widgets which are in themselves tiny little embedded 
  * views.
- * 
- * @author ekow
  */
 class View
 {
