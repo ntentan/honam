@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "57eee1ddc2318e82d8b20fdaab2a55eb",
+    "hash": "fb4a7fd6efc2fb90d9bf52953274e5e6",
     "packages": [
         {
             "name": "natxet/CssMin",
@@ -50,16 +50,16 @@
         },
         {
             "name": "ntentan/utils",
-            "version": "dev-master",
+            "version": "v0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ntentan/utils.git",
-                "reference": "cada79a6d0adff5fae591e93a005fe233e77a8c1"
+                "reference": "e7b5fb75a71d4643108cfe68fc247edfd335c1bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ntentan/utils/zipball/cada79a6d0adff5fae591e93a005fe233e77a8c1",
-                "reference": "cada79a6d0adff5fae591e93a005fe233e77a8c1",
+                "url": "https://api.github.com/repos/ntentan/utils/zipball/e7b5fb75a71d4643108cfe68fc247edfd335c1bb",
+                "reference": "e7b5fb75a71d4643108cfe68fc247edfd335c1bb",
                 "shasum": ""
             },
             "require-dev": {
@@ -82,7 +82,7 @@
                 }
             ],
             "description": "Common utility functions shared accross the ntentan framework.",
-            "time": "2015-04-19 09:04:32"
+            "time": "2015-04-20 08:22:24"
         },
         {
             "name": "tedivm/jshrink",
@@ -1138,9 +1138,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "ntentan/utils": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
