@@ -1,7 +1,5 @@
 <?php
-/**
- * Source file for the helper class
- * 
+/*
  * Ntentan Framework
  * Copyright (c) 2010-2012 James Ekow Abaka Ainooson
  * 
@@ -23,29 +21,48 @@
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
- * 
- * @category Helpers
- * @author James Ainooson <jainooson@gmail.com>
- * @copyright 2010-2012 James Ainooson
- * @license MIT
  */
 
 namespace ntentan\views\helpers;
 
+/**
+ * Base class for helpers. Helpers are little utilities that make it possible to
+ * perform repetitively routine tasks in views.
+ */
 class Helper
 {
+    /**
+     * The base url of the app. Used by helpers which need to build full URLS.
+     * This variable is used in the Helper::makeFullUrl method.
+     * @var string
+     */
     private static $baseUrl;
     
+    /**
+     * A sort of constructor or entry point for helpers.
+     * @param mixed $arguments
+     * @return \ntentan\views\helpers\Helper
+     */
     public function help($arguments)
     {
         return $this;
     }
     
+    /**
+     * Set the base url used in the helpers.
+     * @param string $url The new base url
+     */
     public static function setBaseUrl($url)
     {
         self::$baseUrl = $url;
     }
     
+    /**
+     * Generate a full url by concatenating the base url with a path.
+     * 
+     * @param string $url
+     * @return string
+     */
     protected function makeFullUrl($url)
     {
         return self::$baseUrl . $url;

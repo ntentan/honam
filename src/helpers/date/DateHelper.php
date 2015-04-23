@@ -1,9 +1,7 @@
 <?php
 /*
- * Dates helper
- * 
  * Ntentan Framework
- * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
+ * Copyright (c) 2008-2015 James Ekow Abaka Ainooson
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -24,18 +22,14 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  * 
- * @author James Ainooson <jainooson@gmail.com>
- * @copyright Copyright 2010 James Ekow Abaka Ainooson
- * @license MIT
  */
-
 
 namespace ntentan\views\helpers\date;
 
 use ntentan\views\helpers\Helper;
 
 /**
- * A view helper for formatting dates.
+ * A view helper for formatting dates. This helper provides 
  *
  * @author James Ekow Abaka Ainooson
  */
@@ -72,7 +66,7 @@ class DateHelper extends Helper
      */
     public function help($time)
     {
-        $this->timestamp =strtotime($time);
+        $this->timestamp = strtotime($time);
         return $this;
     }
 
@@ -102,18 +96,15 @@ class DateHelper extends Helper
 
     /**
      * Provides a nice sentence to represents the date in age terms eg. Three Years,
-     * Two days or now. The first argument is a structured array of options.
-     * Currently this argument has one option which also has just one possible
-     * value. This option is the <code>elaborate_with</code> option which currently
-     * only takes the english word <code>ago</code> as its parameter. When this
-     * argument is passed, the word 'ag'o is appended to sentences for which it
-     * would make sense. For example the outputs with this argument could be
+     * Two days or now. The first argument is a boolean which qualifies the date
+     * with a relativity word (like ago) which gives the date a sense of passing
+     * time. For example the outputs with this argument could be
      * (two days ago, one month ago, now, yesterday, three minutes ago ...)
      *
-     * @code
+     * ````php
+     * <?php
      * $helpers->date('2015-01-01')->sentence(true);
-     * @endcode
-     * 
+     * ````
      * 
      * @param boolean $ago
      * @param string $referenceDate
