@@ -136,19 +136,16 @@ abstract class TemplateEngine
         }
         return $this->helpersLoader;
     }
-
+    
     /**
-     * Renders a given template file with associated template data. This render
-     * function combs through the template directory heirachy to find a template
-     * file which matches the given template reference and uses it for the purpose
-     * of rendering the view.
+     * Resolve a template file by running through all the directories in the
+     * template heirachy till a file that matches the template is found.
      * 
-     * @param string $template The template reference file.
-     * @param array $templateData The data to be passed to the template.
+     * @param string $template
      * @return string
      * @throws \ntentan\views\exceptions\FileNotFoundException
      */
-    public static function render($template, $templateData)
+    protected static function resolveTemplateFile($template)
     {
         $templateFile = '';
         $path = TemplateEngine::getPath();
@@ -177,10 +174,24 @@ abstract class TemplateEngine
                 "Could not find a suitable template file for the current request {$template}. Template path $pathString"
             );
         }
-        else
-        {
-            return TemplateEngine::getEngineInstance($templateFile)->generate($templateData);
-        }
+        
+        return $templateFile;
+    }    
+
+    /**
+     * Renders a given template file with associated template data. This render
+     * function combs through the template directory heirachy to find a template
+     * file which matches the given template reference and uses it for the purpose
+     * of rendering the view.
+     * 
+     * @param string $template The template reference file.
+     * @param array $templateData The data to be passed to the template.
+     * @return string
+     * @throws \ntentan\views\exceptions\FileNotFoundException
+     */
+    public static function render($template, $templateData)
+    {
+        return TemplateEngine::getEngineInstance(self::resolveTemplateFile($template))->generate($templateData);
     }
     
     /**
