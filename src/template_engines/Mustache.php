@@ -1,6 +1,6 @@
 <?php
 
-namespace ntentan\honam\template_engines\mustache;
+namespace ntentan\honam\template_engines;
 
 use ntentan\honam\TemplateEngine;
 
@@ -18,8 +18,8 @@ class Mustache extends TemplateEngine
         if(!is_object($this->mustache))
         {
             $this->mustache = new \Mustache_Engine([
-                'loader' => new MustacheLoader(),
-                'partials_loader' => new MustachePartialsLoader($this)
+                'loader' => new mustache\MustacheLoader(),
+                'partials_loader' => new mustache\MustachePartialsLoader($this)
             ]);
         }
         return $this->mustache;
