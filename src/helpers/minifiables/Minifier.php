@@ -14,7 +14,7 @@ abstract class Minifier
     {
         $array = explode('.', $minifier);
         $minifierName = end($array);
-        $class = __NAMESPACE__ . "\\minifiers\\" . str_replace(".", "\\", $minifier) . '\\' . \ntentan\utils\Text::ucamelize($minifierName) . "Minifier";
+        $class = __NAMESPACE__ . "\\minifiers\\" . reset($array) . '\\' . \ntentan\utils\Text::ucamelize($minifierName) . "Minifier";
         $instance = new $class();
         return $instance;
     }

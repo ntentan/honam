@@ -148,7 +148,7 @@ class FormsHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_fieldset.html'),        
             (string)$this->helpers->form->open() . 
-            (string)$this->helpers->form->open_field_set("Login").
+            (string)$this->helpers->form->open_fieldset("Login").
             (string)$this->helpers->form->get_text_field('Username', 'username') .
             (string)$this->helpers->form->get_password_field('Password', 'password').
             (string)$this->helpers->form->close_field_set().
@@ -174,13 +174,13 @@ class FormsHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
     
     public function testContainers()
     {
-        $fieldset = new \ntentan\views\helpers\form\api\Fieldset();
+        $fieldset = new \ntentan\views\helpers\form\Fieldset();
         $this->assertEquals(true, $fieldset->isContainer());
     }
     
     public function testElements()
     {
-        $form = new \ntentan\views\helpers\form\api\Form();
+        $form = new \ntentan\views\helpers\form\Form();
         $this->assertEquals("ntentan\\views\\helpers\\form\\api\\Element", $form->getType());
     }
     

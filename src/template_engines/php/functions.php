@@ -1,6 +1,6 @@
 <?php
-use ntentan\views\template_engines\AssetsLoader;
-use ntentan\views\template_engines\TemplateEngine;
+use ntentan\views\AssetsLoader;
+use ntentan\views\TemplateEngine;
 
 function load_asset($asset, $copyFrom = null)
 {

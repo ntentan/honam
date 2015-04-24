@@ -1,7 +1,7 @@
 <?php
 namespace ntentan\views\tests\lib;
 
-use ntentan\views\template_engines\TemplateEngine;
+use ntentan\views\TemplateEngine;
 
 class ViewBaseTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,7 +14,7 @@ class ViewBaseTest extends \PHPUnit_Framework_TestCase
     
     public function setUp() 
     {
-        $this->view = new \ntentan\views\View();
+        //$this->view = new \ntentan\views\View();
     }
     
     public static function tearDownAfterClass() 

@@ -7,6 +7,6 @@ class HelperBaseTest extends \PHPUnit_Framework_TestCase
     
     public function setUp()
     {
-        $this->helpers = new \ntentan\views\template_engines\HelpersLoader();
+        $this->helpers = new \ntentan\views\HelpersLoader();
     }
 }

@@ -1,7 +1,7 @@
 <?php 
-$attributes = $element->getAttributes(\ntentan\views\helpers\form\api\Element::SCOPE_WRAPPER);
+$attributes = $element->getAttributes(\ntentan\views\helpers\form\Element::SCOPE_WRAPPER);
 $id = $element->getId();
-if($element->getType() === 'ntentan\views\helpers\form\api\HiddenField'):?>
+if($element->getType() === 'ntentan\views\helpers\form\HiddenField'):?>
     <?= $element->render(); ?>
 <?php else: ?>
     <div class="form-element-div" <?php if($id != ''): ?>id="<?= $id ?>_wrapper"<?php endif; ?> <?= t("element_attributes.tpl.php", array('attributes' => $attributes)) ?>>

@@ -1,8 +1,8 @@
 <?php
 namespace ntentan\views\tests\cases;
 
-use ntentan\views\template_engines\TemplateEngine;
-use ntentan\views\template_engines\AssetsLoader;
+use ntentan\views\TemplateEngine;
+use ntentan\views\AssetsLoader;
 
 use org\bovigo\vfs\vfsStream;
 
