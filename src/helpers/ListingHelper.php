@@ -25,7 +25,7 @@ class ListingHelper extends Helper
     
     public function stylesheet()
     {
-        return __DIR__ . '/../../../assets/css/lists/lists.css';
+        return __DIR__ . '/../../assets/css/lists/lists.css';
     }
     
     /**

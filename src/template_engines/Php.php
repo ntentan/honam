@@ -50,7 +50,7 @@ class Php extends TemplateEngine
      */
     public function strip($text)
     {
-        return Janitor::cleanHtml($text, true);
+        return php\Janitor::cleanHtml($text, true);
     }
 
     /**

@@ -68,7 +68,7 @@ class FormHelper extends Helper
     
     public function stylesheet()
     {
-        return __DIR__ . '/../../../assets/css/forms/forms.css';
+        return __DIR__ . '/../../assets/css/forms/forms.css';
     }
     
     public static function create()

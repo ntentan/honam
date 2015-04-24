@@ -181,7 +181,7 @@ class FormsHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
     public function testElements()
     {
         $form = new \ntentan\views\helpers\form\Form();
-        $this->assertEquals("ntentan\\views\\helpers\\form\\api\\Element", $form->getType());
+        $this->assertEquals("ntentan\\views\\helpers\\form\\Element", $form->getType());
     }
     
     public function testStyling()
