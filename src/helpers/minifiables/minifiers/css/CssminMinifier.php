@@ -1,6 +1,6 @@
 <?php
-namespace ntentan\views\helpers\minifiables\minifiers\css;
-use ntentan\views\helpers\minifiables\Minifier;
+namespace ntentan\honam\helpers\minifiables\minifiers\css;
+use ntentan\honam\helpers\minifiables\Minifier;
 
 class CssminMinifier extends Minifier
 {

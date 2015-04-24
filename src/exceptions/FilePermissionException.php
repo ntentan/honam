@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\views\exceptions;
+namespace ntentan\honam\exceptions;
 
 class FilePermissionException extends \Exception
 {

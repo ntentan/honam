@@ -1,7 +1,7 @@
 <?php
-namespace ntentan\views\tests\cases;
+namespace ntentan\honam\tests\cases;
 
-class PainationHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
+class PainationHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
 {
     public function testPlainPagination()
     {

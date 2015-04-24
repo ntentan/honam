@@ -29,9 +29,9 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers;
+namespace ntentan\honam\helpers;
 
-use ntentan\views\Helper;
+use ntentan\honam\Helper;
 use ntentan\utils\Text;
 use \ReflectionMethod;
 use \ReflectionClass;
@@ -48,7 +48,7 @@ class FormHelper extends Helper
     
     public function __construct()
     {
-        \ntentan\views\TemplateEngine::appendPath(
+        \ntentan\honam\TemplateEngine::appendPath(
             __DIR__ . "/../../templates/forms"
         );
     }
@@ -173,7 +173,7 @@ class FormHelper extends Helper
         }
         else
         {
-            throw new \ntentan\views\exceptions\HelperException("Function *$function* not found in form helper.");
+            throw new \ntentan\honam\exceptions\HelperException("Function *$function* not found in form helper.");
         }
         
         return $return;

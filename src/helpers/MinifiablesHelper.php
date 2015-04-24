@@ -1,9 +1,9 @@
 <?php
-namespace ntentan\views\helpers;
+namespace ntentan\honam\helpers;
 
-use ntentan\views\Helper;
-use ntentan\views\AssetsLoader;
-use ntentan\views\helpers\minifiables\Minifier;
+use ntentan\honam\Helper;
+use ntentan\honam\AssetsLoader;
+use ntentan\honam\helpers\minifiables\Minifier;
 
 abstract class MinifiablesHelper extends Helper
 {

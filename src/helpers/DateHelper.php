@@ -24,9 +24,9 @@
  * 
  */
 
-namespace ntentan\views\helpers;
+namespace ntentan\honam\helpers;
 
-use ntentan\views\Helper;
+use ntentan\honam\Helper;
 
 /**
  * A view helper for formatting dates. This helper provides 

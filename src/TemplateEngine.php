@@ -23,7 +23,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\views;
+namespace ntentan\honam;
 
 /**
  * The TemplateEngine class does the work of resolving templates, loading template files,
@@ -39,7 +39,7 @@ abstract class TemplateEngine
 {
     /**
      * An array of loaded template engine instances.
-     * @var array<\ntentan\views\TemplateEngine>
+     * @var array<\ntentan\honam\TemplateEngine>
      */
     private static $loadedInstances;
     
@@ -51,7 +51,7 @@ abstract class TemplateEngine
     
     /**
      * An instance of the helpers loader used for loading the helpers.
-     * @var \ntentan\views\template_engines\HelpersLoader
+     * @var \ntentan\honam\template_engines\HelpersLoader
      */
     private $helpersLoader;
     
@@ -98,8 +98,8 @@ abstract class TemplateEngine
      * The extension of the file determines the engine to be loaded.
      * 
      * @param string $template The template file
-     * @return \ntentan\views\TemplateEngine
-     * @throws \ntentan\views\exceptions\TemplateEngineNotFoundException
+     * @return \ntentan\honam\TemplateEngine
+     * @throws \ntentan\honam\exceptions\TemplateEngineNotFoundException
      */
     private static function getEngineInstance($template)
     {
@@ -107,14 +107,14 @@ abstract class TemplateEngine
         $engine = end($last);
         if(!isset(TemplateEngine::$loadedInstances[$engine]))
         {
-            $engineClass = "ntentan\\views\\template_engines\\" . \ntentan\utils\Text::ucamelize($engine);
+            $engineClass = "ntentan\\honam\\template_engines\\" . \ntentan\utils\Text::ucamelize($engine);
             if(class_exists($engineClass))
             {
                 $engineInstance = new $engineClass();
             }
             else
             {
-                throw new \ntentan\views\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass] for $template");
+                throw new \ntentan\honam\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass] for $template");
             }
             TemplateEngine::$loadedInstances[$engine] = $engineInstance;
         }
@@ -126,7 +126,7 @@ abstract class TemplateEngine
      * Returns the single instance of the helpers loader that is currently
      * stored in this class.
      * 
-     * @return \ntentan\views\template_engines\HelpersLoader
+     * @return \ntentan\honam\template_engines\HelpersLoader
      */
     public function getHelpersLoader()
     {
@@ -143,7 +143,7 @@ abstract class TemplateEngine
      * 
      * @param string $template
      * @return string
-     * @throws \ntentan\views\exceptions\FileNotFoundException
+     * @throws \ntentan\honam\exceptions\FileNotFoundException
      */
     protected static function resolveTemplateFile($template)
     {
@@ -170,7 +170,7 @@ abstract class TemplateEngine
         if($templateFile == null)
         {
             $pathString = "[" . implode('; ', TemplateEngine::getPath()) . "]";
-            throw new \ntentan\views\exceptions\FileNotFoundException(
+            throw new \ntentan\honam\exceptions\FileNotFoundException(
                 "Could not find a suitable template file for the current request {$template}. Template path $pathString"
             );
         }
@@ -187,7 +187,7 @@ abstract class TemplateEngine
      * @param string $template The template reference file.
      * @param array $templateData The data to be passed to the template.
      * @return string
-     * @throws \ntentan\views\exceptions\FileNotFoundException
+     * @throws \ntentan\honam\exceptions\FileNotFoundException
      */
     public static function render($template, $templateData)
     {

@@ -1,13 +1,13 @@
 <?php
 
-namespace ntentan\views\tests\cases;
+namespace ntentan\honam\tests\cases;
 
 /**
  * Description of MenuHelperTest
  *
  * @author ekow
  */
-class MenuHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
+class MenuHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
 {
     public function testMenu()
     {

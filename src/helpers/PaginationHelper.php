@@ -30,10 +30,10 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers;
+namespace ntentan\honam\helpers;
 
-use ntentan\views\Helper;
-use ntentan\views\TemplateEngine;
+use ntentan\honam\Helper;
+use ntentan\honam\TemplateEngine;
 use ntentan\utils\Input;
 
 class PaginationHelper extends Helper

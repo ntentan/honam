@@ -1,7 +1,7 @@
 <?php
-namespace ntentan\views\tests\cases;
+namespace ntentan\honam\tests\cases;
 
-class FormsHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
+class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
 {
     public function testBasicForm()
     {
@@ -165,7 +165,7 @@ class FormsHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
     }
     
     /**
-     * @expectedException \ntentan\views\exceptions\HelperException
+     * @expectedException \ntentan\honam\exceptions\HelperException
      */
     public function testWrongMethod()
     {
@@ -174,14 +174,14 @@ class FormsHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
     
     public function testContainers()
     {
-        $fieldset = new \ntentan\views\helpers\form\Fieldset();
+        $fieldset = new \ntentan\honam\helpers\form\Fieldset();
         $this->assertEquals(true, $fieldset->isContainer());
     }
     
     public function testElements()
     {
-        $form = new \ntentan\views\helpers\form\Form();
-        $this->assertEquals("ntentan\\views\\helpers\\form\\Element", $form->getType());
+        $form = new \ntentan\honam\helpers\form\Form();
+        $this->assertEquals("ntentan\\honam\\helpers\\form\\Element", $form->getType());
     }
     
     public function testStyling()

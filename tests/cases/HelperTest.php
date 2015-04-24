@@ -1,11 +1,11 @@
 <?php
 
-namespace ntentan\views\tests\cases;
+namespace ntentan\honam\tests\cases;
 
-class HelperTest extends \ntentan\views\tests\lib\HelperBaseTest
+class HelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
 {
     /**
-     * @expectedException \ntentan\views\exceptions\HelperException
+     * @expectedException \ntentan\honam\exceptions\HelperException
      */    
     public function testUnknownHelper()
     {

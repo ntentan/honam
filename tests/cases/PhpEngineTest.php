@@ -1,9 +1,9 @@
 <?php
-namespace ntentan\views\tests\cases;
+namespace ntentan\honam\tests\cases;
 
-use ntentan\views\TemplateEngine;
+use ntentan\honam\TemplateEngine;
 
-class PhpEngineTest extends \ntentan\views\tests\lib\ViewBaseTest
+class PhpEngineTest extends \ntentan\honam\tests\lib\ViewBaseTest
 {    
     public function testStrip()
     {

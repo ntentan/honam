@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "fb4a7fd6efc2fb90d9bf52953274e5e6",
+    "hash": "31fdfaeaa5eccccc2f0becd7f62fee5f",
     "packages": [
         {
             "name": "natxet/CssMin",

@@ -23,7 +23,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\views;
+namespace ntentan\honam;
 
 /**
  * 
@@ -59,11 +59,11 @@ class AssetsLoader
     {
         if(!file_exists($assetPath))
         {
-            throw new \ntentan\views\exceptions\FileNotFoundException("File not found [$assetPath]");
+            throw new \ntentan\honam\exceptions\FileNotFoundException("File not found [$assetPath]");
         }
         else if(!is_writable($publicPath))
         {
-            throw new \ntentan\views\exceptions\FilePermissionException("Destination [$publicPath] is not writable");
+            throw new \ntentan\honam\exceptions\FilePermissionException("Destination [$publicPath] is not writable");
         }        
     }    
     

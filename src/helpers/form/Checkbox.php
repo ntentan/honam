@@ -29,7 +29,7 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\form;
+namespace ntentan\honam\helpers\form;
 
 /**
  * A regular checkbox with a label.

@@ -1,7 +1,7 @@
 <?php
-namespace ntentan\views\tests\cases;
+namespace ntentan\honam\tests\cases;
 
-class DatesHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
+class DatesHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
 {    
     public function testDateHelpers()
     {

@@ -29,7 +29,7 @@
  * @license MIT
  */
 
-namespace ntentan\views\helpers\form;
+namespace ntentan\honam\helpers\form;
 
 /**
  * Implementation of a regular text field. This field is used to

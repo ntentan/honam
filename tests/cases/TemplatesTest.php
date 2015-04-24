@@ -1,12 +1,12 @@
 <?php
-namespace ntentan\views\tests\cases;
+namespace ntentan\honam\tests\cases;
 
-use ntentan\views\TemplateEngine;
-use ntentan\views\AssetsLoader;
+use ntentan\honam\TemplateEngine;
+use ntentan\honam\AssetsLoader;
 
 use org\bovigo\vfs\vfsStream;
 
-class TemplatesTest extends \ntentan\views\tests\lib\ViewBaseTest
+class TemplatesTest extends \ntentan\honam\tests\lib\ViewBaseTest
 {
     public function testTemplateLoading()
     {
@@ -39,7 +39,7 @@ class TemplatesTest extends \ntentan\views\tests\lib\ViewBaseTest
     }
     
     /**
-     * @expectedException \ntentan\views\exceptions\FileNotFoundException
+     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
      */
     public function testLayoutLoadFailure()
     {
@@ -47,7 +47,7 @@ class TemplatesTest extends \ntentan\views\tests\lib\ViewBaseTest
     }
     
     /**
-     * @expectedException \ntentan\views\exceptions\TemplateEngineNotFoundException
+     * @expectedException \ntentan\honam\exceptions\TemplateEngineNotFoundException
      */    
     public function testEngineLoadFailure()
     {
@@ -55,7 +55,7 @@ class TemplatesTest extends \ntentan\views\tests\lib\ViewBaseTest
     }
     
     /**
-     * @expectedException \ntentan\views\exceptions\FileNotFoundException
+     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
      */
     public function testAssetFileException()
     {
@@ -66,7 +66,7 @@ class TemplatesTest extends \ntentan\views\tests\lib\ViewBaseTest
     }    
 
     /**
-     * @expectedException \ntentan\views\exceptions\FilePermissionException
+     * @expectedException \ntentan\honam\exceptions\FilePermissionException
      */
     public function testPublicDirectoryException()
     {

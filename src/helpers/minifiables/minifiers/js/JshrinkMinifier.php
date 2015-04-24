@@ -1,6 +1,6 @@
 <?php
-namespace ntentan\views\helpers\minifiables\minifiers\js;
-use ntentan\views\helpers\minifiables\Minifier;
+namespace ntentan\honam\helpers\minifiables\minifiers\js;
+use ntentan\honam\helpers\minifiables\Minifier;
 
 class JshrinkMinifier extends Minifier
 {

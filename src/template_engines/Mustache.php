@@ -1,8 +1,8 @@
 <?php
 
-namespace ntentan\views\template_engines\mustache;
+namespace ntentan\honam\template_engines\mustache;
 
-use ntentan\views\TemplateEngine;
+use ntentan\honam\TemplateEngine;
 
 /**
  * Description of Mustache

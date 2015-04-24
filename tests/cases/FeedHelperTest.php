@@ -1,7 +1,7 @@
 <?php
-namespace ntentan\views\tests\cases;
+namespace ntentan\honam\tests\cases;
 
-class FeedHelperTest extends \ntentan\views\tests\lib\HelperBaseTest
+class FeedHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
 {    
     public function testRSSFeed()
     {

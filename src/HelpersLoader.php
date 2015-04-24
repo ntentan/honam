@@ -23,7 +23,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\views;
+namespace ntentan\honam;
 
 /**
  * A class for loading the helpers in views.
@@ -38,7 +38,7 @@ class HelpersLoader
      * Get the instance of a helper given the string name of the helper.
      * 
      * @param string $helper
-     * @return boolean|\ntentan\views\Helper
+     * @return boolean|\ntentan\honam\Helper
      */
     private function getHelper($helper)
     {
@@ -51,7 +51,7 @@ class HelpersLoader
             }
             else if(file_exists(__DIR__ . "/helpers/$camelizedHelper.php"))
             {
-                $helperClass = "\\ntentan\\views\\helpers\\$camelizedHelper";                
+                $helperClass = "\\ntentan\\honam\\helpers\\$camelizedHelper";                
             }
             else
             {
@@ -85,7 +85,7 @@ class HelpersLoader
         $helper = $this->getHelper($helperName);
         if($helper === false)
         {
-            throw new \ntentan\views\exceptions\HelperException("Cannot load helper with [$helperName]");
+            throw new \ntentan\honam\exceptions\HelperException("Cannot load helper with [$helperName]");
         }
         else
         {

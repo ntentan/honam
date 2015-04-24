@@ -23,7 +23,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\views;
+namespace ntentan\honam;
 
 /**
  * Base class for helpers. Helpers are little utilities that make it possible to
@@ -41,7 +41,7 @@ class Helper
     /**
      * A sort of constructor or entry point for helpers.
      * @param mixed $arguments
-     * @return \ntentan\views\Helper
+     * @return \ntentan\honam\Helper
      */
     public function help($arguments)
     {

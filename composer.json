@@ -19,8 +19,8 @@
     },
     "autoload": {
         "psr-4": {
-            "ntentan\\views\\": "src/",
-            "ntentan\\views\\tests\\": "tests/"
+            "ntentan\\honam\\": "src/",
+            "ntentan\\honam\\tests\\": "tests/"
         }
     }
 }

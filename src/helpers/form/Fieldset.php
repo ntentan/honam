@@ -30,7 +30,7 @@
  */
 
 
-namespace ntentan\views\helpers\form;
+namespace ntentan\honam\helpers\form;
 
 class Fieldset extends Container
 {
@@ -46,7 +46,7 @@ class Fieldset extends Container
     public function renderHead()
     {
         $this->setAttribute('class', "fieldset {$this->getCSSClasses()}");
-        return \ntentan\views\TemplateEngine::render(
+        return \ntentan\honam\TemplateEngine::render(
             'fieldset_head.tpl.php', 
             array(
                 'element' => $this
@@ -56,7 +56,7 @@ class Fieldset extends Container
 
     public function renderFoot()
     {
-        return \ntentan\views\TemplateEngine::render(
+        return \ntentan\honam\TemplateEngine::render(
             'fieldset_foot.tpl.php', 
             array(
                 'element' => $this

@@ -1,5 +1,5 @@
 <?php
-namespace ntentan\views\tests\lib;
+namespace ntentan\honam\tests\lib;
 
 class HelperBaseTest extends \PHPUnit_Framework_TestCase
 {
@@ -7,6 +7,6 @@ class HelperBaseTest extends \PHPUnit_Framework_TestCase
     
     public function setUp()
     {
-        $this->helpers = new \ntentan\views\HelpersLoader();
+        $this->helpers = new \ntentan\honam\HelpersLoader();
     }
 }

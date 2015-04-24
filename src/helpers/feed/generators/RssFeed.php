@@ -24,9 +24,9 @@
  * 
  */
 
-namespace ntentan\views\helpers\feed\generators;
+namespace ntentan\honam\helpers\feed\generators;
 
-use ntentan\views\helpers\feed\Generator;
+use ntentan\honam\helpers\feed\Generator;
 
 /**
  * RSS Feed generator for the Feed helper.

@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace ntentan\views\template_engines\mustache;
+namespace ntentan\honam\template_engines\mustache;
 
 /**
  * Description of MustachePartialsLoader
