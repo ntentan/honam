@@ -108,7 +108,7 @@ abstract class TemplateEngine
             }
             else
             {
-                throw new \ntentan\honam\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass] for $template");
+                throw new \ntentan\honam\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass]");
             }
             self::$loadedInstances[$engine] = $engineInstance;
         }
