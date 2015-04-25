@@ -44,7 +44,7 @@ abstract class TemplateEngine
     private static $loadedInstances;
     
     /**
-     * The template file reference.
+     * The path to the template file to be used when generate is called. 
      * @var string
      */
     protected $template;
@@ -91,6 +91,30 @@ abstract class TemplateEngine
     {
         return self::$path;
     }
+    
+    private static function getEngineClass($engine)
+    {
+        return "ntentan\\honam\\template_engines\\" . \ntentan\utils\Text::ucamelize($engine);
+    }
+    
+    private static function getEngineInstance($engine)
+    {
+        if(!isset(self::$loadedInstances[$engine]))
+        {
+            $engineClass = self::getEngineClass($engine);
+            if(class_exists($engineClass))
+            {
+                $engineInstance = new $engineClass();
+            }
+            else
+            {
+                throw new \ntentan\honam\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass] for $template");
+            }
+            self::$loadedInstances[$engine] = $engineInstance;
+        }
+        
+        return self::$loadedInstances[$engine];
+    }
 
     /**
      * Loads a template engine instance to be used for rendering a given
@@ -101,25 +125,17 @@ abstract class TemplateEngine
      * @return \ntentan\honam\TemplateEngine
      * @throws \ntentan\honam\exceptions\TemplateEngineNotFoundException
      */
-    private static function getEngineInstance($template)
+    private static function getEngineInstanceWithTemplate($template)
     {
-    	$last = explode(".", $template);
-        $engine = end($last);
-        if(!isset(TemplateEngine::$loadedInstances[$engine]))
-        {
-            $engineClass = "ntentan\\honam\\template_engines\\" . \ntentan\utils\Text::ucamelize($engine);
-            if(class_exists($engineClass))
-            {
-                $engineInstance = new $engineClass();
-            }
-            else
-            {
-                throw new \ntentan\honam\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass] for $template");
-            }
-            TemplateEngine::$loadedInstances[$engine] = $engineInstance;
-        }
-        TemplateEngine::$loadedInstances[$engine]->template = $template;
-        return TemplateEngine::$loadedInstances[$engine];
+        $engine = pathinfo($template, PATHINFO_EXTENSION);
+        $engineInstance = self::getEngineInstance($engine);
+        $engineInstance->template = $template;
+        return $engineInstance;
+    }
+    
+    public static function canRender($file)
+    {
+        return class_exists(self::getEngineClass(pathinfo($file, PATHINFO_EXTENSION)));
     }
 
     /**
@@ -148,14 +164,21 @@ abstract class TemplateEngine
     protected static function resolveTemplateFile($template)
     {
         $templateFile = '';
-        $path = TemplateEngine::getPath();
-        $extension = explode('.', $template);
-        $breakDown = explode('_', array_shift($extension));
-        $extension = implode(".", $extension);
+        $path = self::getPath();
+        
+        // Split the filename on the dots. The first part before the first dot
+        // would be used to implement the file breakdown. The other parts are
+        // fused together again and appended during the evaluation of the
+        // breakdown.
+        
+        $splitOnDots = explode('.', $template);
+        $breakDown = explode('_', array_shift($splitOnDots));
+        $extension = implode(".", $splitOnDots);
+        
         for($i = 0; $i < count($breakDown); $i++)
         {
             $testTemplate = implode("_", array_slice($breakDown, $i, count($breakDown) - $i)) . ".$extension";
-            foreach(TemplateEngine::getPath() as $path)
+            foreach(self::getPath() as $path)
             {
                 $newTemplateFile = "$path/$testTemplate";
                 if(file_exists($newTemplateFile))
@@ -169,9 +192,9 @@ abstract class TemplateEngine
         
         if($templateFile == null)
         {
-            $pathString = "[" . implode('; ', TemplateEngine::getPath()) . "]";
+            $pathString = "[" . implode('; ', self::getPath()) . "]";
             throw new \ntentan\honam\exceptions\FileNotFoundException(
-                "Could not find a suitable template file for the current request {$template}. Template path $pathString"
+                "Could not find a suitable template file for the current request '{$template}'. Current template path $pathString"
             );
         }
         
@@ -179,7 +202,7 @@ abstract class TemplateEngine
     }    
 
     /**
-     * Renders a given template file with associated template data. This render
+     * Renders a given template reference with associated template data. This render
      * function combs through the template directory heirachy to find a template
      * file which matches the given template reference and uses it for the purpose
      * of rendering the view.
@@ -191,7 +214,26 @@ abstract class TemplateEngine
      */
     public static function render($template, $templateData)
     {
-        return TemplateEngine::getEngineInstance(self::resolveTemplateFile($template))->generate($templateData);
+        return self::getEngineInstanceWithTemplate(self::resolveTemplateFile($template))->generate($templateData);
+    }
+    
+    /**
+     * Renders a given template file with the associated template data. This
+     * render function loads the appropriate engine and passes the file to it
+     * for rendering.
+     * 
+     * @param string $templatePath A path to the template file
+     * @param string $templateData An array of the template data to be rendered
+     * @return string
+     */
+    public static function renderFile($templatePath, $templateData)
+    {
+        return self::getEngineInstanceWithTemplate($templatePath)->generate($templateData);
+    }
+    
+    public static function renderString($templateString, $engine, $templateData)
+    {
+        return self::getEngineInstance($engine)->generateFromString($templateString, $templateData);
     }
     
     /**
@@ -200,6 +242,12 @@ abstract class TemplateEngine
     public static function reset()
     {
         self::$path = array();
+    }
+    
+    public function generateFromString($string, $data)
+    {
+        $this->template = "data://text/plain," . urlencode($string);
+        return $this->generate($data);
     }
 
     /**
