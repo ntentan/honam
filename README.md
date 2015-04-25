@@ -1,11 +1,11 @@
-ntentan/views
+ntentan/honam
 =============
 
-[![Build Status](https://travis-ci.org/ntentan/views.svg)](https://travis-ci.org/ntentan/views)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ntentan/views/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ntentan/views/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/ntentan/views/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ntentan/views/?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/ntentan/views/version.svg)](https://packagist.org/packages/ntentan/views)
-[![Total Downloads](https://poser.pugx.org/ntentan/views/downloads.svg)](https://packagist.org/packages/ntentan/views)
+[![Build Status](https://travis-ci.org/ntentan/honam.svg)](https://travis-ci.org/ntentan/honam)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ntentan/honam/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ntentan/honam/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/ntentan/honam/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ntentan/honam/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/ntentan/honam/version.svg)](https://packagist.org/packages/ntentan/honam)
+[![Total Downloads](https://poser.pugx.org/ntentan/honam/downloads.svg)](https://packagist.org/packages/ntentan/honam)
 
 The views component of the Ntentan Framework. Although intended for use with 
 Ntentan, this package could be used stand-alone. 
