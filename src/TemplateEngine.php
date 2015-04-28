@@ -186,6 +186,7 @@ abstract class TemplateEngine
             }
             else if(count($files) > 1)
             {
+                $templates = implode(", ", $files);
                 throw new TemplateResolutionException("Multiple templates ($templates) resolved for request");
             }
         }        
@@ -245,6 +246,11 @@ abstract class TemplateEngine
      */
     protected static function resolveTemplateFile($template)
     {
+        if($template == '')
+        {
+            throw new TemplateResolutionException("Empty template file requested");
+        }
+        
         $templateFile = self::searchTemplateDirectory($template, pathinfo($template, PATHINFO_EXTENSION) === '');
         
         if($templateFile == null)
