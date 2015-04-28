@@ -25,6 +25,8 @@
 
 namespace ntentan\honam;
 
+use ntentan\honam\exceptions\TemplateResolutionException;
+
 /**
  * The TemplateEngine class does the work of resolving templates, loading template files,
  * loading template engines and rendering templates. The `ntentan/views` package takes a reference to a 
@@ -155,6 +157,84 @@ abstract class TemplateEngine
         return $this->helpersLoader;
     }
     
+    private static function testTemplateFile($testTemplate, $paths, $extension)
+    {
+        $templateFile = '';
+        foreach($paths as $path)
+        {
+            $newTemplateFile = "$path/$testTemplate.$extension";
+            if(file_exists($newTemplateFile))
+            {
+                $templateFile = $newTemplateFile;
+                break;
+            }        
+        }        
+        return $templateFile;
+    }
+    
+    private static function testNoEngineTemplateFile($testTemplate, $paths)
+    {
+        $templateFile = '';
+        foreach($paths as $path)
+        {
+            $newTemplateFile = "$path/$testTemplate.*";
+            $files = glob($newTemplateFile);
+            if(count($files) == 1)
+            {
+                $templateFile = $files[0];
+                break;
+            }
+            else if(count($files) > 1)
+            {
+                throw new TemplateResolutionException("Multiple templates ($templates) resolved for request");
+            }
+        }        
+        return $templateFile;    
+    }
+    
+    private static function searchTemplateDirectory($template, $ignoreEngine = false)
+    {
+        $templateFile = '';
+        $paths = self::getPath();
+        
+        // Split the filename on the dots. The first part before the first dot
+        // would be used to implement the file breakdown. The other parts are
+        // fused together again and appended during the evaluation of the
+        // breakdown.
+        
+        if($ignoreEngine)
+        {
+            $breakDown = explode('_', $template);            
+        }
+        else
+        {
+            $splitOnDots = explode('.', $template);
+            $breakDown = explode('_', array_shift($splitOnDots));
+            $extension = implode(".", $splitOnDots);
+        }
+        
+        for($i = 0; $i < count($breakDown); $i++)
+        {
+            $testTemplate = implode("_", array_slice($breakDown, $i, count($breakDown) - $i));
+            
+            if($ignoreEngine)
+            {
+                $templateFile = self::testNoEngineTemplateFile($testTemplate, $paths);
+            }
+            else
+            {
+                $templateFile = self::testTemplateFile($testTemplate, $paths, $extension);
+            }
+
+            if($templateFile != '') 
+            {
+                break;
+            }
+        }  
+        
+        return $templateFile;
+    }
+    
     /**
      * Resolve a template file by running through all the directories in the
      * template heirachy till a file that matches the template is found.
@@ -165,37 +245,12 @@ abstract class TemplateEngine
      */
     protected static function resolveTemplateFile($template)
     {
-        $templateFile = '';
-        $path = self::getPath();
-        
-        // Split the filename on the dots. The first part before the first dot
-        // would be used to implement the file breakdown. The other parts are
-        // fused together again and appended during the evaluation of the
-        // breakdown.
-        
-        $splitOnDots = explode('.', $template);
-        $breakDown = explode('_', array_shift($splitOnDots));
-        $extension = implode(".", $splitOnDots);
-        
-        for($i = 0; $i < count($breakDown); $i++)
-        {
-            $testTemplate = implode("_", array_slice($breakDown, $i, count($breakDown) - $i)) . ".$extension";
-            foreach(self::getPath() as $path)
-            {
-                $newTemplateFile = "$path/$testTemplate";
-                if(file_exists($newTemplateFile))
-                {
-                    $templateFile = $newTemplateFile;
-                    break;
-                }
-            }
-            if($templateFile != '') break;
-        }
+        $templateFile = self::searchTemplateDirectory($template, pathinfo($template, PATHINFO_EXTENSION) === '');
         
         if($templateFile == null)
         {
             $pathString = "[" . implode('; ', self::getPath()) . "]";
-            throw new \ntentan\honam\exceptions\FileNotFoundException(
+            throw new TemplateResolutionException(
                 "Could not find a suitable template file for the current request '{$template}'. Current template path $pathString"
             );
         }

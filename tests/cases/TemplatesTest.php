@@ -39,7 +39,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\ViewBaseTest
     }
     
     /**
-     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
+     * @expectedException \ntentan\honam\exceptions\TemplateResolutionException
      */
     public function testLayoutLoadFailure()
     {
