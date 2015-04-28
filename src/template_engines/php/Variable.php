@@ -42,6 +42,11 @@ class Variable implements \ArrayAccess, \Iterator
         return Janitor::cleanHtml($this->data);
     }
     
+    public function u()
+    {
+        return $this->unescape();
+    }
+    
     public function unescape()
     {
         return $this->data;

@@ -16,7 +16,7 @@ class Engine extends \Smarty
     
     public function __destruct() 
     {
-        if($this->temp === '.')
+        if($this->temp === '.' && file_exists("./smarty_compiled_templates"))
         {
             $files = scandir("./smarty_compiled_templates");
             foreach($files as $file)
