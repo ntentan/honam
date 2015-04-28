@@ -61,6 +61,8 @@ abstract class TemplateEngine
      * @var array<string>
      */
     private static $path = array();
+    
+    private static $tempDirectory = '.';
 
     /**
      * Append a directory to the end of the template path heirachy.
@@ -248,6 +250,11 @@ abstract class TemplateEngine
     {
         $this->template = "data://text/plain," . urlencode($string);
         return $this->generate($data);
+    }
+    
+    public static function getTempDirectory()
+    {
+        return self::$tempDirectory;
     }
 
     /**

@@ -10,12 +10,7 @@ class ViewBaseTest extends \PHPUnit_Framework_TestCase
     public static function setUpBeforeClass() 
     {
         TemplateEngine::appendPath('tests/files/views');
-    }    
-    
-    public function setUp() 
-    {
-        //$this->view = new \ntentan\honam\View();
-    }
+    }   
     
     public static function tearDownAfterClass() 
     {
