@@ -1,7 +1,7 @@
 <?php
 namespace ntentan\honam\template_engines\php;
 
-class Variable implements \ArrayAccess, \Iterator
+class Variable implements \ArrayAccess, \Iterator, \Countable
 {
     private $keys;
     private $position;
@@ -45,6 +45,11 @@ class Variable implements \ArrayAccess, \Iterator
     public function u()
     {
         return $this->unescape();
+    }
+    
+    public function count()
+    {
+        return count($this->data);
     }
     
     public function unescape()
