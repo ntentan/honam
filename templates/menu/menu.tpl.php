@@ -36,7 +36,7 @@ foreach($items as $item):
     $params = '';
     foreach($item as $key => $value)
     {
-        if($key == 'url' || $key == 'label' || $key == 'selected' || $key == 'id') continue;
+        if($key == 'url' || $key == 'label' || $key == 'selected' || $key == 'id' || $key == 'fully_matched') continue;
         $params .= "$key = '$value' ";
     }
 $id = isset($item['id']) ? $item['id'] : 'menu-item-' . str_replace("/","-",strtolower($item["url"]));
