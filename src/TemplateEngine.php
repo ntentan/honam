@@ -305,6 +305,7 @@ abstract class TemplateEngine
     public static function reset()
     {
         self::$path = array();
+        self::$loadedInstances = array();
     }
     
     public function generateFromString($string, $data)
