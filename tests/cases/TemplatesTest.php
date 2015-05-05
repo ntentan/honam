@@ -60,7 +60,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\ViewBaseTest
     public function testAssetFileException()
     {
         vfsStream::setup('public');
-        AssetsLoader::setSourceDir('tests/files/assets');
+        AssetsLoader::appendSourceDir('tests/files/assets');
         AssetsLoader::setDestinationDir(vfsStream::url('public'));   
         TemplateEngine::render('missing_asset.tpl.php', array());
     }    
@@ -71,7 +71,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\ViewBaseTest
     public function testPublicDirectoryException()
     {
         vfsStream::setup('public', 0444);
-        AssetsLoader::setSourceDir('tests/files/assets');
+        AssetsLoader::appendSourceDir('tests/files/assets');
         AssetsLoader::setDestinationDir(vfsStream::url('public'));   
         TemplateEngine::render('assets.tpl.php', array());
     }        
@@ -79,7 +79,7 @@ class TemplatesTest extends \ntentan\honam\tests\lib\ViewBaseTest
     public function testAssetLoading()
     {
         vfsStream::setup('public');
-        AssetsLoader::setSourceDir('tests/files/assets');
+        AssetsLoader::appendSourceDir('tests/files/assets');
         AssetsLoader::setDestinationDir(vfsStream::url('public'));
         touch(vfsStream::url('public/existing.css'));
         

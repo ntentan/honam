@@ -11,7 +11,7 @@ class CssMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
         vfsStream::setup('public');
         mkdir(vfsStream::url('public/css'));
         parent::setUp();
-        AssetsLoader::setSourceDir('tests/files/assets');
+        AssetsLoader::appendSourceDir('tests/files/assets');
         AssetsLoader::setDestinationDir(vfsStream::url('public'));
     }
     

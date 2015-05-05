@@ -11,7 +11,7 @@ class JavascriptMinifierTest extends \ntentan\honam\tests\lib\HelperBaseTest
         vfsStream::setup('public');
         mkdir(vfsStream::url('public/js'));
         parent::setUp();
-        AssetsLoader::setSourceDir('tests/files/assets');
+        AssetsLoader::appendSourceDir('tests/files/assets');
         AssetsLoader::setDestinationDir(vfsStream::url('public'));
     }
     

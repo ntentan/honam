@@ -30,13 +30,32 @@ namespace ntentan\honam;
  */
 class AssetsLoader
 {
-    private static $assetsBase = 'assets';
-    private static $publicBase = 'public';
+    private static $assetsPathHeirachy = [];
+    private static $publicPath = 'public';
+    
+    private static function getAssetPath($asset)
+    {
+        foreach(self::$assetsPathHeirachy as $assetPath)
+        {
+            if(file_exists("$assetPath/$asset"))
+            {
+                return "$assetPath/$asset";
+            }
+        }
+    }
     
     public static function load($asset, $copyFrom = null)
     {
-        $assetPath = ($copyFrom==null ? self::$assetsBase . "/$asset" : $copyFrom);
-        $publicPath = self::$publicBase . "/$asset";
+        if($copyFrom === null)
+        {
+            $assetPath = self::getAssetPath($asset);
+        }
+        else
+        {
+            $assetPath = $copyFrom;
+        }
+        
+        $publicPath = self::$publicPath . "/$asset";
         $publicDirectory = dirname($publicPath);
         
         if(file_exists($publicPath)) 
@@ -67,18 +86,23 @@ class AssetsLoader
         }        
     }    
     
-    public static function setSourceDir($assetsBase)
+    public static function appendSourceDir($assetsDir)
     {
-        self::$assetsBase = $assetsBase;
+        self::$assetsPathHeirachy[] = $assetsDir;
+    }
+    
+    public static function prependSourceDir($assetsDir)
+    {
+        array_unshift(self::$assetsPathHeirachy, $assetsDir);
     }
     
     public static function setDestinationDir($publicBase)
     {
-        self::$publicBase = $publicBase;
+        self::$publicPath = $publicBase;
     }    
     
     public static function getDestinationDir()
     {
-        return self::$publicBase;
+        return self::$publicPath;
     }
 }
