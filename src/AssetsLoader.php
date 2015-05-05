@@ -105,4 +105,9 @@ class AssetsLoader
     {
         return self::$publicPath;
     }
+    
+    public static function reset()
+    {
+        self::$assetsPathHeirachy = [];
+    }
 }
