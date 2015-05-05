@@ -47,7 +47,7 @@ class AssetsLoader
         
         if($path == '')
         {
-            throw new exceptions\HelperException("Asset file $asset not found");
+            throw new exceptions\FileNotFoundException("Asset file $asset not found");
         }
         
         return $path;

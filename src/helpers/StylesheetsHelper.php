@@ -12,7 +12,7 @@ class StylesheetsHelper extends MinifiablesHelper
 
     protected function getMinifier()
     {
-        return "css.cssmin";
+        return "css.css_minify";
     }
 
     protected function getTag($url)

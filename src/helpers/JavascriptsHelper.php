@@ -17,7 +17,7 @@ class JavascriptsHelper extends MinifiablesHelper
 
     protected function getMinifier()
     {
-        return "js.jshrink";
+        return "js.js_minify";
     }
 
     protected function getTag($url)
