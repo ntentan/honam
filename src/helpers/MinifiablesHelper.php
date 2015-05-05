@@ -11,7 +11,6 @@ abstract class MinifiablesHelper extends Helper
     private $otherScripts = array();
     private $context = 'default';
     private $combine = false;
-    private $destination = null;
 
     protected abstract function getExtension();
     protected abstract function getMinifier();
