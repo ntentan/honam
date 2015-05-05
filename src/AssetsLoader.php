@@ -32,16 +32,25 @@ class AssetsLoader
 {
     private static $assetsPathHeirachy = [];
     private static $publicPath = 'public';
+    private static $siteUrl = null;
     
-    private static function getAssetPath($asset)
+    public static function getAssetPath($asset)
     {
+        $path = '';
         foreach(self::$assetsPathHeirachy as $assetPath)
         {
             if(file_exists("$assetPath/$asset"))
             {
-                return "$assetPath/$asset";
+                $path = "$assetPath/$asset";
             }
         }
+        
+        if($path == '')
+        {
+            throw new exceptions\HelperException("Asset file $asset not found");
+        }
+        
+        return $path;
     }
     
     public static function load($asset, $copyFrom = null)
@@ -71,7 +80,7 @@ class AssetsLoader
         {
             self::throwTemplateEngineExceptions($assetPath, $publicPath);
         }
-        return $publicPath;
+        return self::getSiteUrl() . "/$asset";
     }
     
     private static function throwTemplateEngineExceptions($assetPath, $publicPath)
@@ -104,6 +113,32 @@ class AssetsLoader
     public static function getDestinationDir()
     {
         return self::$publicPath;
+    }
+    
+    /**
+     * Returns the base url of the current site.
+     * Used internally mainly for the purposes of generating HTML files, this
+     * function would either return a preset site URL or the current 
+     * destination directory. Using this function makes it easy to generate
+     * HTML files which depend on relative paths to locate assets.
+     * 
+     * @return string
+     */
+    public static function getSiteUrl()
+    {
+        if(self::$siteUrl === null)
+        {
+            return self::getDestinationDir();
+        }
+        else
+        {
+            return self::$siteUrl;
+        }
+    }
+    
+    public static function setSiteUrl($siteUrl)
+    {
+        self::$siteUrl = $siteUrl;
     }
     
     public static function reset()

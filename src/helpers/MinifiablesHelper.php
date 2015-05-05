@@ -11,6 +11,7 @@ abstract class MinifiablesHelper extends Helper
     private $otherScripts = array();
     private $context = 'default';
     private $combine = false;
+    private $destination = null;
 
     protected abstract function getExtension();
     protected abstract function getMinifier();
@@ -35,15 +36,15 @@ abstract class MinifiablesHelper extends Helper
     {
         $minifiedScript = '';
         $tags = '';
-        $filename = AssetsLoader::getDestinationDir() . "/".$this->getExtension()."/combined_{$this->context}." . $this->getExtension();
-        if(!file_exists($filename) && $this->combine === true)
+        $filename = "/" . $this->getExtension() . "/combined_{$this->context}." . $this->getExtension();
+        if($this->combine === true)
         {
             foreach($this->minifiableScripts as $script)
             {
                 $minifiedScript .= file_get_contents($script);
             }
-            file_put_contents($filename, Minifier::minify($minifiedScript, $this->getMinifier()));
-            $tags = $this->getTag($filename);
+            file_put_contents(AssetsLoader::getDestinationDir() . $filename, Minifier::minify($minifiedScript, $this->getMinifier()));
+            $tags = $this->getTag(AssetsLoader::getSiteUrl() . $filename);
         }
         else if($this->combine == false)
         {
@@ -89,6 +90,16 @@ abstract class MinifiablesHelper extends Helper
             }
         }
         return $this;
+    }
+    
+    public function setContext($context)
+    {
+        return $this->context($context);
+    }
+    
+    public function setCombine($combine)
+    {
+        return $this->combine($combine);
     }
     
     public function context($context)
