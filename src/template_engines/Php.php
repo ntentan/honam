@@ -38,12 +38,12 @@ require_once 'php/functions.php';
  */
 class Php extends TemplateEngine
 {
-    public function generate($templateData)
+    public function generate($templateVariables)
     {
         // Escape each variable by passing it through the variable class.
         // Users would have to unescape them by calling the escape method directly
         // on the variable.
-        foreach($templateData as $key => $value)
+        foreach($templateVariables as $key => $value)
         {
             $$key = php\Variable::initialize($value);
         }
