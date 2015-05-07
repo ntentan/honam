@@ -67,11 +67,6 @@ class AssetsLoader
         $publicPath = self::$publicPath . "/$asset";
         $publicDirectory = dirname($publicPath);
         
-        if(file_exists($publicPath)) 
-        {
-            return $publicPath;
-        }
-        
         if(file_exists($assetPath) && file_exists($publicDirectory) && is_writable($publicDirectory))
         {
             copy($assetPath, $publicPath);
