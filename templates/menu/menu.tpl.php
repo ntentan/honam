@@ -8,6 +8,6 @@
                 $params .= "$key = '$value' ";
             }
             $id = isset($item['id']) ? $item['id'] : 'menu-item-' . str_replace("/","-",strtolower($item["url"]));
-            echo t('menu_item', array('params' => $params, 'id' => $id, 'item' => $item, 'has_links' => $has_links)) ;
+            echo t("{$alias}_menu_item", array('params' => $params, 'id' => $id, 'item' => $item, 'has_links' => $has_links)) ;
         } ?></ul>
 <?php endif ?>

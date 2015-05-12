@@ -110,7 +110,7 @@ class MenuHelper extends Helper
         }
         
         return \ntentan\honam\TemplateEngine::render(
-            'menu.tpl.php',
+            "{$this->alias}_menu.tpl.php",
             [
                 'items' => $menuItems,
                 'css_classes' => $this->cssClasses,
