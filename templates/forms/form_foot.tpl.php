@@ -2,7 +2,7 @@
 <div class="form-submit-area"><?php 
 foreach($submit_values as $submitValue)
 {
-    if(is_array($submitValue))
+    if(is_array($submitValue->u()))
     {
         $submitValue = $submitValue?("value=\"{$submitValue['value']}\" name=\"{$submitValue['name']}\" id=\"{$submitValue['id']}\""):"";
     }
