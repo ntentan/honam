@@ -141,7 +141,11 @@ class SelectionList extends Field
      */
     public function setOptions($options = [])
     {
-        $this->options = array_merge($this->options, $options);
+        if(is_a($options, "\\ntentan\\honam\\template_engines\\php\\Variable"))
+        {
+            $options = $options->unescape();
+        }
+        $this->options += $options;
         return $this;
     }
 

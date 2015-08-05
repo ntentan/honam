@@ -82,7 +82,7 @@ class CheckableField extends Field
 
     public function render()
     {
-        if($this->getCheckedValue() === $this->getValue())
+        if($this->getCheckedValue() == (string)$this->getValue())
         {
             $this->setAttribute('checked', 'checked');
         }
