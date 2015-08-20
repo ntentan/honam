@@ -26,14 +26,43 @@
 namespace ntentan\honam;
 
 /**
- * 
+ * Responsible for loading assets, placing them in a common directory and
+ * could perform CDN url operations if needed.
+ * This class employs a heirachy of directories from which assets are loaded.
+ * Assets found in directories higher in the heirachy are chosen first. This
+ * mechanism provides room for third party extensions to override assets provided
+ * by core applications.
  */
 class AssetsLoader
 {
+    /**
+     * Heirachy of directories within which assets are loaded.
+     * @var array
+     */
     private static $assetsPathHeirachy = [];
+    
+    /**
+     * Destination public directory of all loaded assets.
+     * @var string
+     */
     private static $publicPath = 'public';
+    
+    /*
+     * Base site URL.
+     * @var string
+     */
     private static $siteUrl = null;
     
+    /**
+     * Returns the actual path for a particular asset.
+     * You pass a specific asset destination path to this method and it 
+     * scans the asset path till it finds a matching source asset. The path to
+     * this matching asset is then returned.
+     * 
+     * @param string $asset
+     * @return string
+     * @throws exceptions\FileNotFoundException
+     */
     public static function getAssetPath($asset)
     {
         $path = '';
@@ -53,6 +82,14 @@ class AssetsLoader
         return $path;
     }
     
+    /**
+     * Loads an asset into the public directory.
+     * This method returns the site url path appended with the asset path.
+     * 
+     * @param string $asset Asset path
+     * @param string $copyFrom Path to copy files from
+     * @return 
+     */
     public static function load($asset, $copyFrom = null)
     {
         if($copyFrom === null)
@@ -90,21 +127,37 @@ class AssetsLoader
         }        
     }    
     
+    /**
+     * Append a source directory to the bottom of the heirachy.
+     * @param string $assetsDir
+     */
     public static function appendSourceDir($assetsDir)
     {
         self::$assetsPathHeirachy[] = $assetsDir;
     }
     
+    /**
+     * Prepend a source directory to the top of the heirachy.
+     * @param string $assetsDir
+     */
     public static function prependSourceDir($assetsDir)
     {
         array_unshift(self::$assetsPathHeirachy, $assetsDir);
     }
     
+    /**
+     * Set the destination directory of loaded assets.
+     * @param string $publicBase
+     */
     public static function setDestinationDir($publicBase)
     {
         self::$publicPath = $publicBase;
     }    
     
+    /**
+     * Get the destination directory of loaded assets.
+     * @return string
+     */
     public static function getDestinationDir()
     {
         return self::$publicPath;
@@ -131,6 +184,10 @@ class AssetsLoader
         }
     }
     
+    /**
+     * Set the base URL of your site to aid in generating full URLs for assets.
+     * @param string $siteUrl
+     */
     public static function setSiteUrl($siteUrl)
     {
         self::$siteUrl = $siteUrl;
