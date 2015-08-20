@@ -11,7 +11,7 @@ if($element->getType() === 'ntentan\honam\helpers\form\HiddenField'):?>
                 echo t("element_label.tpl.php", array('element' => $element, 'label' => $element->getLabel()));
             }
         ?>  
-        <?= $element->render() ?>
+        <?= $element->render()->unescape() ?>
         <?php if($element->getDescription() != ""): ?>
             <div <?php if($id!=""): ?>id="<?= $id ?>_desc"<?php endif; ?> class='form-description'> <?= $element->getDescription() ?> </div>
         <?php endif; ?>

@@ -8,22 +8,23 @@ class Variable implements \ArrayAccess, \Iterator, \Countable
     private $keys;
     private $position;
     private $data;
+    private $iteratable;
 
     public static function initialize($data)
     {
         $type = gettype($data);
         switch ($type) {
-            case 'NULL':
+            case 'object':
             case 'string':
                 return new Variable($data);
 
             case 'array':
                 return new Variable($data, array_keys($data));
 
+            case 'NULL':
             case 'boolean':
             case 'integer':
             case 'double':
-            case 'object':
                 return $data;
 
             default:
@@ -33,8 +34,17 @@ class Variable implements \ArrayAccess, \Iterator, \Countable
 
     public function __construct($data, $keys = array())
     {
-        $this->data = $data;
-        $this->keys = $keys;
+        if($data instanceof Variable) {
+            $this->data = $data->getData();
+            $this->keys = $data->getKeys();
+        } else {
+            $this->data = $data;
+            $this->keys = $keys;
+        }
+        
+        if ($this->data instanceof \Iterator) {
+            $this->iteratable = true;
+        }
     }
 
     public function __toString()
@@ -59,27 +69,49 @@ class Variable implements \ArrayAccess, \Iterator, \Countable
 
     public function rewind()
     {
-        return $this->position = 0;
+        if($this->iteratable) {
+            return $this->data->rewind();
+        } else {
+            return $this->position = 0;
+        }
     }
 
     public function valid()
     {
-        return @isset($this->data[$this->keys[$this->position]]);
+        if($this->iteratable) {
+            return $this->data->valid();
+        } else {
+            return @isset($this->data[$this->keys[$this->position]]);
+        }
     }
 
     public function current()
     {
-        return Variable::initialize($this->data[$this->keys[$this->position]]);
+        if($this->iteratable) {
+            return $this->data->current();
+        } else {
+            return Variable::initialize($this->data[$this->keys[$this->position]]);
+        }
     }
 
     public function key()
     {
-        return $this->keys[$this->position];
+        if($this->iteratable)
+        {
+            return $this->data->key();
+        } else {
+            return $this->keys[$this->position];
+        }
     }
 
     public function next()
     {
-        $this->position++;
+        if($this->iteratable)
+        {
+            $this->data->next();
+        } else {
+            $this->position++;
+        }
     }
 
     public function offsetExists($offset)
@@ -92,7 +124,7 @@ class Variable implements \ArrayAccess, \Iterator, \Countable
         if (isset($this->data[$offset])) {
             return Variable::initialize($this->data[$offset]);
         } else {
-            return Variable::initialize(null);
+            return null;
         }
     }
 
@@ -110,4 +142,23 @@ class Variable implements \ArrayAccess, \Iterator, \Countable
         unset($this->data[$offset]);
     }
 
+    public function __call($method, $arguments)
+    {
+        return Variable::initialize(call_user_func_array([$this->data, $method], $arguments));
+    }
+
+    public function __get($name)
+    {
+        return Variable::initialize($this->data->$name);
+    }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function getKeys()
+    {
+        return $this->keys;
+    }
 }
