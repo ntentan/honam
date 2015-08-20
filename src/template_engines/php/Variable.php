@@ -4,11 +4,10 @@ namespace ntentan\honam\template_engines\php;
 
 class Variable implements \ArrayAccess, \Iterator, \Countable
 {
-
     private $keys;
     private $position;
     private $data;
-    private $iteratable;
+    private $iteratable = false;
 
     public static function initialize($data)
     {
@@ -70,9 +69,9 @@ class Variable implements \ArrayAccess, \Iterator, \Countable
     public function rewind()
     {
         if($this->iteratable) {
-            return $this->data->rewind();
+            $this->data->rewind();
         } else {
-            return $this->position = 0;
+            $this->position = 0;
         }
     }
 

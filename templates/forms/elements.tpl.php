@@ -1,1 +1,1 @@
-<?php foreach($elements as $element): ?><?= $element ?><?php endforeach; ?>
+<?php foreach($elements as $element): ?><?= $element->unescape() ?><?php endforeach; ?>

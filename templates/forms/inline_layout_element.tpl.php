@@ -1,8 +1,8 @@
 <?php 
 $attributes = $element->getAttributes(\ntentan\honam\helpers\form\Element::SCOPE_WRAPPER);
 $id = $element->getId();
-if($element->getType() === 'ntentan\honam\helpers\form\HiddenField'):?>
-    <?= $element->render(); ?>
+if($element->unescape()->getType() === 'ntentan\honam\helpers\form\HiddenField'):?>
+    <?= $element->unescape()->render(); ?>
 <?php else: ?>
     <div class="form-element-div" <?php if($id != ''): ?>id="<?= $id ?>_wrapper"<?php endif; ?> <?= t("element_attributes.tpl.php", array('attributes' => $attributes)) ?>>
         <?php

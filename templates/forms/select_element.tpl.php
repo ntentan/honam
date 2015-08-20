@@ -2,7 +2,7 @@
 
 <?php $options = $element->getOptions();
 $selectValue = $element->getValue();
-foreach($options as $value => $label):?>
+foreach($options->unescape() as $value => $label):?>
 <option value='<?= $value ?>' <?=($selectValue == $value ? "selected='selected'":"") ?> ><?= $label ?></option>
 <?php endforeach; ?>
 </select>
