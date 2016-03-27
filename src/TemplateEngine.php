@@ -308,11 +308,14 @@ abstract class TemplateEngine
         self::$loadedInstances = array();
     }
     
-    public function generateFromString($string, $data)
+    /*public function generateFromString($string, $data)
     {
-        $this->template = "data://text/plain," . urlencode($string);
+        //$this->template = "data://text/plain," . urlencode($string);
+        file_put_contents("php://temp", $string);
+        $this->template = "php://temp";
+        var_dump(file_get_contents("php://temp"));
         return $this->generate($data);
-    }
+    }*/
     
     public static function getTempDirectory()
     {
@@ -323,4 +326,10 @@ abstract class TemplateEngine
      * Passes the data to be rendered to the template engine instance.
      */
     abstract protected function generate($data);
+    
+    /**
+     * Passes a template string and data to be rendered to the template engine
+     * instance.
+     */
+    abstract protected function generateFromString($string, $data);
 }
