@@ -38,6 +38,8 @@ require_once 'php/functions.php';
  */
 class Php extends TemplateEngine
 {
+    private $stringStreamRegistered = false;
+    
     public function generate($templateVariables)
     {
         // Escape each variable by passing it through the variable class.
@@ -97,6 +99,19 @@ class Php extends TemplateEngine
             $length--;
         }
         return mb_substr($text, 0, $length) . $terminator;
+    }
+
+    protected function generateFromString($string, $data)
+    {
+        \ntentan\utils\StringStream::register();
+        file_put_contents('string://template', $string);
+        $this->template = 'string://template';
+        return $this->generate($data);
+    }
+    
+    public function __destruct()
+    {
+        \ntentan\utils\StringStream::unregister();
     }
 }
 
