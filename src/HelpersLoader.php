@@ -47,7 +47,8 @@ class HelpersLoader
             $camelizedHelper = ucfirst($helper) . "Helper";
             if($this->pluginMode)
             {
-                $helperClass = "\\ntentan\\extensions\\{$this->plugin}\\helpers\\$helper\\$camelizedHelper";
+                $helperClass = "\\ntentan\\extensions\\{$this->plugin}\\helpers\\$camelizedHelper";
+                $this->pluginMode = false;
             }
             else if(file_exists(__DIR__ . "/helpers/$camelizedHelper.php"))
             {
