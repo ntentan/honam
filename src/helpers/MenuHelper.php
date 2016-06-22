@@ -42,10 +42,20 @@ use ntentan\utils\Input;
 class MenuHelper extends Helper
 {
     private $items = array();
-    private $cssClasses = array();
+    private $cssClasses = [
+        'menu' => [],
+        'item' => [],
+        'selected' => [],
+        'matched' => []
+    ];
     private $currentUrl;
     private $alias;
     private $hasLinks = true;
+    
+    const MENU = 'menu';
+    const ITEM = 'item';
+    const SELECTED_ITEM = 'selected';
+    const MATCHED_ITEM = 'matched';
     
     public function __construct()
     {
@@ -54,16 +64,16 @@ class MenuHelper extends Helper
         );
         $this->setCurrentUrl(Input::server('REQUEST_URI'));
     }    
-
+    
     public function help($items = null)
     {
         $this->items = $items;
         return $this;
     }
     
-    public function addCssClass($class)
+    public function addCssClass($class, $section = self::MENU)
     {
-        $this->cssClasses[] = $class;
+        $this->cssClasses[$section][] = $class;
         return $this;
     }
     
@@ -95,11 +105,11 @@ class MenuHelper extends Helper
             {
                 $item = array(
                     'label' => $item,
-                    'url' => strtolower(str_replace(' ', '_', $item)),
+                    'url' => $this->makeFullUrl(strtolower(str_replace(' ', '_', $item))),
                     'default' => null
                 );
             }
-            
+                        
             $item['selected'] = (
                 $item['url'] == substr($this->currentUrl, 0, strlen($item['url']))
             );

@@ -65,6 +65,6 @@ class Helper
      */
     protected function makeFullUrl($url)
     {
-        return self::$baseUrl . $url;
+        return preg_replace("~/+~", "/", self::$baseUrl . "/$url");
     }
 }
