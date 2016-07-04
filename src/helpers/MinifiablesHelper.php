@@ -18,7 +18,7 @@ abstract class MinifiablesHelper extends Helper
     
     private function makePublic($file)
     {
-        return $this->getTag($this->makeFullUrl(AssetsLoader::load($this->getExtension() . "/" . basename($file), $file)));        
+        return $this->getTag(AssetsLoader::load($this->getExtension() . "/" . basename($file), $file));        
     }
     
     private function writeTags($files)
