@@ -29,8 +29,7 @@ class FeedHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         ->setUrl('http://someurl.net')
         ->setUpdated('2014-12-01 14:23:36')
         ->setDescription('The blog of honam tests');
-        
-        $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/feeds/rss_feed.xml'), $rssFeed);
+        $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/feeds/rss_feed.xml'), (string)$rssFeed);
     }
     
     public function testRSSFeed2()
@@ -60,7 +59,7 @@ class FeedHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         ->setUpdated('2014-12-01 14:23:36')
         ->setDescription('The blog of honam tests');
         
-        $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/feeds/rss_feed.xml'), $rssFeed);
+        $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/feeds/rss_feed.xml'), (string)$rssFeed);
     }    
     
     public function testRSSFeedGUIDGenerate()
@@ -87,6 +86,6 @@ class FeedHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         ->setUrl('http://someurl.net')
         ->setUpdated('2014-12-01 14:23:36')
         ->setDescription('The blog of honam tests');
-        $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/feeds/rss_feed_guid.xml'), $rssFeed);
+        $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/feeds/rss_feed_guid.xml'), (string)$rssFeed);
     }
 }

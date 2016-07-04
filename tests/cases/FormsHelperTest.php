@@ -101,7 +101,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $element = $this->helpers->form->create('TextField', 'Test', 'test')->setDescription('A test form');
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/text_field.html'),   
-            $element
+            (string)$element
         ); 
     }
     
@@ -112,7 +112,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $this->helpers->form->add('PasswordField', 'Password', 'password');
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_form.html'),
-            $this->helpers->form
+            (string)$this->helpers->form
         );
     }
     
@@ -128,7 +128,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $this->helpers->form->add('PasswordField', 'Password', 'password');
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_form_values.html'),
-            $this->helpers->form
+            (string)$this->helpers->form
         );
     }    
     
@@ -139,7 +139,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $this->helpers->form->add_password_field('Password', 'password');
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_form.html'),
-            $this->helpers->form
+            (string)$this->helpers->form
         );
     }    
     
