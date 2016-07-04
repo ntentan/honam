@@ -65,9 +65,6 @@ class Helper
      */
     protected function makeFullUrl($url)
     {
-        if(AssetsLoader::getSiteUrl() == '')
-            return self::$baseUrl . "$url";
-        else
-            return $url;
+        return self::$baseUrl . "$url";
     }
 }
