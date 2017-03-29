@@ -45,9 +45,9 @@ class Php extends TemplateEngine
         // Escape each variable by passing it through the variable class.
         // Users would have to unescape them by calling the escape method directly
         // on the variable.
-        foreach($templateVariables as $key => $value)
+        foreach($templateVariables as $_key => $_value)
         {
-            $$key = php\Variable::initialize($value);
+            $$_key = php\Variable::initialize($_value);
         }
 
         // Expose helpers
