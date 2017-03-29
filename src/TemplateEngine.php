@@ -1,5 +1,6 @@
 <?php
-/* 
+
+/*
  * View Templating System
  * Copyright (c) 2008-2015 James Ekow Abaka Ainooson
  * 
@@ -37,33 +38,32 @@ use ntentan\honam\exceptions\TemplateResolutionException;
  * priority over those closer to the end of the array.
  * 
  */
-abstract class TemplateEngine
-{
+abstract class TemplateEngine {
+
     /**
      * An array of loaded template engine instances.
      * @var array<\ntentan\honam\TemplateEngine>
      */
     private static $loadedInstances;
-    
+
     /**
      * The path to the template file to be used when generate is called. 
      * @var string
      */
     protected $template;
-    
+
     /**
      * An instance of the helpers loader used for loading the helpers.
      * @var \ntentan\honam\template_engines\HelpersLoader
      */
     private $helpersLoader;
-    
+
     /**
      * The array which holds the template path heirachy.
      * 
      * @var array<string>
      */
     private static $path = array();
-    
     private static $tempDirectory = '.';
 
     /**
@@ -71,8 +71,7 @@ abstract class TemplateEngine
      * 
      * @param string $path
      */
-    public static function appendPath($path)
-    {
+    public static function appendPath($path) {
         self::$path[] = $path;
     }
 
@@ -81,8 +80,7 @@ abstract class TemplateEngine
      * 
      * @param string $path
      */
-    public static function prependPath($path)
-    {
+    public static function prependPath($path) {
         array_unshift(self::$path, $path);
     }
 
@@ -91,32 +89,25 @@ abstract class TemplateEngine
      * 
      * @return array<string>
      */
-    public static function getPath()
-    {
+    public static function getPath() {
         return self::$path;
     }
-    
-    private static function getEngineClass($engine)
-    {
+
+    private static function getEngineClass($engine) {
         return "ntentan\\honam\\template_engines\\" . \ntentan\utils\Text::ucamelize($engine);
     }
-    
-    private static function getEngineInstance($engine)
-    {
-        if(!isset(self::$loadedInstances[$engine]))
-        {
+
+    private static function getEngineInstance($engine) {
+        if (!isset(self::$loadedInstances[$engine])) {
             $engineClass = self::getEngineClass($engine);
-            if(class_exists($engineClass))
-            {
+            if (class_exists($engineClass)) {
                 $engineInstance = new $engineClass();
-            }
-            else
-            {
+            } else {
                 throw new \ntentan\honam\exceptions\TemplateEngineNotFoundException("Could not load template engine class [$engineClass]");
             }
             self::$loadedInstances[$engine] = $engineInstance;
         }
-        
+
         return self::$loadedInstances[$engine];
     }
 
@@ -129,16 +120,14 @@ abstract class TemplateEngine
      * @return \ntentan\honam\TemplateEngine
      * @throws \ntentan\honam\exceptions\TemplateEngineNotFoundException
      */
-    private static function getEngineInstanceWithTemplate($template)
-    {
+    private static function getEngineInstanceWithTemplate($template) {
         $engine = pathinfo($template, PATHINFO_EXTENSION);
         $engineInstance = self::getEngineInstance($engine);
         $engineInstance->template = $template;
         return $engineInstance;
     }
-    
-    public static function canRender($file)
-    {
+
+    public static function canRender($file) {
         return class_exists(self::getEngineClass(pathinfo($file, PATHINFO_EXTENSION)));
     }
 
@@ -148,94 +137,75 @@ abstract class TemplateEngine
      * 
      * @return \ntentan\honam\template_engines\HelpersLoader
      */
-    public function getHelpersLoader()
-    {
-        if($this->helpersLoader == null)
-        {
+    public function getHelpersLoader() {
+        if ($this->helpersLoader == null) {
             $this->helpersLoader = new HelpersLoader();
         }
         return $this->helpersLoader;
     }
-    
-    private static function testTemplateFile($testTemplate, $paths, $extension)
-    {
+
+    private static function testTemplateFile($testTemplate, $paths, $extension) {
         $templateFile = '';
-        foreach($paths as $path)
-        {
+        foreach ($paths as $path) {
             $newTemplateFile = "$path/$testTemplate.$extension";
-            if(file_exists($newTemplateFile))
-            {
+            if (file_exists($newTemplateFile)) {
                 $templateFile = $newTemplateFile;
                 break;
-            }        
-        }        
+            }
+        }
         return $templateFile;
     }
-    
-    private static function testNoEngineTemplateFile($testTemplate, $paths)
-    {
+
+    private static function testNoEngineTemplateFile($testTemplate, $paths) {
         $templateFile = '';
-        foreach($paths as $path)
-        {
+        foreach ($paths as $path) {
             $newTemplateFile = "$path/$testTemplate.*";
             $files = glob($newTemplateFile);
-            if(count($files) == 1)
-            {
+            if (count($files) == 1) {
                 $templateFile = $files[0];
                 break;
-            }
-            else if(count($files) > 1)
-            {
+            } else if (count($files) > 1) {
                 $templates = implode(", ", $files);
                 throw new TemplateResolutionException("Multiple templates ($templates) resolved for request");
             }
-        }        
-        return $templateFile;    
+        }
+        return $templateFile;
     }
-    
-    private static function searchTemplateDirectory($template, $ignoreEngine = false)
-    {
+
+    private static function searchTemplateDirectory($template, $ignoreEngine = false) {
         $templateFile = '';
         $paths = self::getPath();
-        
+
         // Split the filename on the dots. The first part before the first dot
         // would be used to implement the file breakdown. The other parts are
         // fused together again and appended during the evaluation of the
         // breakdown.
-        
-        if($ignoreEngine)
-        {
-            $breakDown = explode('_', $template);            
-        }
-        else
-        {
+
+        if ($ignoreEngine) {
+            $breakDown = explode('_', $template);
+        } else {
             $splitOnDots = explode('.', $template);
             $breakDown = explode('_', array_shift($splitOnDots));
             $extension = implode(".", $splitOnDots);
         }
-        
-        for($i = 0; $i < count($breakDown); $i++)
-        {
+
+        for ($i = 0; $i < count($breakDown); $i++) {
             $testTemplate = implode("_", array_slice($breakDown, $i, count($breakDown) - $i));
-            
-            if($ignoreEngine)
-            {
+
+            if ($ignoreEngine) {
                 $templateFile = self::testNoEngineTemplateFile($testTemplate, $paths);
-            }
-            else
-            {
+            } else {
                 $templateFile = self::testTemplateFile($testTemplate, $paths, $extension);
             }
 
-            if($templateFile != '') 
-            {
+            if ($templateFile != '') {
                 break;
             }
-        }  
-        
+        }
+
         return $templateFile;
     }
-    
+
     /**
      * Resolve a template file by running through all the directories in the
      * template heirachy till a file that matches the template is found.
@@ -244,25 +214,22 @@ abstract class TemplateEngine
      * @return string
      * @throws \ntentan\honam\exceptions\FileNotFoundException
      */
-    protected static function resolveTemplateFile($template)
-    {
-        if($template == '')
-        {
+    protected static function resolveTemplateFile($template) {
+        if ($template == '') {
             throw new TemplateResolutionException("Empty template file requested");
         }
-        
+
         $templateFile = self::searchTemplateDirectory($template, pathinfo($template, PATHINFO_EXTENSION) === '');
-        
-        if($templateFile == null)
-        {
+
+        if ($templateFile == null) {
             $pathString = "[" . implode('; ', self::getPath()) . "]";
             throw new TemplateResolutionException(
-                "Could not find a suitable template file for the current request '{$template}'. Current template path $pathString"
+            "Could not find a suitable template file for the current request '{$template}'. Current template path $pathString"
             );
         }
-        
+
         return $templateFile;
-    }    
+    }
 
     /**
      * Renders a given template reference with associated template data. This render
@@ -275,11 +242,10 @@ abstract class TemplateEngine
      * @return string
      * @throws \ntentan\honam\exceptions\FileNotFoundException
      */
-    public static function render($template, $templateData)
-    {
+    public static function render($template, $templateData) {
         return self::getEngineInstanceWithTemplate(self::resolveTemplateFile($template))->generate($templateData);
     }
-    
+
     /**
      * Renders a given template file with the associated template data. This
      * render function loads the appropriate engine and passes the file to it
@@ -289,36 +255,32 @@ abstract class TemplateEngine
      * @param string $templateData An array of the template data to be rendered
      * @return string
      */
-    public static function renderFile($templatePath, $templateData)
-    {
+    public static function renderFile($templatePath, $templateData) {
         return self::getEngineInstanceWithTemplate($templatePath)->generate($templateData);
     }
-    
-    public static function renderString($templateString, $engine, $templateData)
-    {
+
+    public static function renderString($templateString, $engine, $templateData) {
         return self::getEngineInstance($engine)->generateFromString($templateString, $templateData);
     }
-    
+
     /**
      * Resets the path heirachy.
      */
-    public static function reset()
-    {
+    public static function reset() {
         self::$path = array();
         self::$loadedInstances = array();
     }
-    
-    /*public function generateFromString($string, $data)
-    {
-        //$this->template = "data://text/plain," . urlencode($string);
-        file_put_contents("php://temp", $string);
-        $this->template = "php://temp";
-        var_dump(file_get_contents("php://temp"));
-        return $this->generate($data);
-    }*/
-    
-    public static function getTempDirectory()
-    {
+
+    /* public function generateFromString($string, $data)
+      {
+      //$this->template = "data://text/plain," . urlencode($string);
+      file_put_contents("php://temp", $string);
+      $this->template = "php://temp";
+      var_dump(file_get_contents("php://temp"));
+      return $this->generate($data);
+      } */
+
+    public static function getTempDirectory() {
         return self::$tempDirectory;
     }
 
@@ -326,7 +288,7 @@ abstract class TemplateEngine
      * Passes the data to be rendered to the template engine instance.
      */
     abstract protected function generate($data);
-    
+
     /**
      * Passes a template string and data to be rendered to the template engine
      * instance.

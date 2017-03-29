@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Ntentan Framework
  * Copyright (c) 2010-2015 James Ekow Abaka Ainooson
@@ -36,31 +37,27 @@ require_once 'php/functions.php';
  * features. This could sometimes create a problem since some of these features
  * are not intended for templating use.
  */
-class Php extends TemplateEngine
-{
+class Php extends TemplateEngine {
+
     private $stringStreamRegistered = false;
-    
-    public function generate($templateVariables)
-    {
+
+    public function generate($templateVariables) {
         // Escape each variable by passing it through the variable class.
         // Users would have to unescape them by calling the escape method directly
         // on the variable.
-        foreach($templateVariables as $_key => $_value)
-        {
+        foreach ($templateVariables as $_key => $_value) {
             $$_key = php\Variable::initialize($_value);
         }
 
         // Expose helpers
-        $helpers = $this->getHelpersLoader();   
+        $helpers = $this->getHelpersLoader();
 
         // Start trapping the output buffer and include the PHP template for
         // execution.
         ob_start();
-        try{
+        try {
             include $this->template;
-        }
-        catch(\Exception $e)
-        {
+        } catch (\Exception $e) {
             ob_get_flush();
             throw $e;
         }
@@ -74,8 +71,7 @@ class Php extends TemplateEngine
      * @param string $text
      * @return string
      */
-    public function strip($text)
-    {
+    public function strip($text) {
         return php\Janitor::cleanHtml($text, true);
     }
 
@@ -92,26 +88,22 @@ class Php extends TemplateEngine
      * @param string $terminator The ellipsis terminator to use for the text.
      * @return string
      */
-    public function truncate($text, $length, $terminator = ' ...')
-    {
-        while(mb_substr($text, $length, 1) != ' ' && $length > 0)
-        {
+    public function truncate($text, $length, $terminator = ' ...') {
+        while (mb_substr($text, $length, 1) != ' ' && $length > 0) {
             $length--;
         }
         return mb_substr($text, 0, $length) . $terminator;
     }
 
-    protected function generateFromString($string, $data)
-    {
+    protected function generateFromString($string, $data) {
         \ntentan\utils\StringStream::register();
         file_put_contents('string://template', $string);
         $this->template = 'string://template';
         return $this->generate($data);
     }
-    
-    public function __destruct()
-    {
+
+    public function __destruct() {
         \ntentan\utils\StringStream::unregister();
     }
-}
 
+}
