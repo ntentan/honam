@@ -39,8 +39,6 @@ require_once 'php/functions.php';
  */
 class Php extends TemplateEngine {
 
-    private $stringStreamRegistered = false;
-
     public function generate($templateVariables) {
         // Escape each variable by passing it through the variable class.
         // Users would have to unescape them by calling the escape method directly
