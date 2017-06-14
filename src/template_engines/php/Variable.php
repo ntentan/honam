@@ -131,7 +131,11 @@ class Variable implements \ArrayAccess, \Iterator, \Countable {
     public function __get($name) {
         return Variable::initialize($this->data->$name);
     }
-
+    
+    public function __debugInfo() {
+        return $this->data;
+    }
+    
     public function getData() {
         return $this->data;
     }
@@ -139,5 +143,4 @@ class Variable implements \ArrayAccess, \Iterator, \Countable {
     public function getKeys() {
         return $this->keys;
     }
-
 }
