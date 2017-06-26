@@ -133,7 +133,7 @@ class Variable implements \ArrayAccess, \Iterator, \Countable {
     }
     
     public function __debugInfo() {
-        return $this->data;
+        return is_array($this->data) ? $this->data : [$this->data];
     }
     
     public function getData() {
