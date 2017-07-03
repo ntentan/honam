@@ -232,7 +232,7 @@ abstract class Element
 
     public function __toString()
     {
-        return TemplateEngine::render(FormHelper::getLayout() . "_layout_element.tpl.php", array('element' => $this));
+        return TemplateEngine::render("inline_layout_element.tpl.php", array('element' => $this));
     }
 
     //! Returns an array of all the CSS classes associated with this

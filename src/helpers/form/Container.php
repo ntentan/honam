@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Containers for containing form elements
  * 
@@ -32,7 +33,6 @@
 namespace ntentan\honam\helpers\form;
 
 use \ntentan\honam\TemplateEngine;
-use \Exception;
 
 /**
  * The container class. This abstract class provides the necessary
@@ -42,15 +42,21 @@ use \Exception;
 abstract class Container extends Element
 {
 
-    /**
-     * The array which holds all the elements contained in this container.
-     */
+    const RENDER_MODE_ALL = 'all';
+    const RENDER_MODE_HEAD = 'head';
+    const RENDER_MODE_FOOT = 'foot';
+
+    protected $renderMode = self::RENDER_MODE_ALL;
     protected $elements = array();
 
-    public $rendererMode = 'all';
-    
     abstract protected function renderHead();
-    abstract protected function renderFoot();    
+
+    abstract protected function renderFoot();
+    
+    public function setRenderMode($renderMode)
+    {
+        $this->renderMode = $renderMode;
+    }
 
     private function addElement($element)
     {
@@ -65,8 +71,7 @@ abstract class Container extends Element
     public function add()
     {
         $arguments = func_get_args();
-        foreach($arguments as $element)
-        {
+        foreach ($arguments as $element) {
             $this->addElement($element);
         }
         return $this;
@@ -79,10 +84,8 @@ abstract class Container extends Element
      */
     public function setData($data)
     {
-        if(is_array($data))
-        {
-            foreach($this->elements as $element)
-            {
+        if (is_array($data)) {
+            foreach ($this->elements as $element) {
                 $element->setData($data);
             }
         }
@@ -91,20 +94,15 @@ abstract class Container extends Element
 
     public function render()
     {
-        switch($this->rendererMode)
-        {
-            case 'head';
+        switch ($this->renderMode) {
+            case self::RENDER_MODE_HEAD;
                 return $this->renderHead();
-            case 'foot':
+            case self::RENDER_MODE_FOOT:
                 return $this->renderFoot();
             default:
-                return 
-                $this->renderHead().
-                TemplateEngine::render(
-                    'elements.tpl.php', 
-                    array('elements' => $this->getElements())
-                ).
-                $this->renderFoot();
+                return $this->renderHead() 
+                    . TemplateEngine::render('elements.tpl.php', array('elements' => $this->getElements()))
+                    . $this->renderFoot();
         }
     }
 
@@ -118,9 +116,10 @@ abstract class Container extends Element
     {
         return $this->render();
     }
-    
+
     public function isContainer()
     {
         return true;
     }
+
 }

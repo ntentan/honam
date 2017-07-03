@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Forms helper
  * 
@@ -41,18 +42,18 @@ use \ReflectionClass;
  */
 class FormHelper extends Helper
 {
+
     private $container;
-    private static $layout = "inline";
     private $data = array();
     private $errors = array();
-    
+
     public function __construct()
     {
         \ntentan\honam\TemplateEngine::appendPath(
             __DIR__ . "/../../templates/forms"
         );
     }
-    
+
     /**
      * Renders the form when the value is used as a string
      * @return string
@@ -61,135 +62,111 @@ class FormHelper extends Helper
     {
         $this->container->setData($this->data);
         $this->container->setErrors($this->errors);
-        $return = (string)$this->container;
+        $return = (string) $this->container;
         $this->container = null;
         return $return;
     }
-    
-    public function stylesheet()
-    {
-        return __DIR__ . '/../../assets/css/forms/forms.css';
-    }
-    
+
     public static function create()
     {
         $args = func_get_args();
         $element = __NAMESPACE__ . "\\form\\" . array_shift($args);
         $element = new ReflectionClass($element);
-        return $element->newInstanceArgs($args==null?array():$args);
+        return $element->newInstanceArgs($args == null ? array() : $args);
     }
-    
+
     public function setId($id)
     {
-        $this->getCotainer()->setId($id);
+        $this->getContainer()->setId($id);
     }
-        
+
     public function add()
     {
         $args = func_get_args();
-        if(is_string($args[0]))
-        {
+        if (is_string($args[0])) {
             $elementClass = new ReflectionMethod(__NAMESPACE__ . "\\FormHelper", 'create');
             $element = $elementClass->invokeArgs(null, $args);
-            $this->getCotainer()->add($element);
+            $this->getContainer()->add($element);
         }
         return $this;
     }
-    
+
     public function setErrors($errors)
     {
         $this->errors = $errors;
     }
-    
+
     public function setData($data)
     {
         $this->data = $data;
     }
-    
+
     public function open($formId = '')
     {
         $this->container = new form\Form();
-        if($formId != '')
-        {
+        if ($formId != '') {
             $this->container->setId($formId);
         }
-        $this->container->rendererMode = 'head';
-        return $this->container;        
+        $this->container->setRenderMode(form\Container::RENDER_MODE_HEAD);
+        return $this->container;
     }
-    
+
     public function close($submit = 'Submit')
     {
         $arguments = func_get_args();
-        if($submit === false)
-        {
+        if ($submit === false) {
             $this->container->setShowSubmit(false);
-        }
-        else if(count($arguments) > 0)
-        {
+        } else if (count($arguments) > 0) {
             $this->container->setSubmitValues($arguments);
         }
-        $this->container->rendererMode = 'foot';
-        return $this->container;        
+        $this->container->setRenderMode(form\Container::RENDER_MODE_FOOT);
+        return $this->container;
     }
 
     public function __call($function, $arguments)
     {
-        if(substr($function, 0, 5) == "open_")
-        {
+        if (substr($function, 0, 5) == "open_") {
             $container = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 5, strlen($function)));
             $containerClass = new ReflectionClass($container);
             $containerObject = $containerClass->newInstanceArgs($arguments);
-            $return = $containerObject->renderHead();
-        }
-        elseif(substr($function, 0, 6) == "close_")
-        {
+            $containerObject->setRenderMode(form\Container::RENDER_MODE_HEAD);
+            $return = $containerObject;
+        } elseif (substr($function, 0, 6) == "close_") {
             $container = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 6, strlen($function)));
             $containerClass = new ReflectionClass($container);
             $containerObject = $containerClass->newInstanceArgs($arguments);
-            $return = $containerObject->renderFoot();
-        }
-        elseif(substr($function, 0, 4) == "get_")
-        {
+            $containerObject->setRenderMode(form\Container::RENDER_MODE_FOOT);
+            $return = $containerObject;
+        } elseif (substr($function, 0, 4) == "get_") {
             $element = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 4, strlen($function)));
             $elementClass = new ReflectionClass($element);
             $elementObject = $elementClass->newInstanceArgs($arguments);
             $name = $elementObject->getName();
-            if(isset($this->data[$name])) 
-            {
+            if (isset($this->data[$name])) {
                 $elementObject->setValue($this->data[$name]);
             }
-            if(isset($this->errors[$name]))
-            {
+            if (isset($this->errors[$name])) {
                 $elementObject->setErrors($this->errors[$name]);
             }
             $return = $elementObject;
-        }
-        elseif(substr($function, 0, 4) == "add_")
-        {
+        } elseif (substr($function, 0, 4) == "add_") {
             $element = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 4, strlen($function)));
             $elementClass = new ReflectionClass($element);
             $elementObject = $elementClass->newInstanceArgs($arguments);
             $return = $this->container->add($elementObject);
-        }
-        else
-        {
+        } else {
             throw new \ntentan\honam\exceptions\HelperException("Function *$function* not found in form helper.");
         }
-        
+
         return $return;
     }
-    
-    public static function getLayout()
+
+    private function getContainer()
     {
-        return self::$layout;
-    }
-    
-    public function getCotainer()
-    {
-        if($this->container === null)
-        {
+        if ($this->container === null) {
             $this->container = new form\Form();
         }
         return $this->container;
     }
+
 }

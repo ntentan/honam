@@ -34,7 +34,6 @@ namespace ntentan\honam\helpers\form;
 
 class Fieldset extends Container
 {
-    private $collapsible = false;
 
     public function __construct($label="",$description="")
     {

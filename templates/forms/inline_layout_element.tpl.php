@@ -4,7 +4,7 @@ $id = $element->getId();
 if($element->unescape()->getType() === 'ntentan\honam\helpers\form\HiddenField'):?>
     <?= $element->unescape()->render(); ?>
 <?php else: ?>
-    <div class="form-element-div" <?php if($id != ''): ?>id="<?= $id ?>_wrapper"<?php endif; ?> <?= t("element_attributes.tpl.php", array('attributes' => $attributes)) ?>>
+    <div class="form-element <?= $element->hasError() ? 'form-error' : '' ?>" <?php if($id != ''): ?>id="<?= $id ?>_wrapper"<?php endif; ?>>
         <?php
             if(!$element->isContainer() && $element->getRenderLabel())
             {
@@ -13,18 +13,16 @@ if($element->unescape()->getType() === 'ntentan\honam\helpers\form\HiddenField')
         ?>  
         <?= $element->render()->unescape() ?>
         <?php if($element->getDescription() != ""): ?>
-            <div <?php if($id!=""): ?>id="<?= $id ?>_desc"<?php endif; ?> class='form-description'> <?= $element->getDescription() ?> </div>
+            <span> <?= $element->getDescription() ?> </span>
         <?php endif; ?>
 
         <?php if($element->hasError()):
             $errors = $element->getErrors();?>
-            <?php if(is_array($errors) || is_a($errors, '\Iterator')): ?>
-                <div class='form-errors'><ul>
-                    <?php foreach($errors as $error): ?>
-                    <li><?= $error ?></li>
-                    <?php endforeach; ?>
-                </ul></div>
-            <?php endif; ?>
+            <ul>
+                <?php foreach($errors as $error): ?>
+                <li><?= $error ?></li>
+                <?php endforeach; ?>
+            </ul>
         <?php endif; ?>
     </div>
 <?php endif; ?>
