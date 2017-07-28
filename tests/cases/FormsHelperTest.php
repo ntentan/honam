@@ -184,7 +184,6 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $form = $this->helpers->form->open() .
             $this->helpers->form->get_text_field('Some Text', 'some_text')
                 ->setAttribute('style', 'border:1px solid green')
-                ->setAttribute('style', 'background-color:pink', '_wrapper')
                 ->addCSSClass('someclass').
             $this->helpers->form->close();
         $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/markup/form_styling.html'), $form);

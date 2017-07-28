@@ -1,22 +1,18 @@
 <form method="POST" class="fapi-form">
-    <div class="form-element "  >
+    <div class="form-element form-error"  >
         <label class="form-label">Username</label>
         <input type="text" class="text error" name="username" />        
-        <div class='form-errors'>
             <ul>
                 <li>Invalid username or password</li>
                 <li>Username must be unique</li>
             </ul>
-        </div>
     </div>
-    <div class="form-element "  >
+    <div class="form-element form-error"  >
         <label class="form-label">Password</label>
         <input type="password" class="password error" name="password" />        
-        <div class='form-errors'>
             <ul>
                 <li>Password must contain six or more characters</li>
             </ul>
-        </div>
     </div>
     <div class="form-submit-area">
         <input class="form-submit" type="submit" value="Login" />

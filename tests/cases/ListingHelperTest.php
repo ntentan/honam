@@ -21,8 +21,6 @@ class ListingHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
                 )
             )
         );
-        
-        $this->assertFileExists($this->helpers->listing->stylesheet());
     }
 }
 

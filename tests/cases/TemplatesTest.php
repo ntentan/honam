@@ -53,26 +53,4 @@ class TemplatesTest extends \ntentan\honam\tests\lib\ViewBaseTest
     {
         TemplateEngine::render('arbitrary.tpl.noengine', array());
     }
-    
-    /**
-     * @expectedException \ntentan\honam\exceptions\FileNotFoundException
-     */
-    public function testAssetFileException()
-    {
-        vfsStream::setup('public');
-        AssetsLoader::appendSourceDir('tests/files/assets');
-        AssetsLoader::setDestinationDir(vfsStream::url('public'));   
-        TemplateEngine::render('missing_asset.tpl.php', array());
-    }    
-
-    /**
-     * @expectedException \ntentan\honam\exceptions\FilePermissionException
-     */
-    public function testPublicDirectoryException()
-    {
-        vfsStream::setup('public', 0444);
-        AssetsLoader::appendSourceDir('tests/files/assets');
-        AssetsLoader::setDestinationDir(vfsStream::url('public'));   
-        TemplateEngine::render('assets.tpl.php', array());
-    }
 }
