@@ -91,11 +91,6 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         );
     }
     
-    public function testFormCSS()
-    {
-        $this->assertFileExists($this->helpers->form->stylesheet());
-    }
-    
     public function testFormCreate()
     {
         $element = $this->helpers->form->create('TextField', 'Test', 'test')->setDescription('A test form');

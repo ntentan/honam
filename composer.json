@@ -13,10 +13,10 @@
         "ntentan/utils":"0.*"
     },
     "require-dev" : {
-        "phpunit/phpunit":"4.*",
-        "mikey179/vfsStream":"1.*",
-        "mustache/mustache": "2.*",
-        "smarty/smarty": "3.*"
+        "phpunit/phpunit":"@stable",
+        "mikey179/vfsStream":"@stable",
+        "mustache/mustache": "@stable",
+        "smarty/smarty": "@stable"
     },
     "suggest" : {
         "mustache/mustache": "For mustache template support (2.*)",

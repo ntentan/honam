@@ -1,7 +1,9 @@
 <?php
 namespace ntentan\honam\tests\lib;
 
-class HelperBaseTest extends \PHPUnit_Framework_TestCase
+use PHPUnit\Framework\TestCase;
+
+class HelperBaseTest extends TestCase
 {
     protected $helpers;
     

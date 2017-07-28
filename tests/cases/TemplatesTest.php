@@ -74,18 +74,5 @@ class TemplatesTest extends \ntentan\honam\tests\lib\ViewBaseTest
         AssetsLoader::appendSourceDir('tests/files/assets');
         AssetsLoader::setDestinationDir(vfsStream::url('public'));   
         TemplateEngine::render('assets.tpl.php', array());
-    }        
-    
-    public function testAssetLoading()
-    {
-        vfsStream::setup('public');
-        AssetsLoader::appendSourceDir('tests/files/assets');
-        AssetsLoader::setDestinationDir(vfsStream::url('public'));
-        touch(vfsStream::url('public/existing.css'));
-        
-        $output = TemplateEngine::render('assets.tpl.php', array());
-        $this->assertEquals("vfs://public/some.css\nvfs://public/another.css\nvfs://public/existing.css", $output);
-        $this->assertFileExists(vfsStream::url('public/some.css'));
-        $this->assertFileExists(vfsStream::url('public/another.css'));        
     }
 }

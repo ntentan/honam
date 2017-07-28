@@ -2,8 +2,9 @@
 namespace ntentan\honam\tests\lib;
 
 use ntentan\honam\TemplateEngine;
+use PHPUnit\Framework\TestCase;
 
-class ViewBaseTest extends \PHPUnit_Framework_TestCase
+class ViewBaseTest extends  TestCase
 {
     protected $view;
     

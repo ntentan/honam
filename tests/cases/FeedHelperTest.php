@@ -3,8 +3,15 @@ namespace ntentan\honam\tests\cases;
 
 class FeedHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
 {    
-    public function testRSSFeed()
+
+    public function setUp()
     {
+        parent::setUp();
+        date_default_timezone_set('UTC');
+    }
+
+    public function testRSSFeed()
+    {        
         $rssFeed = $this->helpers->feed->setItems(
             array(
                 array(
@@ -13,7 +20,7 @@ class FeedHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
                     'summary' => 'This is a brief story for you to understand why we did this',
                     'author' => 'author@honam.ntentan',
                     'category' => 'Sports',
-                    'date' => '2014-12-01 13:45:23'
+                    'date' => '2014-12-01 13:45:23 UTC'
                 ),
                 array(
                     'title' => 'Some HTML Item',
@@ -21,13 +28,13 @@ class FeedHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
                     'summary' => '<b>Has HTML</b><p>This is a brief story for you to understand why we did this</p>',
                     'author' => 'author@honam.ntentan',
                     'category' => 'Sports',
-                    'date' => '2014-12-02 13:45:23'
+                    'date' => '2014-12-02 13:45:23 UTC'
                 )                
             )
         )
         ->setTitle('Test RSS Feed')
         ->setUrl('http://someurl.net')
-        ->setUpdated('2014-12-01 14:23:36')
+        ->setUpdated('2014-12-01 14:23:36 UTC')
         ->setDescription('The blog of honam tests');
         $this->assertXmlStringEqualsXmlString(file_get_contents('tests/files/feeds/rss_feed.xml'), (string)$rssFeed);
     }
