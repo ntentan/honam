@@ -271,15 +271,6 @@ abstract class TemplateEngine {
         self::$loadedInstances = array();
     }
 
-    /* public function generateFromString($string, $data)
-      {
-      //$this->template = "data://text/plain," . urlencode($string);
-      file_put_contents("php://temp", $string);
-      $this->template = "php://temp";
-      var_dump(file_get_contents("php://temp"));
-      return $this->generate($data);
-      } */
-
     public static function getTempDirectory() {
         return self::$tempDirectory;
     }

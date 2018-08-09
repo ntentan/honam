@@ -11,31 +11,40 @@ use ntentan\honam\TemplateEngine;
  */
 class Mustache extends TemplateEngine
 {
-    private $mustache;
+    private $loaderMustache;
+
+    private $stringMustache;
+
     /**
-     * 
+     *
      * @return \Mustache_Engine
      */
     private function getMustache($loaders = true)
     {
-        if(!is_object($this->mustache) && $loaders == true)
-        {
-            $this->mustache = new \Mustache_Engine([
-                'loader' => new mustache\MustacheLoader(),
-                'partials_loader' => new mustache\MustachePartialsLoader($this)
-            ]);
-        } elseif (!is_object($this->mustache)) {
-            $this->mustache = new \Mustache_Engine();
+        if ($loaders == true) {
+            if(!$this->loaderMustache) {
+                $this->loaderMustache = new \Mustache_Engine([
+                    'loader' => new mustache\MustacheLoader(),
+                    'partials_loader' => new mustache\MustachePartialsLoader($this)
+                ]);
+            }
+            return $this->loaderMustache;
+        } else {
+            if(!$this->stringMustache) {
+                $this->stringMustache = new \Mustache_Engine([
+                    'partials_loader' => new mustache\MustachePartialsLoader($this)
+                ]);
+            }
+            return $this->stringMustache;
         }
-        return $this->mustache;
     }
-    
-    protected function generate($data) 
+
+    protected function generate($data)
     {
         $m = $this->getMustache();
         return $m->render($this->template, $data);
     }
-    
+
     public function getTemplateFile($name)
     {
         return self::resolveTemplateFile($name);
