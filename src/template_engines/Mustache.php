@@ -31,7 +31,9 @@ class Mustache extends TemplateEngine
             return $this->loaderMustache;
         } else {
             if(!$this->stringMustache) {
-                $this->stringMustache = new \Mustache_Engine();
+                $this->stringMustache = new \Mustache_Engine([
+                    'partials_loader' => new mustache\MustachePartialsLoader($this)
+                ]);
             }
             return $this->stringMustache;
         }
