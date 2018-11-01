@@ -94,11 +94,13 @@ class FormHelper extends Helper
     public function setErrors($errors)
     {
         $this->errors = $errors;
+        return $this->container;
     }
 
     public function setData($data)
     {
         $this->data = $data;
+        return $this->container;
     }
 
     public function open($formId = '')
