@@ -159,10 +159,14 @@ abstract class TemplateEngine {
     private static function testNoEngineTemplateFile($testTemplate, $paths) {
         $templateFile = '';
         foreach ($paths as $path) {
-            $newTemplateFile = "$path/$testTemplate.*";
-            $files = glob($newTemplateFile);
+            $newTemplateFile = "$testTemplate.*";
+            $files = array_filter(
+                scandir($path), 
+                function($file) use($newTemplateFile) {
+                    return fnmatch($newTemplateFile, $file);
+                });
             if (count($files) == 1) {
-                $templateFile = $files[0];
+                $templateFile = $path . "/" . reset($files);
                 break;
             } else if (count($files) > 1) {
                 $templates = implode(", ", $files);
