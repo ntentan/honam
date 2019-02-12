@@ -166,7 +166,7 @@ abstract class TemplateEngine {
                 break;
             } else if (count($files) > 1) {
                 $templates = implode(", ", $files);
-                throw new TemplateResolutionException("Multiple templates ($templates) resolved for request");
+                throw new TemplateResolutionException("Multiple templates were resolved for the request '$testTemplate'. Please ensure that only one supported template type of the name '$testTemplate' exists in the path '$path'. Files found: $templates");
             }
         }
         return $templateFile;
