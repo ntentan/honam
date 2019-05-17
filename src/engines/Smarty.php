@@ -1,6 +1,6 @@
 <?php
 
-namespace ntentan\honam\template_engines;
+namespace ntentan\honam\engines;
 
 use ntentan\honam\TemplateEngine;
 

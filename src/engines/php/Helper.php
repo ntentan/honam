@@ -23,7 +23,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\honam;
+namespace ntentan\honam\engines\php;
 
 /**
  * Base class for helpers. Helpers are little utilities that make it possible to

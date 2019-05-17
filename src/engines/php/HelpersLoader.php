@@ -23,7 +23,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\honam;
+namespace ntentan\honam\engines\php;
 
 /**
  * A class for loading the helpers in views.

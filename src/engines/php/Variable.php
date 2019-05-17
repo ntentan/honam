@@ -1,6 +1,6 @@
 <?php
 
-namespace ntentan\honam\template_engines\php;
+namespace ntentan\honam\engines\php;
 
 class Variable implements \ArrayAccess, \Iterator, \Countable {
 
