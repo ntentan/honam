@@ -10,7 +10,7 @@
     ],
     "require": {
         "matthiasmullie/minify":"1.*",
-        "ntentan/utils":"@stable"
+        "ntentan/utils":"dev-dev"
     },
     "require-dev" : {
         "phpunit/phpunit":"@stable",
