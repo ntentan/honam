@@ -1,14 +1,15 @@
 <?php
 namespace ntentan\honam\tests\lib;
 
+use ntentan\honam\engines\php\HelpersLoader;
 use PHPUnit\Framework\TestCase;
 
 class HelperBaseTest extends TestCase
 {
     protected $helpers;
     
-    public function setUp()
+    public function setUp() : void
     {
-        $this->helpers = new \ntentan\honam\HelpersLoader();
+        $this->helpers = new HelpersLoader();
     }
 }

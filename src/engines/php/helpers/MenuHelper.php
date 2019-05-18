@@ -31,9 +31,10 @@
  */
 
 
-namespace ntentan\honam\helpers;
+namespace ntentan\honam\engines\php\helpers;
 
-use ntentan\honam\Helper;
+use ntentan\honam\engines\php\Helper;
+
 use ntentan\utils\Input;
 
 /**

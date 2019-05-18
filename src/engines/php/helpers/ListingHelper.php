@@ -1,9 +1,9 @@
 <?php
 
-namespace ntentan\honam\helpers;
+namespace ntentan\honam\engines\php\helpers;
 
-use ntentan\honam\TemplateEngine;
-use ntentan\honam\Helper;
+use ntentan\honam\engines\php\Helper;
+
 
 class ListingHelper extends Helper
 {

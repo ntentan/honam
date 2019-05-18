@@ -25,13 +25,13 @@
 
 namespace ntentan\honam\engines\php;
 
+use ReflectionMethod;
+
 /**
  * A class for loading the helpers in views.
  */
 class HelpersLoader
 {
-    private $pluginMode = false;
-    private $plugin;
     private $loadedHelpers = array();
     
     /**
@@ -42,58 +42,22 @@ class HelpersLoader
      */
     private function getHelper($helper)
     {
-        if(!isset($this->loadedHelpers[$this->plugin . $helper]))
-        {
-            $camelizedHelper = ucfirst($helper) . "Helper";
-            if($this->pluginMode)
-            {
-                $helperClass = "\\ntentan\\extensions\\{$this->plugin}\\helpers\\$camelizedHelper";
-                $this->pluginMode = false;
-            }
-            else if(file_exists(__DIR__ . "/helpers/$camelizedHelper.php"))
-            {
-                $helperClass = "\\ntentan\\honam\\helpers\\$camelizedHelper";                
-            }
-            else
-            {
-                return false;
-            }
-                        
+        if(!isset($this->loadedHelpers[$helper])) {
+            $helperClass = __NAMESPACE__ . "\\helpers\\" . ucfirst($helper) . "Helper";;
             $helperInstance = new $helperClass();
-            $this->loadedHelpers[$this->plugin . $helper] = $helperInstance;
+            $this->loadedHelpers[$helper] = $helperInstance;
         }
-        return $this->loadedHelpers[$this->plugin . $helper];
+        return $this->loadedHelpers[$helper];
     }
 
     public function __get($helper)
     {
-        $helperInstance = $this->getHelper($helper);
-        if($helperInstance === false)
-        {
-            if($this->pluginMode === false)
-            {
-                $this->pluginMode = true;
-                $this->plugin = $helper;
-                $helperInstance = $this;
-            }
-        }
-        
-        return $helperInstance;
+        return $this->getHelper($helper);
     }
 
     public function __call($helperName, $arguments)
     {
-        $helper = $this->getHelper($helperName);
-        if($helper === false)
-        {
-            throw new \ntentan\honam\exceptions\HelperException("Cannot load helper with [$helperName]");
-        }
-        else
-        {
-            $method = new \ReflectionMethod($helper, 'help');
-            $this->plugin = null;
-            $this->pluginMode = false;
-        }
-        return $method->invokeArgs($helper, $arguments);
+        $helper = $this->getHelper($helperName);;
+        return (new ReflectionMethod($helper, 'help'))->invokeArgs($helper, $arguments);
     }
 }

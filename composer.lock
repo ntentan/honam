@@ -121,12 +121,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ntentan/utils.git",
-                "reference": "4b701dc90528aaed4fda30f49999453720ca0816"
+                "reference": "e0e257c6b207da5eb895fd2cd343babc5371b83c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ntentan/utils/zipball/4b701dc90528aaed4fda30f49999453720ca0816",
-                "reference": "4b701dc90528aaed4fda30f49999453720ca0816",
+                "url": "https://api.github.com/repos/ntentan/utils/zipball/e0e257c6b207da5eb895fd2cd343babc5371b83c",
+                "reference": "e0e257c6b207da5eb895fd2cd343babc5371b83c",
                 "shasum": ""
             },
             "require-dev": {
@@ -152,7 +152,7 @@
                 }
             ],
             "description": "Common utility functions shared accross the ntentan framework.",
-            "time": "2018-08-06T00:19:46+00:00"
+            "time": "2019-05-18T01:47:21+00:00"
         }
     ],
     "packages-dev": [

@@ -23,9 +23,10 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\honam\helpers;
+namespace ntentan\honam\engines\php\helpers;
 
-use ntentan\honam\Helper;
+use ntentan\honam\engines\php\Helper;
+
 
 /**
  * The FeedHelper provides a generic way of generating feeds. The FeedHelper has
@@ -76,7 +77,7 @@ class FeedHelper extends Helper
     public function __toString()
     {
         $generatorClassName = ucfirst($this->format) . "Feed";
-        $generatorClass = "\\ntentan\\honam\\helpers\\feed\\generators\\$generatorClassName";
+        $generatorClass = __NAMESPACE__ . "\\feed\\generators\\$generatorClassName";
         $generator = new $generatorClass();
         $generator->setup($this->properties, $this->items);
         return $generator->generate();
