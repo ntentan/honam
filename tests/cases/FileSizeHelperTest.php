@@ -1,7 +1,7 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-class FileSizeHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
+class FileSizeHelperTest extends \ntentan\honam\tests\lib\HelperTestCase
 {    
     public function testFileSizes()
     {

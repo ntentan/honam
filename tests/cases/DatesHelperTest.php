@@ -1,9 +1,9 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-use ntentan\honam\tests\lib\HelperBaseTest;
+use ntentan\honam\tests\lib\HelperTestCase;
 
-class DatesHelperTest extends HelperBaseTest
+class DatesHelperTest extends HelperTestCase
 {    
     public function testDateHelpers()
     {

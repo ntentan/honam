@@ -25,15 +25,24 @@
 
 namespace ntentan\honam\engines\php;
 
+use ntentan\honam\Honam;
+use ntentan\honam\TemplateRenderer;
 use ReflectionMethod;
 
 /**
  * A class for loading the helpers in views.
  */
-class HelpersLoader
+class HelperFactory
 {
     private $loadedHelpers = array();
-    
+
+    private $templateRenderer;
+
+    public function setTemplateRenderer(TemplateRenderer $templateRenderer)
+    {
+        $this->templateRenderer = $templateRenderer;
+    }
+
     /**
      * Get the instance of a helper given the string name of the helper.
      * 
@@ -44,7 +53,7 @@ class HelpersLoader
     {
         if(!isset($this->loadedHelpers[$helper])) {
             $helperClass = __NAMESPACE__ . "\\helpers\\" . ucfirst($helper) . "Helper";;
-            $helperInstance = new $helperClass();
+            $helperInstance = new $helperClass($this->templateRenderer);
             $this->loadedHelpers[$helper] = $helperInstance;
         }
         return $this->loadedHelpers[$helper];

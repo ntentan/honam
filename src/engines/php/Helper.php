@@ -25,6 +25,9 @@
 
 namespace ntentan\honam\engines\php;
 
+
+use ntentan\honam\TemplateRenderer;
+
 /**
  * Base class for helpers. Helpers are little utilities that make it possible to
  * perform repetitively routine tasks in views.
@@ -36,12 +39,20 @@ class Helper
      * This variable is used in the Helper::makeFullUrl method.
      * @var string
      */
-    private static $baseUrl;
-    
+    private $baseUrl;
+
+    protected $templateRenderer;
+
+    public function __construct(TemplateRenderer $templateRenderer)
+    {
+        $this->templateRenderer = $templateRenderer;
+    }
+
+
     /**
      * A sort of constructor or entry point for helpers.
      * @param mixed $arguments
-     * @return \ntentan\honam\Helper
+     * @return Helper
      */
     public function help($arguments)
     {
@@ -52,9 +63,9 @@ class Helper
      * Set the base url used in the helpers.
      * @param string $url The new base url
      */
-    public static function setBaseUrl($url)
+    public function setBaseUrl($url)
     {
-        self::$baseUrl = $url;
+        $this->baseUrl = $url;
     }
     
     /**
@@ -65,6 +76,7 @@ class Helper
      */
     protected function makeFullUrl($url)
     {
-        return self::$baseUrl . "$url";
+        return $this->baseUrl . "$url";
     }
+
 }

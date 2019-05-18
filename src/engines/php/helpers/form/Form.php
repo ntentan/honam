@@ -29,9 +29,8 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form;
+namespace ntentan\honam\engines\php\helpers\form;
 
-use ntentan\honam\TemplateEngine;
 use ntentan\utils\Input;
 
 /**
@@ -47,7 +46,6 @@ class Form extends Container
 
     public function __construct()
     {
-        parent::__construct();
         $this->action = Input::server("REQUEST_URI");
     }
 
@@ -63,16 +61,13 @@ class Form extends Container
         $this->setAttribute('action', $this->action);
         $this->setAttribute('accept-charset', 'utf-8');
         
-        return TemplateEngine::render('form_head.tpl.php', array('element' => $this));
+        return $this->templateRenderer->render('form_head', ['element' => $this]);
     }
 
     public function renderFoot()
     {
-        return TemplateEngine::render('form_foot.tpl.php',
-            array(
-                'show_submit' => $this->showSubmit,
-                'submit_values' => $this->submitValues,
-            )
+        return $this->templateRenderer->render(
+            'form_foot', ['show_submit' => $this->showSubmit, 'submit_values' => $this->submitValues]
         );
     }
     

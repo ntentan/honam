@@ -29,9 +29,8 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form;
+namespace ntentan\honam\engines\php\helpers\form;
 
-use ntentan\honam\TemplateEngine;
 
 /**
  * The form field class. This class represents a form field element.
@@ -66,6 +65,7 @@ class Field extends Element
      * Sets the value of the field.
      *
      * @param $value The value of the field.
+     * @return Field
      */
     public function setValue($value)
     {

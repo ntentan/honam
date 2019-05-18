@@ -107,7 +107,7 @@ class TemplateFileResolver
      *
      * @param string $template
      * @return string
-     * @throws \ntentan\honam\exceptions\FileNotFoundException
+     * @throws TemplateResolutionException
      */
     public function resolveTemplateFile($template)
     {

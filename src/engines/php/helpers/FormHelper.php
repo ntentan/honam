@@ -48,12 +48,6 @@ class FormHelper extends Helper
     private $data = array();
     private $errors = array();
 
-    public function __construct()
-    {
-        \ntentan\honam\TemplateEngine::appendPath(
-            __DIR__ . "/../../templates/forms"
-        );
-    }
 
     /**
      * Renders the form when the value is used as a string
@@ -68,12 +62,17 @@ class FormHelper extends Helper
         return $return;
     }
 
-    public static function create()
+    /**
+     * @return object
+     * @throws \ReflectionException
+     */
+    public function create()
     {
         $args = func_get_args();
-        $element = __NAMESPACE__ . "\\form\\" . array_shift($args);
-        $element = new ReflectionClass($element);
-        return $element->newInstanceArgs($args == null ? array() : $args);
+        $elementClass = new ReflectionClass(__NAMESPACE__ . "\\form\\" . array_shift($args));
+        $element = $elementClass->newInstanceArgs($args == null ? array() : $args);
+        $element->setTemplateRenderer($this->templateRenderer);
+        return $element;
     }
 
     public function setId($id)
@@ -85,8 +84,8 @@ class FormHelper extends Helper
     {
         $args = func_get_args();
         if (is_string($args[0])) {
-            $elementClass = new ReflectionMethod(__NAMESPACE__ . "\\FormHelper", 'create');
-            $element = $elementClass->invokeArgs(null, $args);
+            $elementCreator = new ReflectionMethod(__NAMESPACE__ . "\\FormHelper", 'create');
+            $element = $elementCreator->invokeArgs($this, $args);
             $this->getContainer()->add($element);
         }
         return $this;
@@ -106,7 +105,7 @@ class FormHelper extends Helper
 
     public function open($formId = '')
     {
-        $this->container = new form\Form();
+        $this->container = $this->create('Form');
         if ($formId != '') {
             $this->container->setId($formId);
         }
@@ -130,10 +129,11 @@ class FormHelper extends Helper
     {
         if (substr($function, 0, 5) == "open_") {
             $container = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 5, strlen($function)));
-            $containerClass = new ReflectionClass($container);
-            $containerObject = $containerClass->newInstanceArgs($arguments);
-            $containerObject->setRenderMode(form\Container::RENDER_MODE_HEAD);
-            $return = $containerObject;
+            //return $this->create()
+//            $containerClass = new ReflectionClass($container);
+//            $containerObject = $containerClass->newInstanceArgs($arguments);
+//            $containerObject->setRenderMode(form\Container::RENDER_MODE_HEAD);
+//            $return = $containerObject;
         } elseif (substr($function, 0, 6) == "close_") {
             $container = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 6, strlen($function)));
             $containerClass = new ReflectionClass($container);

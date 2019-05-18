@@ -36,9 +36,9 @@ class EngineRegistry
         foreach($this->extensions as $extension => $factory) {
             if($extension == substr($templateFile, -strlen($extension))) {
                 if(is_a($factory, EngineFactoryInterface::class)) {
-                    $engine = $factory->create();
+                    $engine = $factory->create($this->templateRenderer);
                 } else if (is_callable($factory)) {
-                    $engine = $factory();
+                    $engine = $factory($this->templateRenderer);
                 } else {
                     throw new FactoryException("There is no factory for creating engines for the {$extension} extension");
                 }

@@ -26,7 +26,7 @@
 
 namespace ntentan\honam\engines;
 
-use ntentan\honam\engines\php\HelpersLoader;
+use ntentan\honam\engines\php\HelperFactory;
 use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\TemplateEngine;
 use ntentan\honam\engines\php\Variable;
@@ -43,7 +43,7 @@ class PhpEngine extends AbstractEngine
     private $helpersLoader;
     private $janitor;
 
-    public function __construct(HelpersLoader $helpersLoader, Janitor $janitor)
+    public function __construct(HelperFactory $helpersLoader, Janitor $janitor)
     {
         $this->helpersLoader = $helpersLoader;
     }

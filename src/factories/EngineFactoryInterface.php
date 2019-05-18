@@ -3,6 +3,7 @@
 namespace ntentan\honam\factories;
 
 use ntentan\honam\engines\AbstractEngine;
+use ntentan\honam\TemplateRenderer;
 
 /**
  * Interface TemplateEngineFactoryInterface
@@ -11,5 +12,5 @@ use ntentan\honam\engines\AbstractEngine;
  */
 interface EngineFactoryInterface
 {
-    public function create() : AbstractEngine;
+    public function create(TemplateRenderer $templateRenderer) : AbstractEngine;
 }

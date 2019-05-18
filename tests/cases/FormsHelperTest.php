@@ -1,29 +1,31 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
+use ntentan\honam\tests\lib\HelperTestCase;
+
+class FormsHelperTest extends HelperTestCase
 {
     public function testBasicForm()
     {
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/basic_form_test.html'),   
-            (string)$this->helpers->form->open(). (string)$this->helpers->form->close()
+            $this->helpers->form->open()->__toString() . $this->helpers->form->close()->__toString()
         );
         
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/basic_form_id_test.html'),   
-            (string)$this->helpers->form->open('form-with-id'). (string)$this->helpers->form->close()
+            $this->helpers->form->open('form-with-id')->__toString() . $this->helpers->form->close()->__toString()
         );        
         
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/basic_form_no_submit_test.html'),   
-            (string)$this->helpers->form->open('form-with-id'). (string)$this->helpers->form->close(false)
+            $this->helpers->form->open('form-with-id')->__toString() . $this->helpers->form->close(false)->__toString()
         ); 
         
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/basic_form_multi_submit_test.html'),   
-            (string)$this->helpers->form->open('form-with-id'). 
-            (string)$this->helpers->form->close('Close', 'Resolve', 'Comment')
+            $this->helpers->form->open('form-with-id')->__toString() .
+            $this->helpers->form->close('Close', 'Resolve', 'Comment')->__toString()
         ); 
     }
     
@@ -43,10 +45,10 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_errors.html'),
-            (string)$this->helpers->form->open() . 
-            (string)$this->helpers->form->get_text_field('Username', 'username') .
-            (string)$this->helpers->form->get_password_field('Password', 'password').
-            (string)$this->helpers->form->close('Login')
+            $this->helpers->form->open()->__toString() .
+            $this->helpers->form->get_text_field('Username', 'username')->__toString() .
+            $this->helpers->form->get_password_field('Password', 'password')->__toString().
+            $this->helpers->form->close('Login')->__toString()
         );
     }
     

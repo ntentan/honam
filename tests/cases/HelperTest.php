@@ -2,7 +2,7 @@
 
 namespace ntentan\honam\tests\cases;
 
-class HelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
+class HelperTest extends \ntentan\honam\tests\lib\HelperTestCase
 {
     public function testPlugin()
     {

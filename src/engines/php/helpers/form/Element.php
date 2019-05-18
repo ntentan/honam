@@ -29,7 +29,7 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form;
+namespace ntentan\honam\engines\php\helpers\form;
 
 use ntentan\honam\helpers\FormHelper;
 use ntentan\honam\TemplateEngine;
@@ -45,8 +45,6 @@ abstract class Element
 {
     const SCOPE_ELEMENT = "";
     const SCOPE_WRAPPER = "_wrapper";
-
-    protected $formId;
 
     /**
      * The id of the form useful for CSS styling and DOM access.
@@ -115,16 +113,11 @@ abstract class Element
      */
     protected $parent = null;
 
-    /**
-     * The name of the form field. This is what is to be outputed as
-     * the HTML name attribute of the field. If name encryption is
-     * enabled the outputed name to HTML is mangled by the encryption
-     * algorithm. However internally the Field may still be referenced
-     * bu the unmangled name.
-     */
-    public $name;
+    protected $name;
 
     protected $renderLabel = true;
+
+    protected $templateRenderer;
 
     public function __construct($label="", $description="", $id="")
     {
@@ -149,6 +142,7 @@ abstract class Element
      * Public accessor for setting the name property of the field.
      *
      * @param  $name The name to assign to the form element.
+     * @return Element
      */
     public function setName($name)
     {
@@ -232,7 +226,7 @@ abstract class Element
 
     public function __toString()
     {
-        return TemplateEngine::render("inline_layout_element.tpl.php", array('element' => $this));
+        return $this->templateRenderer->render("inline_layout_element.tpl.php", array('element' => $this));
     }
 
     //! Returns an array of all the CSS classes associated with this
@@ -303,10 +297,10 @@ abstract class Element
     {
         $this->renderLabel = $renderLabel;
     }
-    
-    public function isContainer()
+
+    public function setTemplateRenderer($templateRenderer)
     {
-        return false;
-    }    
+        $this->templateRenderer = $templateRenderer;
+    }
 }
 

@@ -27,6 +27,7 @@
 namespace ntentan\honam;
 
 use ntentan\honam\exceptions\TemplateResolutionException;
+use ntentan\honam\exceptions\UnknownTemplateExtensionException;
 
 /**
  * The TemplateEngine class does the work of resolving templates, loading template files,
@@ -63,6 +64,7 @@ class TemplateRenderer
      * TemplateRenderer constructor.
      *
      * @param EngineRegistry $registry
+     * @param TemplateFileResolver $templateFileResolver
      */
     public function __construct(EngineRegistry $registry, TemplateFileResolver $templateFileResolver)
     {
@@ -72,21 +74,25 @@ class TemplateRenderer
     }
 
     /**
+     * @param $templateFile
      * @return string|null
+     * @throws UnknownTemplateExtensionException
      */
     private function getTemplateExtension($templateFile)
     {
-        foreach($this->registry->getSupportedExtensions() as $extension) {
+        $supportedExtensions = $this->registry->getSupportedExtensions();
+        foreach($supportedExtensions as $extension) {
             if($extension == substr($templateFile, -strlen($extension))) return $extension;
         }
-        return null;
+        throw new UnknownTemplateExtensionException("There are currently no registered engines that can render $templateFile");
     }
 
 
     /**
      * Check if an engine exists that can render the given file.
-     * @param $file
+     * @param $templateFile
      * @return bool
+     * @throws UnknownTemplateExtensionException
      */
     public function canRender($templateFile)
     {
@@ -115,11 +121,14 @@ class TemplateRenderer
      * function combs through the template directory heirachy to find a template
      * file which matches the given template reference and uses it for the purpose
      * of rendering the view.
-     * 
+     *
      * @param string $template The template reference file.
-     * @param array $templateData The data to be passed to the template.
+     * @param $data
+     * @param bool $fromString
+     * @param null $extension
      * @return string
-     * @throws \ntentan\honam\exceptions\FileNotFoundException
+     * @throws TemplateResolutionException
+     * @throws exceptions\TemplateEngineNotFoundException
      */
     public function render($template, $data, $fromString = false, $extension=null)
     {
