@@ -30,7 +30,7 @@
  */
 
 
-namespace ntentan\honam\helpers\form;
+namespace ntentan\honam\engines\php\helpers\form;
 
 /**
  * A selection list class for the forms helper. This class renders an HTML
@@ -125,10 +125,7 @@ class SelectionList extends Field
         }
         $this->setAttribute('class', "select {$this->getCSSClasses()}");
         
-        return \ntentan\honam\TemplateEngine::render(
-            'select_element.tpl.php', 
-            array('element' => $this)
-        );
+        return $this->templateRenderer->render('select_element.tpl.php', ['element' => $this]);
     }
 
     /**

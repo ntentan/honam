@@ -29,7 +29,7 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form;
+namespace ntentan\honam\engines\php\helpers\form;
 
 class TextArea extends Field
 {
@@ -46,11 +46,6 @@ class TextArea extends Field
         $this->setAttribute('cols', 80);
         $this->setAttribute('class', "textarea {$this->getCSSClasses()}");
         $this->setAttribute('name', $this->getName());
-        return \ntentan\honam\TemplateEngine::render(
-            "textarea_element.tpl.php",
-            array(
-                'element' => $this
-            )
-        );
+        return $this->templateRenderer->render("textarea_element.tpl.php", ['element' => $this]);
     }
 }

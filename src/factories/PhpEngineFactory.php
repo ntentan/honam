@@ -15,6 +15,7 @@ class PhpEngineFactory implements EngineFactoryInterface
     public function __construct(TemplateFileResolver $templateFileResolver)
     {
         $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/forms");
+        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/lists");
     }
 
     public function create(TemplateRenderer $templateRenderer): AbstractEngine

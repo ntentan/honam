@@ -34,7 +34,7 @@ namespace ntentan\honam\engines\php\helpers\form;
 
 /**
  * The form field class. This class represents a form field element.
- * Sublcasses of this class are to be used to capture information from
+ * Subclasses of this class are to be used to capture information from
  * the user of the application.
  * \ingroup Form_API
  */
@@ -87,6 +87,7 @@ class Field extends Element
      * Sets the required status of the field.
      *
      * @param The required status of the field.
+     * @return Field
      */
     public function setRequired($required)
     {
@@ -133,6 +134,6 @@ class Field extends Element
     {
         $this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");
         $this->setAttribute("name", $this->getName());
-        return TemplateEngine::render("input_element.tpl.php", array('element' => $this));
+        return $this->templateRenderer->render("input_element.tpl.php", array('element' => $this));
     }
 }

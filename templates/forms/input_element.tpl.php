@@ -1,1 +1,1 @@
-<?php $value = $element->getValue() ?><input<?= t('element_attributes.tpl.php', array('attributes' => $element->getAttributes())) ?><?php if(unescape($value)): ?> value="<?= $value ?>"<?php endif; ?>/>
+<?php $value = $element->getValue() ?><input<?= $this->partial('element_attributes.tpl.php', array('attributes' => $element->getAttributes())) ?><?php if($value->unescape()): ?> value="<?= $value ?>"<?php endif; ?>/>

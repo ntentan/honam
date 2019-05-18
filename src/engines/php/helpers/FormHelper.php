@@ -34,6 +34,8 @@ namespace ntentan\honam\engines\php\helpers;
 
 use ntentan\honam\engines\php\Helper;
 
+use ntentan\honam\engines\php\helpers\form\Container;
+use ntentan\honam\exceptions\HelperException;
 use ntentan\utils\Text;
 use \ReflectionMethod;
 use \ReflectionClass;
@@ -62,17 +64,19 @@ class FormHelper extends Helper
         return $return;
     }
 
-    /**
-     * @return object
-     * @throws \ReflectionException
-     */
-    public function create()
+    private function createElement($element, $args)
     {
-        $args = func_get_args();
-        $elementClass = new ReflectionClass(__NAMESPACE__ . "\\form\\" . array_shift($args));
+        $elementClass = new ReflectionClass(__NAMESPACE__ . "\\form\\" . $element);
         $element = $elementClass->newInstanceArgs($args == null ? array() : $args);
         $element->setTemplateRenderer($this->templateRenderer);
         return $element;
+    }
+
+    public function create()
+    {
+        $args = func_get_args();
+        $element = array_shift($args);
+        return $this->createElement($element, $args);
     }
 
     public function setId($id)
@@ -83,11 +87,8 @@ class FormHelper extends Helper
     public function add()
     {
         $args = func_get_args();
-        if (is_string($args[0])) {
-            $elementCreator = new ReflectionMethod(__NAMESPACE__ . "\\FormHelper", 'create');
-            $element = $elementCreator->invokeArgs($this, $args);
-            $this->getContainer()->add($element);
-        }
+        $element = array_shift($args);
+        $this->getContainer()->add($this->createElement($element, $args));
         return $this;
     }
 
@@ -128,46 +129,43 @@ class FormHelper extends Helper
     public function __call($function, $arguments)
     {
         if (substr($function, 0, 5) == "open_") {
-            $container = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 5, strlen($function)));
-            //return $this->create()
-//            $containerClass = new ReflectionClass($container);
-//            $containerObject = $containerClass->newInstanceArgs($arguments);
-//            $containerObject->setRenderMode(form\Container::RENDER_MODE_HEAD);
-//            $return = $containerObject;
-        } elseif (substr($function, 0, 6) == "close_") {
-            $container = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 6, strlen($function)));
-            $containerClass = new ReflectionClass($container);
-            $containerObject = $containerClass->newInstanceArgs($arguments);
-            $containerObject->setRenderMode(form\Container::RENDER_MODE_FOOT);
-            $return = $containerObject;
-        } elseif (substr($function, 0, 4) == "get_") {
-            $element = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 4, strlen($function)));
-            $elementClass = new ReflectionClass($element);
-            $elementObject = $elementClass->newInstanceArgs($arguments);
-            $name = $elementObject->getName();
-            if (isset($this->data[$name])) {
-                $elementObject->setValue($this->data[$name]);
-            }
-            if (isset($this->errors[$name])) {
-                $elementObject->setErrors($this->errors[$name]);
-            }
-            $return = $elementObject;
-        } elseif (substr($function, 0, 4) == "add_") {
-            $element = __NAMESPACE__ . "\\form\\" . Text::ucamelize(substr($function, 4, strlen($function)));
-            $elementClass = new ReflectionClass($element);
-            $elementObject = $elementClass->newInstanceArgs($arguments);
-            $return = $this->container->add($elementObject);
-        } else {
-            throw new \ntentan\honam\exceptions\HelperException("Function *$function* not found in form helper.");
+            $container = $this->createElement(Text::ucamelize(substr($function, 5, strlen($function))), $arguments);
+            $container->setRenderMode(Container::RENDER_MODE_HEAD);
+            return $container;
         }
 
-        return $return;
+        elseif (substr($function, 0, 6) == "close_") {
+            $container = $this->createElement(Text::ucamelize(substr($function, 5, strlen($function))), $arguments);
+            $container->setRenderMode(Container::RENDER_MODE_FOOT);
+            return $container;
+        }
+
+        elseif (substr($function, 0, 4) == "get_") {
+            $element = $this->createElement(Text::ucamelize(substr($function, 4, strlen($function))), $arguments);
+            $name = $element->getName();
+            if (isset($this->data[$name])) {
+                $element->setValue($this->data[$name]);
+            }
+            if (isset($this->errors[$name])) {
+                $element->setErrors($this->errors[$name]);
+            }
+            return $element;
+        }
+
+        elseif (substr($function, 0, 4) == "add_") {
+            $element = $this->createElement(Text::ucamelize(substr($function, 4, strlen($function))), $arguments);
+            return $this->container->add($element);
+        }
+
+        else {
+            throw new HelperException("Function *$function* not found in form helper.");
+        }
     }
 
     private function getContainer()
     {
         if ($this->container === null) {
-            $this->container = new form\Form();
+            $this->container = $this->createElement("Form", []);
         }
         return $this->container;
     }

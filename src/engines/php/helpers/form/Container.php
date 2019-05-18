@@ -100,7 +100,7 @@ abstract class Container extends Element
                 return $this->renderFoot();
             default:
                 return $this->renderHead() 
-                    . TemplateEngine::render('elements.tpl.php', array('elements' => $this->getElements()))
+                    . $this->templateRenderer->render('elements.tpl.php', array('elements' => $this->getElements()))
                     . $this->renderFoot();
         }
     }

@@ -16,18 +16,11 @@ class ListingHelper extends Helper
           "variables"             =>  null
        );
     
-    public function __construct() 
-    {
-        TemplateEngine::appendPath(
-            __DIR__ . "/../../templates/lists"
-        );
-    }
-    
     public function stylesheet()
     {
         return __DIR__ . '/../../assets/css/lists/lists.css';
     }
-    
+
     /**
      *  array(
      *     "headers"               =>  $this->headers,
@@ -38,6 +31,7 @@ class ListingHelper extends Helper
      *     "variables"             =>  $this->variables,
      *  )
      * @param type $arguments
+     * @return ListingHelper
      */
     public function help($arguments)
     {
@@ -49,7 +43,7 @@ class ListingHelper extends Helper
     {
         $this->parameters['row_template'] = $this->parameters['row_template'] == null ? 'row.tpl.php' : $this->parameters['row_template'];
         $this->parameters['default_cell_template'] = $this->parameters['default_cell_template'] == null ? 'default_cell.tpl.php' : $this->parameters['default_cell_template'];
-        return TemplateEngine::render('list.tpl.php', $this->parameters);
+        return $this->templateRenderer->render('list.tpl.php', $this->parameters);
     }
 }
 

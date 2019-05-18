@@ -29,9 +29,7 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form;
-
-use ntentan\honam\TemplateEngine;
+namespace ntentan\honam\engines\php\helpers\form;
 
 /**
  * A regular checkbox with a label.
@@ -46,10 +44,10 @@ class CheckableField extends Field
     /**
      * Constructor for the checkbox.
      *
-     * @param $label The label of the checkbox.
-     * @param $name The name of the checkbox used for the name='' attribute of the HTML output
-     * @param $description A description of the field.
-     * @param $value A value to assign to this checkbox.
+     * @param string $label The label of the checkbox.
+     * @param string $name The name of the checkbox used for the name='' attribute of the HTML output
+     * @param string $value A value to assign to this checkbox.
+     * @param string $description A description of the field.
      */
     public function __construct($label="", $name="", $value="", $description="")
     {
@@ -90,10 +88,7 @@ class CheckableField extends Field
         $this->setAttribute("name", $this->getName());
         $this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");        
         $this->setValue($this->getCheckedValue());
-        return TemplateEngine::render(
-            'input_checkable_element.tpl.php', 
-            array('element' => $this)
-        );
+        return $this->templateRenderer->render('input_checkable_element.tpl.php', array('element' => $this));
     }
 }
 
