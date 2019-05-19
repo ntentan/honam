@@ -2,12 +2,14 @@
 
 namespace ntentan\honam\tests\cases;
 
+use ntentan\honam\tests\lib\HelperTestCase;
+
 /**
  * Description of MenuHelperTest
  *
  * @author ekow
  */
-class MenuHelperTest extends \ntentan\honam\tests\lib\HelperTestCase
+class MenuHelperTest extends HelperTestCase
 {
     public function testMenu()
     {

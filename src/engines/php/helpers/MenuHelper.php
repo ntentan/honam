@@ -35,6 +35,7 @@ namespace ntentan\honam\engines\php\helpers;
 
 use ntentan\honam\engines\php\Helper;
 
+use ntentan\honam\TemplateRenderer;
 use ntentan\utils\Input;
 
 /**
@@ -58,11 +59,9 @@ class MenuHelper extends Helper
     const SELECTED_ITEM = 'selected';
     const MATCHED_ITEM = 'matched';
     
-    public function __construct()
+    public function __construct(TemplateRenderer $templateRenderer)
     {
-        \ntentan\honam\TemplateEngine::appendPath(
-            __DIR__ . "/../../templates/menu"
-        );
+        parent::__construct($templateRenderer);
         $this->setCurrentUrl(Input::server('REQUEST_URI'));
     }    
     
@@ -120,7 +119,7 @@ class MenuHelper extends Helper
             $menuItems[$index] = $item;
         }
         
-        return \ntentan\honam\TemplateEngine::render(
+        return $this->templateRenderer->render(
             "{$this->alias}_menu.tpl.php",
             [
                 'items' => $menuItems,

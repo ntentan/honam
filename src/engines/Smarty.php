@@ -20,7 +20,6 @@ class Smarty extends TemplateEngine
             $this->smarty = new smarty\Engine();
         }
         $this->smarty->clearAllAssign();
-        $data['honam'] = $this->getHelpersLoader();
         $this->smarty->assign($data);
         return $this->smarty;
     }

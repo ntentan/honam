@@ -52,14 +52,8 @@ class PaginationHelper extends Helper
         'base_url' => null,
         'page_number' => 1
     );
+
     private $halfNumberOfLinks;
-    
-    public function __construct()
-    {
-        TemplateEngine::appendPath(
-            __DIR__ . "/../../templates/pagination"
-        );
-    } 
 
     public function help($params = array())
     {
@@ -148,6 +142,6 @@ class PaginationHelper extends Helper
             );
         }
         
-        return TemplateEngine::render("links.tpl.php", array('links' => $pagingLinks));
+        return $this->templateRenderer->render("links.tpl.php", array('links' => $pagingLinks));
     }
 }

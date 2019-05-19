@@ -23,7 +23,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\honam\template_engines\mustache;
+namespace ntentan\honam\engines\mustache;
 
 /**
  * Loads a given mustache template file.

@@ -7,7 +7,7 @@ class PainationHelperTest extends \ntentan\honam\tests\lib\HelperTestCase
     {
         $this->assertXmlStringEqualsXmlString(
             "<ul class='pagination'></ul>", 
-            (string)$this->helpers->pagination()
+            (string)$this->helpers->pagination()->__toString()
         );
     }
     

@@ -1,7 +1,9 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-class ListingHelperTest extends \ntentan\honam\tests\lib\HelperTestCase
+use ntentan\honam\tests\lib\HelperTestCase;
+
+class ListingHelperTest extends HelperTestCase
 {
     public function testList()
     {

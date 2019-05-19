@@ -9,16 +9,8 @@ use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\TemplateFileResolver;
 use ntentan\honam\TemplateRenderer;
 
-class PhpEngineFactory implements EngineFactoryInterface
+class SmartyEngineFactory implements EngineFactoryInterface
 {
-    public function __construct(TemplateFileResolver $templateFileResolver)
-    {
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/forms");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/lists");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/menu");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/pagination");
-    }
-
     public function create(TemplateRenderer $templateRenderer): AbstractEngine
     {
         $helpersLoader = new HelperFactory($templateRenderer);

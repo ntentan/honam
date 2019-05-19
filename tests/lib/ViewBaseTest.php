@@ -1,20 +1,25 @@
 <?php
 namespace ntentan\honam\tests\lib;
 
+use ntentan\honam\EngineRegistry;
+use ntentan\honam\factories\PhpEngineFactory;
 use ntentan\honam\TemplateEngine;
+use ntentan\honam\TemplateFileResolver;
+use ntentan\honam\TemplateRenderer;
 use PHPUnit\Framework\TestCase;
 
 class ViewBaseTest extends  TestCase
 {
     protected $view;
+    protected $templateRenderer;
+    protected $templateFileResolver;
     
-    public static function setUpBeforeClass() : void
+    public function setUp() : void
     {
-        TemplateEngine::appendPath('tests/files/views');
-    }   
-    
-    public static function tearDownAfterClass() : void
-    {
-        TemplateEngine::reset();
+        $this->templateFileResolver = new TemplateFileResolver();
+        $engineRegistry = new EngineRegistry();
+        $phpEngineFactory = new PhpEngineFactory($this->templateFileResolver);
+        $engineRegistry->registerEngine(["tpl.php"], $phpEngineFactory);
+        $this->templateRenderer = new TemplateRenderer($engineRegistry, $this->templateFileResolver);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace ntentan\honam\factories;
 
-use ntentan\honam\template_engines\AbstractEngine;
-use ntentan\honam\template_engines\mustache\MustacheLoader;
-use ntentan\honam\template_engines\mustache\MustachePartialsLoader;
-use ntentan\honam\template_engines\MustacheEngine;
+use ntentan\honam\engines\AbstractEngine;
+use ntentan\honam\engines\mustache\MustacheLoader;
+use ntentan\honam\engines\mustache\MustachePartialsLoader;
+use ntentan\honam\engines\MustacheEngine;
 
 
 class MustacheEngineFactory implements EngineFactoryInterface

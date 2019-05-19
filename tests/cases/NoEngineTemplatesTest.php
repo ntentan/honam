@@ -1,13 +1,13 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-use ntentan\honam\TemplateEngine;
+use ntentan\honam\tests\lib\ViewBaseTest;
 
-class NoEngineTemplatesTest extends \ntentan\honam\tests\lib\ViewBaseTest
+class NoEngineTemplatesTest extends ViewBaseTest
 {
     public function testLoading()
     {
-        TemplateEngine::appendPath("tests/files/views/no_engine");
-        TemplateEngine::render("no_engine", array());
+        $this->templateFileResolver->appendToPathHierarchy("tests/files/views/no_engine");
+        $this->templateRenderer->render("no_engine", []);
     }
 }
