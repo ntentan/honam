@@ -2,7 +2,7 @@
 namespace ntentan\honam\tests\lib;
 
 use ntentan\honam\EngineRegistry;
-use ntentan\honam\engines\php\HelperFactory;
+use ntentan\honam\factories\HelperFactory;
 use ntentan\honam\factories\PhpEngineFactory;
 use ntentan\honam\TemplateFileResolver;
 use ntentan\honam\TemplateRenderer;

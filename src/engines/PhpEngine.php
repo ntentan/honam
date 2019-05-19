@@ -26,10 +26,9 @@
 
 namespace ntentan\honam\engines;
 
-use ntentan\honam\engines\php\HelperFactory;
 use ntentan\honam\engines\php\Janitor;
-use ntentan\honam\TemplateEngine;
 use ntentan\honam\engines\php\Variable;
+use ntentan\honam\factories\HelperFactory;
 use ntentan\utils\StringStream;
 
 /**
@@ -47,6 +46,7 @@ class PhpEngine extends AbstractEngine
     public function __construct(HelperFactory $helpersLoader, Janitor $janitor)
     {
         $this->helpersLoader = $helpersLoader;
+        $this->janitor = $janitor;
     }
 
     function partial($template, $templateData = array())
@@ -133,7 +133,7 @@ class PhpEngine extends AbstractEngine
      * @return string
      */
     public function strip($text) {
-        return php\Janitor::cleanHtml($text, true);
+        return $this->janitor->cleanHtml($text, true);
     }
 
     /**

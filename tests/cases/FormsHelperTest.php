@@ -1,7 +1,7 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-use ntentan\honam\engines\php\helpers\form\Fieldset;
+use ntentan\honam\exceptions\HelperException;
 use ntentan\honam\tests\lib\HelperTestCase;
 
 class FormsHelperTest extends HelperTestCase
@@ -162,11 +162,9 @@ class FormsHelperTest extends HelperTestCase
         );
     }
     
-    /**
-     * @expectedException \ntentan\honam\exceptions\HelperException
-     */
     public function testWrongMethod()
     {
+        $this->expectException(HelperException::class);
         $this->helpers->form->fail();
     }
     

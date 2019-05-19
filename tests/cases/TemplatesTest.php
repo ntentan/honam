@@ -1,6 +1,8 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
+use ntentan\honam\exceptions\TemplateEngineNotFoundException;
+use ntentan\honam\exceptions\TemplateResolutionException;
 use ntentan\honam\tests\lib\ViewBaseTest;
 
 class TemplatesTest extends ViewBaseTest
@@ -31,19 +33,15 @@ class TemplatesTest extends ViewBaseTest
         $this->assertEquals("Is this another Login Page?", $output);
     }
     
-    /**
-     * @expectedException \ntentan\honam\exceptions\TemplateResolutionException
-     */
     public function testLayoutLoadFailure()
     {
+        $this->expectException(TemplateResolutionException::class);
         $this->templateRenderer->render('arbitrary.tpl.php', array());
     }
     
-    /**
-     * @expectedException \ntentan\honam\exceptions\TemplateEngineNotFoundException
-     */    
     public function testEngineLoadFailure()
     {
+        $this->expectException(TemplateEngineNotFoundException::class);
         $this->templateRenderer->render('arbitrary.tpl.noengine', array());
     }
 }

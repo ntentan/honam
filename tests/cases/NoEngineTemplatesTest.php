@@ -8,6 +8,6 @@ class NoEngineTemplatesTest extends ViewBaseTest
     public function testLoading()
     {
         $this->templateFileResolver->appendToPathHierarchy("tests/files/views/no_engine");
-        $this->templateRenderer->render("no_engine", []);
+        $this->assertEquals("tests/files/views/no_engine/no_engine.smarty", $this->templateFileResolver->resolveTemplateFile('no_engine'));
     }
 }

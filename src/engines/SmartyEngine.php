@@ -3,7 +3,7 @@
 namespace ntentan\honam\engines;
 
 
-use ntentan\honam\template_engines\smarty\Engine;
+use ntentan\honam\engines\smarty\Core;
 
 /**
  * Description of Mustache
@@ -14,29 +14,9 @@ class SmartyEngine extends AbstractEngine
 {
     private $smarty;
 
-    public function __construct(Engine $smarty)
+    public function __construct(Core $smarty)
     {
-
-    }
-
-    private function getSmarty($data)
-    {
-        if($this->smarty === null)
-        {
-        }
-        $this->smarty->clearAllAssign();
-        $this->smarty->assign($data);
-        return $this->smarty;
-    }
-    
-    protected function generate($data) 
-    {
-        return $this->getSmarty($data)->fetch($this->template);
-    }
-
-    protected function generateFromString($string, $data)
-    {
-        return $this->getSmarty($data)->display("string:$string");
+        $this->smarty = $smarty;
     }
 
     /**
@@ -44,10 +24,12 @@ class SmartyEngine extends AbstractEngine
      * @param string $filePath
      * @param array $data
      * @return string
+     * @throws \SmartyException
      */
     public function renderFromFileTemplate(string $filePath, array $data): string
     {
-        // TODO: Implement renderFromFileTemplate() method.
+        $this->smarty->setData($data);
+        return $this->smarty->fetch($filePath);
     }
 
     /**
@@ -56,9 +38,11 @@ class SmartyEngine extends AbstractEngine
      * @param string $string
      * @param array $data
      * @return string
+     * @throws \SmartyException
      */
     public function renderFromStringTemplate(string $string, array $data): string
     {
-        // TODO: Implement renderFromStringTemplate() method.
+        $this->smarty->setData($data);
+        return $this->smarty->fetch("string:$string");
     }
 }

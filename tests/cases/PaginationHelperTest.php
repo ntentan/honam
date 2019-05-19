@@ -1,7 +1,9 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-class PainationHelperTest extends \ntentan\honam\tests\lib\HelperTestCase
+use ntentan\honam\tests\lib\HelperTestCase;
+
+class PainationHelperTest extends HelperTestCase
 {
     public function testPlainPagination()
     {
