@@ -1,31 +1,31 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-use ntentan\honam\TemplateEngine;
+use ntentan\honam\tests\lib\ViewBaseTest;
 
-class PhpEngineTest extends \ntentan\honam\tests\lib\ViewBaseTest
+class PhpEngineTest extends ViewBaseTest
 {    
     public function testStrip()
     {
-        $output = TemplateEngine::render('phptest_strip.tpl.php', array());
+        $output = $this->templateRenderer->render('phptest_strip.tpl.php', array());
         $this->assertEquals("This should strip", $output);
     }
     
     public function testTruncate()
     {
-        $output = TemplateEngine::render('phptest_truncate.tpl.php', array());
+        $output = $this->templateRenderer->render('phptest_truncate.tpl.php', array());
         $this->assertEquals("The quick ...", $output);
     }
     
     public function testVariableUnescape()
     {
-        $output = TemplateEngine::render('phptest_variable.tpl.php', array('some_html' => "<div><span>Hello I'm HTML</span></div>"));
+        $output = $this->templateRenderer->render('phptest_variable.tpl.php', array('some_html' => "<div><span>Hello I'm HTML</span></div>"));
         $this->assertEquals("&lt;div&gt;&lt;span&gt;Hello I'm HTML&lt;/span&gt;&lt;/div&gt; : <div><span>Hello I'm HTML</span></div>", $output);
     }
     
     public function testArrayVariable()
     {
-        $output = TemplateEngine::render(
+        $output = $this->templateRenderer->render(
             'phptest_array.tpl.php',
             array(
                 'array' => array(

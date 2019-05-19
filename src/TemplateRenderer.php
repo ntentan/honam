@@ -60,6 +60,8 @@ class TemplateRenderer
      */
     private $templateFileResolver;
 
+    private $tempDirectory;
+
     /**
      * TemplateRenderer constructor.
      *
@@ -115,6 +117,16 @@ class TemplateRenderer
         return $this->loadedInstances[$extension];
     }
 
+    public function setTempDirectory(string $tempDirectory)
+    {
+        $this->tempDirectory = $tempDirectory;
+    }
+
+    public function getTempDirectory()
+    {
+        return $this->tempDirectory;
+    }
+
 
     /**
      * Renders a given template reference with associated template data. This render
@@ -128,6 +140,7 @@ class TemplateRenderer
      * @param null $extension
      * @return string
      * @throws TemplateResolutionException
+     * @throws UnknownTemplateExtensionException
      * @throws exceptions\TemplateEngineNotFoundException
      */
     public function render($template, $data, $fromString = false, $extension=null)

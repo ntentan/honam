@@ -2,8 +2,9 @@
 namespace ntentan\honam\template_engines\smarty;
 
 use ntentan\honam\TemplateEngine;
+use Smarty;
 
-class Engine extends \Smarty
+class Engine extends Smarty
 {
     private $temp;
     

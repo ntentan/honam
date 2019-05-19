@@ -30,6 +30,7 @@ use ntentan\honam\engines\php\HelperFactory;
 use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\TemplateEngine;
 use ntentan\honam\engines\php\Variable;
+use ntentan\utils\StringStream;
 
 /**
  * The PHP engine is a template engine built into honam which uses raw PHP as
@@ -95,7 +96,7 @@ class PhpEngine extends AbstractEngine
      */
     public function renderFromStringTemplate(string $string, array $data) : string
     {
-        \ntentan\utils\StringStream::register();
+        StringStream::register();
         file_put_contents('string://template', $string);
         return $this->renderFromFileTemplate('string://template', $data);
     }
@@ -124,36 +125,36 @@ class PhpEngine extends AbstractEngine
 //        return ob_get_clean();
 //    }
 //
-//    /**
-//     * A utility function to strip the text of all HTML code. This function
-//     * removes all HTML tags instead of escaping them.
-//     *
-//     * @param string $text
-//     * @return string
-//     */
-//    public function strip($text) {
-//        return php\Janitor::cleanHtml($text, true);
-//    }
-//
-//    /**
-//     * A utility function to cut long pieces of text into meaningful short
-//     * chunks. The function is very good in cases where you want to show just
-//     * a short preview snippet of a long text. The function cuts the long string
-//     * without cutting through words and appends some sort of ellipsis
-//     * terminator to the text.
-//     *
-//     * @param string $text The text to be truncated.
-//     * @param string $length The maximum lenght of the truncated string. Might
-//     *      return a shorter string if the lenght ends in the middle of a word.
-//     * @param string $terminator The ellipsis terminator to use for the text.
-//     * @return string
-//     */
-//    public function truncate($text, $length, $terminator = ' ...') {
-//        while (mb_substr($text, $length, 1) != ' ' && $length > 0) {
-//            $length--;
-//        }
-//        return mb_substr($text, 0, $length) . $terminator;
-//    }
+    /**
+     * A utility function to strip the text of all HTML code. This function
+     * removes all HTML tags instead of escaping them.
+     *
+     * @param string $text
+     * @return string
+     */
+    public function strip($text) {
+        return php\Janitor::cleanHtml($text, true);
+    }
+
+    /**
+     * A utility function to cut long pieces of text into meaningful short
+     * chunks. The function is very good in cases where you want to show just
+     * a short preview snippet of a long text. The function cuts the long string
+     * without cutting through words and appends some sort of ellipsis
+     * terminator to the text.
+     *
+     * @param string $text The text to be truncated.
+     * @param string $length The maximum lenght of the truncated string. Might
+     *      return a shorter string if the lenght ends in the middle of a word.
+     * @param string $terminator The ellipsis terminator to use for the text.
+     * @return string
+     */
+    public function truncate($text, $length, $terminator = ' ...') {
+        while (mb_substr($text, $length, 1) != ' ' && $length > 0) {
+            $length--;
+        }
+        return mb_substr($text, 0, $length) . $terminator;
+    }
 //
 //    protected function generateFromString($string, $data) {
 //        \ntentan\utils\StringStream::register();
@@ -162,8 +163,8 @@ class PhpEngine extends AbstractEngine
 //        return $this->generate($data);
 //    }
 //
-//    public function __destruct() {
-//        \ntentan\utils\StringStream::unregister();
-//    }
+    public function __destruct() {
+        StringStream::unregister();
+    }
 
 }

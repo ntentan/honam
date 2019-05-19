@@ -21,7 +21,7 @@ class PhpEngineFactory implements EngineFactoryInterface
 
     public function create(TemplateRenderer $templateRenderer): AbstractEngine
     {
-        $helpersLoader = new HelperFactory($templateRenderer);
+        $helpersLoader = new HelperFactory();
         $janitor = new Janitor();
         return new PhpEngine($helpersLoader, $janitor);
     }
