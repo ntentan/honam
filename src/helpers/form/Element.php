@@ -153,7 +153,7 @@ abstract class Element
     /**
      * Public accessor for getting the name property of the field.
      *
-     * @return The name of the form field.
+     * @return string
      */
     public function getName()
     {
@@ -188,7 +188,7 @@ abstract class Element
      * Sets the description which is attached to this element. The description
      * is normally displayed under the element when rendering HTML.
      *
-     * @return string
+     * @return Element
      */
     public function setDescription($description)
     {
@@ -221,6 +221,8 @@ abstract class Element
      * Renders the form element by outputing the HTML associated with
      * the element. This method is abstract and it is implemented by
      * all the other classes which inherit the Element class.
+     *
+     * @return string
      */
     abstract public function render();
 

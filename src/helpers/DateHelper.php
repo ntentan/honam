@@ -53,7 +53,7 @@ class DateHelper extends Helper
      */
     private function selectTimestamp($date = null)
     {
-        return $date == null ? $this->timestamp : strtotime($date);
+        return $date === null ? $this->timestamp : strtotime($date);
     }
 
     /**
@@ -62,7 +62,7 @@ class DateHelper extends Helper
      * parsed.
      * 
      * @param string $time
-     * @return DatesHelper
+     * @return DateHelper
      */
     public function help($time)
     {

@@ -12,5 +12,5 @@ abstract class Generator
         $this->properties = $properties;
     }
 
-    abstract public function generate();
+    abstract public function generate() : string;
 }

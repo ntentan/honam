@@ -3,14 +3,14 @@ namespace ntentan\honam\engines\smarty;
 
 use ntentan\honam\factories\HelperFactory;
 use ntentan\honam\TemplateRenderer;
+use ntentan\utils\Filesystem;
 use Smarty;
 
 class Core extends Smarty
 {
-    private $temp;
+    private $temp = '.';
     private $helperFactory;
-    private $templateRenderer;
-    
+
     public function __construct(HelperFactory $helperFactory, string $tempDirectory)
     {
         parent::__construct();
@@ -22,14 +22,7 @@ class Core extends Smarty
     public function __destruct() 
     {
         if($this->temp === '.' && file_exists("./smarty_compiled_templates")) {
-            $files = scandir("./smarty_compiled_templates");
-            foreach($files as $file) {
-                if($file == "." | $file == "..") {
-                    continue;
-                }
-                unlink("./smarty_compiled_templates/$file");
-            }
-            rmdir("./smarty_compiled_templates");
+            Filesystem::get("./smarty_compiled_templates")->delete();
         }
     }
 

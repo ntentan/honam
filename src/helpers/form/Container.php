@@ -48,8 +48,14 @@ abstract class Container extends Element
     protected $renderMode = self::RENDER_MODE_ALL;
     protected $elements = array();
 
+    /**
+     * @return string
+     */
     abstract protected function renderHead();
 
+    /**
+     * @return string
+     */
     abstract protected function renderFoot();
     
     public function setRenderMode($renderMode)

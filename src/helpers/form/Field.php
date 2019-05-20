@@ -98,28 +98,22 @@ class Field extends Element
     /**
      * Returns the required status of the field.
      *
-     * @return The required status of the field.
+     * @return bool
      */
     public function getRequired()
     {
         return $this->required;
     }
 
-    //! Sets the data that is stored in this field.
-    //! \param $data An array of fields. This method just looks through for
-    //!              a field that matches it and then applies its value to
-    //!              itself.
+    /**
+     * @param $data
+     */
     public function setData($data)
     {
-        if(array_search($this->getName(false),array_keys($data))!==false)
+        if(array_search($this->getName(),array_keys($data))!==false)
         {
-            $this->setValue($data[$this->getName(false)]);
+            $this->setValue($data[$this->getName()]);
         }
-    }
-
-    public function getType()
-    {
-        return __CLASS__;
     }
 
     public function getCSSClasses()
@@ -129,7 +123,10 @@ class Field extends Element
         if($this->getRequired()) $classes .="required ";
         return trim($classes);
     }
-    
+
+    /**
+     * @return string
+     */
     public function render()
     {
         $this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");

@@ -8,7 +8,8 @@ use Countable;
 use Iterator;
 use ntentan\honam\exceptions\HonamException;
 
-class Variable implements ArrayAccess, Iterator, Countable {
+class Variable implements ArrayAccess, Iterator, Countable
+{
 
     private $keys;
     private $position;
@@ -16,7 +17,14 @@ class Variable implements ArrayAccess, Iterator, Countable {
     private $iteratable = false;
     private $janitor;
 
-    public static function initialize($data, Janitor $janitor) {
+    /**
+     * @param $data
+     * @param Janitor $janitor
+     * @return mixed
+     * @throws HonamException
+     */
+    public static function initialize($data, Janitor $janitor)
+    {
         $type = gettype($data);
         switch ($type) {
             case 'object':
@@ -56,7 +64,7 @@ class Variable implements ArrayAccess, Iterator, Countable {
 
     public function __toString()
     {
-        return $this->janitor->cleanHtml($this->data);
+        return $this->janitor->cleanHtml((string)$this->data);
     }
 
     public function u()
@@ -101,7 +109,8 @@ class Variable implements ArrayAccess, Iterator, Countable {
         }
     }
 
-    public function key() {
+    public function key()
+    {
         if ($this->iteratable) {
             return $this->data->key();
         } else {
@@ -109,7 +118,8 @@ class Variable implements ArrayAccess, Iterator, Countable {
         }
     }
 
-    public function next() {
+    public function next()
+    {
         if ($this->iteratable) {
             $this->data->next();
         } else {
@@ -117,11 +127,13 @@ class Variable implements ArrayAccess, Iterator, Countable {
         }
     }
 
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->data[$offset]);
     }
 
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         if (isset($this->data[$offset])) {
             return Variable::initialize($this->data[$offset], $this->janitor);
         } else {
@@ -129,7 +141,8 @@ class Variable implements ArrayAccess, Iterator, Countable {
         }
     }
 
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         if (is_null($offset)) {
             $this->data[] = $value;
         } else {
@@ -137,27 +150,44 @@ class Variable implements ArrayAccess, Iterator, Countable {
         }
     }
 
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->data[$offset]);
     }
 
-    public function __call($method, $arguments) {
+    /**
+     * @param $method
+     * @param $arguments
+     * @return mixed
+     * @throws HonamException
+     */
+    public function __call($method, $arguments)
+    {
         return Variable::initialize(call_user_func_array([$this->data, $method], $arguments), $this->janitor);
     }
 
-    public function __get($name) {
+    /**
+     * @param $name
+     * @return mixed
+     * @throws HonamException
+     */
+    public function __get($name)
+    {
         return Variable::initialize($this->data->$name, $this->janitor);
     }
-    
-    public function __debugInfo() {
+
+    public function __debugInfo()
+    {
         return is_array($this->data) ? $this->data : [$this->data];
     }
-    
-    public function getData() {
+
+    public function getData()
+    {
         return $this->data;
     }
 
-    public function getKeys() {
+    public function getKeys()
+    {
         return $this->keys;
     }
 }

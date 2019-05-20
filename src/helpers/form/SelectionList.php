@@ -32,6 +32,8 @@
 
 namespace ntentan\honam\helpers\form;
 
+use ntentan\honam\engines\php\Variable;
+
 /**
  * A selection list class for the forms helper. This class renders an HTML
  * select form object with its associated options.
@@ -132,13 +134,13 @@ class SelectionList extends Field
      * Set the options using a key value pair datastructure represented in the form of
      * a structured array.
      *
-     * @param array $options An array of options
+     * @param array|Variable $options An array of options
      * 
      * @return SelectionList
      */
     public function setOptions($options = [])
     {
-        if(is_a($options, "\\ntentan\\honam\\template_engines\\php\\Variable"))
+        if(is_a($options, Variable::class))
         {
             $options = $options->unescape();
         }

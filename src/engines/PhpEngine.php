@@ -26,6 +26,7 @@
 
 namespace ntentan\honam\engines;
 
+use Exception;
 use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\engines\php\Variable;
 use ntentan\honam\factories\HelperFactory;
@@ -40,7 +41,14 @@ use ntentan\utils\StringStream;
  */
 class PhpEngine extends AbstractEngine
 {
+    /**
+     * @var HelperFactory
+     */
     private $helpersLoader;
+
+    /**
+     * @var Janitor
+     */
     private $janitor;
 
     public function __construct(HelperFactory $helpersLoader, Janitor $janitor)
@@ -49,14 +57,18 @@ class PhpEngine extends AbstractEngine
         $this->janitor = $janitor;
     }
 
-    function partial($template, $templateData = array())
+    public function partial($template, $templateData = array())
     {
         return $this->templateRenderer->render($template, $templateData);
     }
 
-    function unescape($item)
+    /**
+     * @param mixed $item
+     * @return mixed
+     */
+    public function unescape($item)
     {
-        if($item instanceof ntentan\honam\template_engines\php\Variable) {
+        if($item instanceof Variable) {
             return $item->unescape();
         } else {
             return $item;
@@ -83,7 +95,7 @@ class PhpEngine extends AbstractEngine
         ob_start();
         try {
             include $filePath;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             ob_get_flush();
             throw $e;
         }
@@ -101,30 +113,6 @@ class PhpEngine extends AbstractEngine
         return $this->renderFromFileTemplate('string://template', $data);
     }
 
-//    public function generate($templateVariables)
-//    {
-//        // Escape each variable by passing it through the variable class.
-//        // Users would have to unescape them by calling the escape method directly
-//        // on the variable.
-//        foreach ($templateVariables as $_key => $_value) {
-//            $$_key = php\Variable::initialize($_value);
-//        }
-//
-//        // Expose helpers
-//        $helpers = $this->getHelpersLoader();
-//
-//        // Start trapping the output buffer and include the PHP template for
-//        // execution.
-//        ob_start();
-//        try {
-//            include $this->template;
-//        } catch (\Exception $e) {
-//            ob_get_flush();
-//            throw $e;
-//        }
-//        return ob_get_clean();
-//    }
-//
     /**
      * A utility function to strip the text of all HTML code. This function
      * removes all HTML tags instead of escaping them.
@@ -132,7 +120,8 @@ class PhpEngine extends AbstractEngine
      * @param string $text
      * @return string
      */
-    public function strip($text) {
+    public function strip($text)
+    {
         return $this->janitor->cleanHtml($text, true);
     }
 
@@ -149,21 +138,16 @@ class PhpEngine extends AbstractEngine
      * @param string $terminator The ellipsis terminator to use for the text.
      * @return string
      */
-    public function truncate($text, $length, $terminator = ' ...') {
+    public function truncate($text, $length, $terminator = ' ...')
+    {
         while (mb_substr($text, $length, 1) != ' ' && $length > 0) {
             $length--;
         }
         return mb_substr($text, 0, $length) . $terminator;
     }
-//
-//    protected function generateFromString($string, $data) {
-//        \ntentan\utils\StringStream::register();
-//        file_put_contents('string://template', $string);
-//        $this->template = 'string://template';
-//        return $this->generate($data);
-//    }
-//
-    public function __destruct() {
+
+    public function __destruct()
+    {
         StringStream::unregister();
     }
 

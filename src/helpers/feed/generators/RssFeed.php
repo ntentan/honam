@@ -27,15 +27,16 @@
 namespace ntentan\honam\helpers\feed\generators;
 
 use ntentan\honam\helpers\feed\Generator;
+use SimpleXMLElement;
 
 /**
  * RSS Feed generator for the Feed helper.
  */
 class RssFeed extends Generator
 {
-    public function generate()
+    public function generate() : string
     {
-        $rss = new \SimpleXMLElement('<rss></rss>');
+        $rss = new SimpleXMLElement('<rss></rss>');
         $rss['version'] = '2.0';
         $rss->addChild('channel');
         foreach($this->properties as $property => $value)
@@ -97,7 +98,12 @@ class RssFeed extends Generator
         
         return $properties[$property];
     }
-    
+
+    /**
+     * @param $property
+     * @param $value
+     * @return false|string
+     */
     private function formatProperty($property, $value)
     {
         switch($property)
