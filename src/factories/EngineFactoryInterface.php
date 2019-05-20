@@ -12,5 +12,5 @@ use ntentan\honam\TemplateRenderer;
  */
 interface EngineFactoryInterface
 {
-    public function create(TemplateRenderer $templateRenderer) : AbstractEngine;
+    public function create() : AbstractEngine;
 }

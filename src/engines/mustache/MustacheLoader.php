@@ -25,12 +25,14 @@
 
 namespace ntentan\honam\engines\mustache;
 
+use Mustache_Loader;
+
 /**
  * Loads a given mustache template file.
  *
  * @author ekow
  */
-class MustacheLoader implements \Mustache_Loader
+class MustacheLoader implements Mustache_Loader
 {
     public function load($name) 
     {

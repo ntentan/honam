@@ -2,6 +2,8 @@
 
 namespace ntentan\honam\engines;
 
+use Mustache_Engine;
+
 /**
  * Description of Mustache
  *
@@ -12,31 +14,32 @@ class MustacheEngine extends AbstractEngine
     private $stringRenderingEngine;
     private $fileRenderingEngine;
 
-    /**
-     *
-     * @return \Mustache_Engine
-     */
-    public function __construct($stringRenderingEngine, $fileRenderingEngine)
+    public function __construct(Mustache_Engine $stringRenderingEngine, Mustache_Engine $fileRenderingEngine)
     {
         $this->stringRenderingEngine = $stringRenderingEngine;
         $this->fileRenderingEngine = $fileRenderingEngine;
     }
 
-    protected function generate($data)
+    /**
+     * Passes the data to be rendered to the template engine instance.
+     * @param string $filePath
+     * @param array $data
+     * @return string
+     */
+    public function renderFromFileTemplate(string $filePath, array $data): string
     {
-        $m = $this->getMustache();
-        return $m->render($this->template, $data);
+        return $this->fileRenderingEngine->render($filePath, $data);
     }
 
-    public function getTemplateFile($name)
+    /**
+     * Passes a template string and data to be rendered to the template engine
+     * instance.
+     * @param string $string
+     * @param array $data
+     * @return string
+     */
+    public function renderFromStringTemplate(string $string, array $data): string
     {
-        return $this->resolveTemplateFile($name);
+        return $this->stringRenderingEngine->render($string, $data);
     }
-
-    protected function generateFromString($string, $data)
-    {
-        $m = $this->getMustache(false);
-        return $m->render($string, $data);
-    }
-
 }

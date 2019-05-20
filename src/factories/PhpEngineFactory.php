@@ -4,24 +4,20 @@ namespace ntentan\honam\factories;
 use ntentan\honam\engines\AbstractEngine;
 use ntentan\honam\engines\PhpEngine;
 use ntentan\honam\engines\php\Janitor;
-use ntentan\honam\TemplateFileResolver;
-use ntentan\honam\TemplateRenderer;
 
 class PhpEngineFactory implements EngineFactoryInterface
 {
-    public function __construct(TemplateFileResolver $templateFileResolver)
+    private $helperFactory;
+    private $janitor;
+
+    public function __construct(HelperFactory $helperFactory, Janitor $janitor)
     {
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/forms");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/lists");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/menu");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/pagination");
+        $this->helperFactory = $helperFactory;
+        $this->janitor = $janitor;
     }
 
-    public function create(TemplateRenderer $templateRenderer): AbstractEngine
+    public function create(): AbstractEngine
     {
-        $helpersLoader = new HelperFactory();
-        $helpersLoader->setTemplateRenderer($templateRenderer);
-        $janitor = new Janitor();
-        return new PhpEngine($helpersLoader, $janitor);
+        return new PhpEngine($this->helperFactory, $this->janitor);
     }
 }

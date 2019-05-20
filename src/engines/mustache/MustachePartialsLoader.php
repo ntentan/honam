@@ -25,23 +25,32 @@
 
 namespace ntentan\honam\engines\mustache;
 
+use Mustache_Loader;
+use ntentan\honam\exceptions\TemplateResolutionException;
+use ntentan\honam\TemplateFileResolver;
+
 /**
  * Leverages the template engine's template resolver to resolve partial
  * templates requested from within a given mustache template.
  *
  * @author ekow
  */
-class MustachePartialsLoader implements \Mustache_Loader
+class MustachePartialsLoader implements Mustache_Loader
 {
-    private $mustache;
+    private $templateFileResolver;
     
-    public function __construct($mustache) 
+    public function __construct(TemplateFileResolver $templateFileResolver)
     {
-        $this->mustache = $mustache;
+        $this->templateFileResolver = $templateFileResolver;
     }
-    
-    public function load($name) 
+
+    /**
+     * @param string $name
+     * @return false|\Mustache_Source|string
+     * @throws TemplateResolutionException
+     */
+    public function load($name)
     {
-        return file_get_contents($this->mustache->getTemplateFile("$name.mustache"));
+        return file_get_contents($this->templateFileResolver->resolveTemplateFile("$name.mustache"));
     }
 }

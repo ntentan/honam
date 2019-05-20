@@ -123,12 +123,6 @@ class TemplateRenderer
         $this->tempDirectory = $tempDirectory;
     }
 
-    public function getTempDirectory()
-    {
-        return $this->tempDirectory;
-    }
-
-
     /**
      * Renders a given template reference with associated template data. This render
      * function combs through the template directory heirachy to find a template

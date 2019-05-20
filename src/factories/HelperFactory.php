@@ -26,6 +26,7 @@
 namespace ntentan\honam\factories;
 
 use ntentan\honam\Helper;
+use ntentan\honam\TemplateFileResolver;
 use ntentan\honam\TemplateRenderer;
 use ReflectionMethod;
 
@@ -41,6 +42,14 @@ class HelperFactory
     public function setTemplateRenderer(TemplateRenderer $templateRenderer)
     {
         $this->templateRenderer = $templateRenderer;
+    }
+
+    public function setupTemplatePaths(TemplateFileResolver $templateFileResolver)
+    {
+        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/forms");
+        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/lists");
+        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/menu");
+        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/pagination");
     }
 
     /**

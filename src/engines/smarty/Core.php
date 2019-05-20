@@ -2,12 +2,14 @@
 namespace ntentan\honam\engines\smarty;
 
 use ntentan\honam\factories\HelperFactory;
+use ntentan\honam\TemplateRenderer;
 use Smarty;
 
 class Core extends Smarty
 {
     private $temp;
     private $helperFactory;
+    private $templateRenderer;
     
     public function __construct(HelperFactory $helperFactory, string $tempDirectory)
     {
