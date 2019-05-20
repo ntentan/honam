@@ -15,6 +15,7 @@ class HelperTestCase extends TestCase
     
     public function setUp() : void
     {
+        error_reporting(E_ALL);
         $this->helpers = new HelperFactory();
         $templateFileResolver = new TemplateFileResolver();
         $engineRegistry = new EngineRegistry();

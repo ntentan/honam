@@ -19,7 +19,7 @@ class MenuHelperTest extends HelperTestCase
                 array(
                     'Home', 'Projects', 'Blog', 'About'
                 )
-            )
+            )->__toString()
         );
     }
     

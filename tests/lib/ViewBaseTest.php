@@ -26,6 +26,7 @@ class ViewBaseTest extends  TestCase
 
     public function setUp() : void
     {
+        error_reporting(E_ALL);
         $this->templateFileResolver = new TemplateFileResolver();
         $engineRegistry = new EngineRegistry();
         $helperFactory = new HelperFactory();

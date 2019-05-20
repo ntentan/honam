@@ -72,7 +72,7 @@ class PhpEngine extends AbstractEngine
         // Users would have to unescape them by calling the escape method directly
         // on the variable.
         foreach ($data as $_key => $_value) {
-            $$_key = Variable::initialize($_value);
+            $$_key = Variable::initialize($_value, $this->janitor);
         }
 
         // Expose helpers
