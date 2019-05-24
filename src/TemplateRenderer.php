@@ -102,7 +102,13 @@ class TemplateRenderer
      */
     public function canRender($templateFile)
     {
-        return $this->getTemplateExtension($templateFile) !== null;
+        try {
+            $this->getTemplateExtension($templateFile);
+            return true;
+        } catch(TemplateEngineNotFoundException $exception) {
+            return false;
+        }
+
     }
 
 
