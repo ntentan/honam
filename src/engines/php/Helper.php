@@ -23,8 +23,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\honam;
+namespace ntentan\honam\engines\php;
 
+use ntentan\honam\TemplateRenderer;
 
 /**
  * Base class for helpers. Helpers are little utilities that make it possible to
@@ -65,10 +66,10 @@ class Helper
     {
         $this->baseUrl = $url;
     }
-    
+
     /**
      * Generate a full url by concatenating the base url with a path.
-     * 
+     *
      * @param string $url
      * @return string
      */

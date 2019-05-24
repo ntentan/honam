@@ -26,8 +26,10 @@
 
 namespace ntentan\honam;
 
+use ntentan\honam\engines\AbstractEngine;
 use ntentan\honam\exceptions\TemplateEngineNotFoundException;
 use ntentan\honam\exceptions\TemplateResolutionException;
+use ntentan\honam\factories\HelperVariable;
 
 /**
  * The TemplateEngine class does the work of resolving templates, loading template files,
@@ -44,7 +46,7 @@ class TemplateRenderer
 
     /**
      * An array of loaded template engine instances.
-     * @var array<\ntentan\honam\TemplateEngine>
+     * @var array<AbstractEngine>
      */
     private $loadedInstances;
 
@@ -73,7 +75,8 @@ class TemplateRenderer
         $this->registry = $registry;
         $this->templateFileResolver = $templateFileResolver;
         $this->tempDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "honam_temp";
-        $registry->setTemplateRenderer($this);
+
+        //$registry->setTemplateRenderer($this);
     }
 
     /**
@@ -109,6 +112,7 @@ class TemplateRenderer
      * @param $extension
      * @return mixed
      * @throws exceptions\TemplateEngineNotFoundException
+     * @throws exceptions\FactoryException
      */
     private function loadEngine($extension)
     {
@@ -136,6 +140,7 @@ class TemplateRenderer
      * @return string
      * @throws TemplateResolutionException
      * @throws exceptions\TemplateEngineNotFoundException
+     * @throws exceptions\FactoryException
      */
     public function render($template, $data, $fromString = false, $extension=null)
     {

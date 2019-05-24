@@ -23,10 +23,9 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\honam\helpers;
+namespace ntentan\honam\engines\php\helpers;
 
-use ntentan\honam\Helper;
-
+use ntentan\honam\engines\php\Helper;
 
 /**
  * The FeedHelper provides a generic way of generating feeds. The FeedHelper has

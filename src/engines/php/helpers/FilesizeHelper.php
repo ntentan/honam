@@ -1,8 +1,8 @@
 <?php
-namespace ntentan\honam\helpers;
 
-use ntentan\honam\Helper;
+namespace ntentan\honam\engines\php\helpers;
 
+use ntentan\honam\engines\php\Helper;
 
 class FilesizeHelper extends Helper
 {

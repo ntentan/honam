@@ -1,1 +1,1 @@
-Hello {$firstname} {$lastname}{$honam->form->open()}{$honam->form->close()}
+Hello {$firstname} {$lastname}

@@ -1,9 +1,9 @@
 <?php
 /**
- * Source code file for text fields
+ * Text area for forms
  * 
  * Ntentan Framework
- * Copyright (c) 2008-2013 James Ekow Abaka Ainooson
+ * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -29,20 +29,23 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form;
+namespace ntentan\honam\engines\php\helpers\form;
 
-/**
- * Implementation of a regular text field. This field is used to
- * accept single line text input from the user.
- * @ingroup Form_API
- */
-class TextField extends Field
+class TextArea extends Field
 {
-
-    public function __construct($label="",$name="",$description="",$value="")
+    public function __construct($label="",$name="",$description="")
     {
-        Field::__construct($name,$value);
-        Element::__construct($label, $description);
-        $this->setAttribute("type","text");
+        $this->setLabel($label);
+        $this->setName($name);
+        $this->setDescription($description);
+    }
+
+    public function render()
+    {
+        $this->setAttribute('rows', 10);
+        $this->setAttribute('cols', 80);
+        $this->setAttribute('class', "textarea {$this->getCSSClasses()}");
+        $this->setAttribute('name', $this->getName());
+        return $this->templateRenderer->render("textarea_element.tpl.php", ['element' => $this]);
     }
 }

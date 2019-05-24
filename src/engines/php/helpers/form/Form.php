@@ -29,28 +29,55 @@
  * @license MIT
  */
 
+namespace ntentan\honam\engines\php\helpers\form;
 
-namespace ntentan\honam\helpers\form;
+use ntentan\utils\Input;
 
-class Fieldset extends Container
+/**
+ * The form class. This class represents the overall form class. This
+ * form represents the main form for collecting data from the user.
+ */
+class Form extends Container
 {
+    protected $submitValues = array('Submit');
+    protected $showSubmit = true;
+    protected $method = "POST";
+    private $action;
 
-    public function __construct($label="",$description="")
+    public function __construct()
     {
-        parent::__construct();
-        $this->setLabel($label);
-        $this->setDescription($description);
+        $this->action = Input::server("REQUEST_URI");
     }
 
+    public function setAction($action)
+    {
+        $this->action = $action;
+        return $this;
+    }
+    
     public function renderHead()
     {
-        $this->setAttribute('class', "fieldset {$this->getCSSClasses()}");
-        return $this->templateRenderer->render('fieldset_head.tpl.php', ['element' => $this]);
+        $this->setAttribute("method", $this->method);
+        $this->setAttribute('action', $this->action);
+        $this->setAttribute('accept-charset', 'utf-8');
+        
+        return $this->templateRenderer->render('form_head', ['element' => $this]);
     }
 
     public function renderFoot()
     {
-        return $this->templateRenderer->render('fieldset_foot.tpl.php',['element' => $this]);
+        return $this->templateRenderer->render(
+            'form_foot', ['show_submit' => $this->showSubmit, 'submit_values' => $this->submitValues]
+        );
+    }
+    
+    public function setShowSubmit($showSubmit)
+    {
+        $this->showSubmit = $showSubmit;
+    }
+    
+    public function setSubmitValues($submitValues)
+    {
+        $this->submitValues = $submitValues;
     }
 }
-

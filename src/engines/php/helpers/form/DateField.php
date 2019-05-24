@@ -1,6 +1,6 @@
 <?php
 /**
- * Text area for forms
+ * Fields for collecting dates
  * 
  * Ntentan Framework
  * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
@@ -29,23 +29,15 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form;
+namespace ntentan\honam\engines\php\helpers\form;
 
-class TextArea extends Field
+class DateField extends TextField
 {
     public function __construct($label="",$name="",$description="")
     {
-        $this->setLabel($label);
-        $this->setName($name);
-        $this->setDescription($description);
-    }
-
-    public function render()
-    {
-        $this->setAttribute('rows', 10);
-        $this->setAttribute('cols', 80);
-        $this->setAttribute('class', "textarea {$this->getCSSClasses()}");
-        $this->setAttribute('name', $this->getName());
-        return $this->templateRenderer->render("textarea_element.tpl.php", ['element' => $this]);
+        parent::__construct($label,$name,$description);
+    	$this->setAttribute('type', 'date');
+        $this->setAttribute("class", "datefield ".$this->getCSSClasses());
     }
 }
+

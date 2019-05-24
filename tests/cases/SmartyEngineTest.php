@@ -8,7 +8,7 @@ class SmartyEngineTest extends ViewBaseTest
     public function testInvocation()
     {
         $this->assertEquals(
-            'Hello James Ainooson<form method="POST"><div class="form-submit-area"><input class="form-submit" type="submit" value="Submit" /></div></form>',
+            'Hello James Ainooson',
             $this->templateRenderer->render("test.smarty", array('firstname' => 'James', 'lastname' => 'Ainooson'))
         );
     }

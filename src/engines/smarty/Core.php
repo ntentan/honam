@@ -1,7 +1,7 @@
 <?php
 namespace ntentan\honam\engines\smarty;
 
-use ntentan\honam\factories\HelperFactory;
+use ntentan\honam\factories\HelperVariable;
 use ntentan\honam\TemplateRenderer;
 use ntentan\utils\Filesystem;
 use Smarty;
@@ -9,13 +9,11 @@ use Smarty;
 class Core extends Smarty
 {
     private $temp = '.';
-    private $helperFactory;
 
-    public function __construct(HelperFactory $helperFactory, string $tempDirectory)
+    public function __construct(string $tempDirectory)
     {
         parent::__construct();
         $this->temp = $tempDirectory;
-        $this->helperFactory = $helperFactory;
         $this->setCompileDir("{$this->temp}/smarty_compiled_templates");
     }
     
@@ -30,6 +28,5 @@ class Core extends Smarty
     {
         $this->clearAllAssign();
         $this->assign($data);
-        $this->assign('honam', $this->helperFactory);
     }
 }

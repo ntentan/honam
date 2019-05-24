@@ -23,9 +23,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
 
-namespace ntentan\honam\factories;
+namespace ntentan\honam\engines\php;
 
-use ntentan\honam\Helper;
 use ntentan\honam\TemplateFileResolver;
 use ntentan\honam\TemplateRenderer;
 use ReflectionMethod;
@@ -33,39 +32,34 @@ use ReflectionMethod;
 /**
  * A class for loading the helpers in views.
  */
-class HelperFactory
+class HelperVariable
 {
     private $loadedHelpers = array();
-
     private $templateRenderer;
 
-    public function setTemplateRenderer(TemplateRenderer $templateRenderer)
+    public function __construct(TemplateRenderer $templateRenderer, TemplateFileResolver $templateFileResolver)
     {
+        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../../templates/forms");
+        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../../templates/lists");
+        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../../templates/menu");
+        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../../templates/pagination");
         $this->templateRenderer = $templateRenderer;
-    }
-
-    public function setupTemplatePaths(TemplateFileResolver $templateFileResolver)
-    {
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/forms");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/lists");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/menu");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../templates/pagination");
     }
 
     /**
      * Get the instance of a helper given the string name of the helper.
      * 
-     * @param string $helper
+     * @param string $helperName
      * @return boolean|Helper
      */
-    private function getHelper(string $helper) : Helper
+    private function getHelper(string $helperName) : Helper
     {
-        if(!isset($this->loadedHelpers[$helper])) {
-            $helperClass = 'ntentan\honam\helpers\\' . ucfirst($helper) . "Helper";;
+        if(!isset($this->loadedHelpers[$helperName])) {
+            $helperClass = 'ntentan\honam\engines\php\helpers\\' . ucfirst($helperName) . "Helper";;
             $helperInstance = new $helperClass($this->templateRenderer);
-            $this->loadedHelpers[$helper] = $helperInstance;
+            $this->loadedHelpers[$helperName] = $helperInstance;
         }
-        return $this->loadedHelpers[$helper];
+        return $this->loadedHelpers[$helperName];
     }
 
     public function __get($helper)

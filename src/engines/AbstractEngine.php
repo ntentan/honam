@@ -9,12 +9,12 @@ abstract class AbstractEngine
     /**
      * @var TemplateRenderer
      */
-    protected $templateRenderer;
+    /*protected $templateRenderer;
 
     public function setTemplateRenderer(TemplateRenderer $templateSystem)
     {
         $this->templateRenderer = $templateSystem;
-    }
+    }*/
 
     /**
      * Passes the data to be rendered to the template engine instance.

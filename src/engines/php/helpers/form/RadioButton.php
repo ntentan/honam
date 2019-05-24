@@ -1,9 +1,9 @@
 <?php
 /**
- * Hidden form field
+ * Checkboxes for forms
  * 
  * Ntentan Framework
- * Copyright (c) 2008-2013 James Ekow Abaka Ainooson
+ * Copyright (c) 2008-2012 James Ekow Abaka Ainooson
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -29,19 +29,26 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form;
+namespace ntentan\honam\engines\php\helpers\form;
 
-
-class HiddenField extends Field
+/**
+ * A regular checkbox with a label.
+ */
+class RadioButton extends CheckableField
 {
-    public function __construct($name="", $value="")
-    {
-        parent::__construct($name, $value);
-        $this->setAttribute('type', 'hidden');
-    }
 
-    public function getType()
+    /**
+     * Constructor for the checkbox.
+     *
+     * @param $label The label of the checkbox.
+     * @param $name The name of the checkbox used for the name='' attribute of the HTML output
+     * @param $description A description of the field.
+     * @param $value A value to assign to this checkbox.
+     */
+    public function __construct($label="", $name="", $value="", $description="")
     {
-        return __CLASS__;
+        parent::__construct($label, $name, $value, $description);
+        $this->setAttribute('type', 'radio');
     }
 }
+

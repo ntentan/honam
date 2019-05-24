@@ -5,6 +5,7 @@ namespace ntentan\honam;
 
 
 use ntentan\honam\engines\AbstractEngine;
+use ntentan\honam\exceptions\FactoryException;
 use ntentan\honam\exceptions\TemplateEngineNotFoundException;
 use ntentan\honam\factories\EngineFactoryInterface;
 
@@ -12,12 +13,7 @@ class EngineRegistry
 {
     private $engines = [];
     private $extensions = [];
-    private $templateRenderer;
 
-    public function setTemplateRenderer(TemplateRenderer $templateRenderer)
-    {
-        $this->templateRenderer = $templateRenderer;
-    }
 
     public function registerEngine($extensions, $factory)
     {
@@ -36,13 +32,13 @@ class EngineRegistry
         foreach($this->extensions as $extension => $factory) {
             if($extension == substr($templateFile, -strlen($extension))) {
                 if(is_a($factory, EngineFactoryInterface::class)) {
-                    $engine = $factory->create($this->templateRenderer);
+                    $engine = $factory->create(); //$this->templateRenderer);
                 } else if (is_callable($factory)) {
-                    $engine = $factory($this->templateRenderer);
+                    $engine = $factory(); //$this->templateRenderer);
                 } else {
                     throw new FactoryException("There is no factory for creating engines for the {$extension} extension");
                 }
-                $engine->setTemplateRenderer($this->templateRenderer);
+                //$engine->setTemplateRenderer($this->templateRenderer);
                 return $engine;
             }
         }

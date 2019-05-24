@@ -27,9 +27,11 @@
 namespace ntentan\honam\engines;
 
 use Exception;
+use ntentan\honam\engines\php\HelperVariable;
 use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\engines\php\Variable;
-use ntentan\honam\factories\HelperFactory;
+use ntentan\honam\TemplateFileResolver;
+use ntentan\honam\TemplateRenderer;
 use ntentan\utils\StringStream;
 
 /**
@@ -50,11 +52,13 @@ class PhpEngine extends AbstractEngine
      * @var Janitor
      */
     private $janitor;
+    private $templateRenderer;
 
-    public function __construct(HelperFactory $helpersLoader, Janitor $janitor)
+    public function __construct(TemplateRenderer $templateRenderer, HelperVariable $helperVariable, Janitor $janitor)
     {
-        $this->helpersLoader = $helpersLoader;
+        $this->helpersLoader = $helperVariable;
         $this->janitor = $janitor;
+        $this->templateRenderer = $templateRenderer;
     }
 
     public function partial($template, $templateData = array())

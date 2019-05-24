@@ -29,17 +29,14 @@
  * @license MIT
  */
 
-namespace ntentan\honam\helpers\form;
+namespace ntentan\honam\engines\php\helpers\form;
+
 
 /**
  * A regular checkbox with a label.
  */
-class CheckableField extends Field
+class Checkbox extends CheckableField
 {
-    /**
-     * The value that this field should contain if this checkbox is checked.
-     */
-    protected $checkedValue;
 
     /**
      * Constructor for the checkbox.
@@ -49,46 +46,10 @@ class CheckableField extends Field
      * @param string $value A value to assign to this checkbox.
      * @param string $description A description of the field.
      */
-    public function __construct($label="", $name="", $value="", $description="")
+    public function __construct($label="", $name="", $value="1", $description="")
     {
-        Element::__construct($label, $description);
-        parent::__construct($name);
-        $this->setCheckedValue($value);
-        $this->setRenderLabel(false);
-    }
-
-    /**
-     * Sets the value that should be assigned as the checked value for
-     * this check box.
-     * @param $checkedValue The value to be assigned.
-     * @return Checkbox
-     */
-    public function setCheckedValue($checkedValue)
-    {
-        $this->checkedValue = $checkedValue;
-        return $this;
-    }
-
-    /**
-     * Gets and returns the checkedValue for the check box.
-     * @return string
-     */
-    public function getCheckedValue()
-    {
-        return $this->checkedValue;
-    }
-
-    public function render()
-    {
-        if($this->getCheckedValue() == (string)$this->getValue())
-        {
-            $this->setAttribute('checked', 'checked');
-        }
-        
-        $this->setAttribute("name", $this->getName());
-        $this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");        
-        $this->setValue($this->getCheckedValue());
-        return $this->templateRenderer->render('input_checkable_element.tpl.php', array('element' => $this));
+        parent::__construct($label, $name, $value, $description);
+        $this->setAttribute('type', 'checkbox');
     }
 }
 

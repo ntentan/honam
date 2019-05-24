@@ -8,16 +8,14 @@ use ntentan\honam\engines\smarty\Core;
 class SmartyEngineFactory implements EngineFactoryInterface
 {
     private $tempDirectory;
-    private $helperFactory;
 
-    public function __construct(HelperFactory $helperFactory, string $tempDirectory)
+    public function __construct(string $tempDirectory = '.tmp')
     {
-        $this->helperFactory = $helperFactory;
         $this->tempDirectory = $tempDirectory;
     }
 
     public function create(): AbstractEngine
     {
-        return new SmartyEngine(new Core($this->helperFactory, $this->tempDirectory));
+        return new SmartyEngine(new Core($this->tempDirectory));
     }
 }
