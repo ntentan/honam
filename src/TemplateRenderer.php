@@ -152,7 +152,7 @@ class TemplateRenderer
     {
         if($fromString) {
             $engine = $this->loadEngine($extension);
-            return $engine->renderFromFileTemplate($template, $data);
+            return $engine->renderFromStringTemplate($template, $data);
         } else {
             $templateFile = $this->templateFileResolver->resolveTemplateFile($template);
             $engine = $this->loadEngine($this->getTemplateExtension($templateFile));

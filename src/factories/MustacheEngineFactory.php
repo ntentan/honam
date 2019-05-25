@@ -21,10 +21,11 @@ class MustacheEngineFactory implements EngineFactoryInterface
 
     public function create() : AbstractEngine
     {
+        $loader =
         $loaderMustache = new Mustache_Engine([
             'loader' => new MustacheLoader(), 'partials_loader' => new MustachePartialsLoader($this->templateFileResolver)]
         );
         $stringMustache = new Mustache_Engine(['partials_loader' => new MustachePartialsLoader($this->templateFileResolver)]);
-        return new MustacheEngine($loaderMustache, $stringMustache);
+        return new MustacheEngine($stringMustache, $loaderMustache);
     }
 }
