@@ -64,7 +64,7 @@ class Field extends Element
     /**
      * Sets the value of the field.
      *
-     * @param $value The value of the field.
+     * @param string $value The value of the field.
      * @return Field
      */
     public function setValue($value)
@@ -76,7 +76,7 @@ class Field extends Element
     /**
      * Get the value of the field.
      *
-     * @return unknown
+     * @return mixed
      */
     public function getValue()
     {
@@ -86,7 +86,7 @@ class Field extends Element
     /**
      * Sets the required status of the field.
      *
-     * @param The required status of the field.
+     * @param boolean $required
      * @return Field
      */
     public function setRequired($required)

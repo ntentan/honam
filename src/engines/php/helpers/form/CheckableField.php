@@ -60,8 +60,8 @@ class CheckableField extends Field
     /**
      * Sets the value that should be assigned as the checked value for
      * this check box.
-     * @param $checkedValue The value to be assigned.
-     * @return Checkbox
+     * @param string $checkedValue
+     * @return CheckableField
      */
     public function setCheckedValue($checkedValue)
     {

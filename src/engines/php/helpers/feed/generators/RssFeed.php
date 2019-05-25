@@ -102,7 +102,7 @@ class RssFeed extends Generator
     /**
      * @param $property
      * @param $value
-     * @return false|string
+     * @return string
      */
     private function formatProperty($property, $value)
     {

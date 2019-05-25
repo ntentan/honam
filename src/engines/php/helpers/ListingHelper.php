@@ -31,7 +31,7 @@ class ListingHelper extends Helper
      *     "default_cell_template" =>  $this->defaultCellTemplate,
      *     "variables"             =>  $this->variables,
      *  )
-     * @param type $arguments
+     * @param array $arguments
      * @return ListingHelper
      */
     public function help($arguments)
@@ -40,6 +40,12 @@ class ListingHelper extends Helper
         return $this;
     }
 
+    /**
+     * @return string
+     * @throws \ntentan\honam\exceptions\FactoryException
+     * @throws \ntentan\honam\exceptions\TemplateEngineNotFoundException
+     * @throws \ntentan\honam\exceptions\TemplateResolutionException
+     */
     public function __toString()
     {
         $this->parameters['row_template'] = $this->parameters['row_template'] == null ? 'row.tpl.php' : $this->parameters['row_template'];

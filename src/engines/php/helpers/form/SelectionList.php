@@ -117,7 +117,7 @@ class SelectionList extends Field
         $keys = array_keys($this->options);
         array_unshift($keys, '');
         array_unshift($this->options, $this->default);
-        $this->options = array_combine($keys, $this->options);
+        $this->options = array_combine($keys, $this->options) ?? [];
         
         $this->setAttribute('name', $this->name);
         

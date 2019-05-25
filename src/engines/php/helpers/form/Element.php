@@ -31,8 +31,6 @@
 
 namespace ntentan\honam\engines\php\helpers\form;
 
-use ntentan\honam\engines\php\helpers\formHelper;
-use ntentan\honam\TemplateEngine;
 
 /**
  * The form element class. An element can be anything from the form
@@ -141,7 +139,7 @@ abstract class Element
     /**
      * Public accessor for setting the name property of the field.
      *
-     * @param  $name The name to assign to the form element.
+     * @param  string $name
      * @return Element
      */
     public function setName($name)
