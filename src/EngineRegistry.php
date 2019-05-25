@@ -11,9 +11,7 @@ use ntentan\honam\factories\EngineFactoryInterface;
 
 class EngineRegistry
 {
-    private $engines = [];
     private $extensions = [];
-
 
     public function registerEngine($extensions, $factory)
     {
@@ -27,18 +25,23 @@ class EngineRegistry
         return array_keys($this->extensions);
     }
 
+    /**
+     * @param $templateFile
+     * @return AbstractEngine
+     * @throws FactoryException
+     * @throws TemplateEngineNotFoundException
+     */
     public function getEngineInstance($templateFile) : AbstractEngine
     {
         foreach($this->extensions as $extension => $factory) {
             if($extension == substr($templateFile, -strlen($extension))) {
                 if(is_a($factory, EngineFactoryInterface::class)) {
-                    $engine = $factory->create(); //$this->templateRenderer);
+                    $engine = $factory->create();
                 } else if (is_callable($factory)) {
-                    $engine = $factory(); //$this->templateRenderer);
+                    $engine = $factory();
                 } else {
                     throw new FactoryException("There is no factory for creating engines for the {$extension} extension");
                 }
-                //$engine->setTemplateRenderer($this->templateRenderer);
                 return $engine;
             }
         }
