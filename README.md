@@ -7,6 +7,7 @@ ntentan/honam
 [![Latest Stable Version](https://poser.pugx.org/ntentan/honam/version.svg)](https://packagist.org/packages/ntentan/honam)
 [![Total Downloads](https://poser.pugx.org/ntentan/honam/downloads.svg)](https://packagist.org/packages/ntentan/honam)
 
+Honam provides an interface through which multiple template engines can be accessed. It ships with support for smarty, mustache and an internal native PHP based template engine.
 
 
 License
