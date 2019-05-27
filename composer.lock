@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8b18f1edf07a2e7b478cd0574bee28c",
+    "content-hash": "72ba462d83f4e0486822ab67d9f8df62",
     "packages": [
         {
             "name": "matthiasmullie/minify",
@@ -117,16 +117,16 @@
         },
         {
             "name": "ntentan/utils",
-            "version": "dev-dev",
+            "version": "v0.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ntentan/utils.git",
-                "reference": "e0e257c6b207da5eb895fd2cd343babc5371b83c"
+                "reference": "e36260f2c38e54f681c786eadcf22b836d51b995"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ntentan/utils/zipball/e0e257c6b207da5eb895fd2cd343babc5371b83c",
-                "reference": "e0e257c6b207da5eb895fd2cd343babc5371b83c",
+                "url": "https://api.github.com/repos/ntentan/utils/zipball/e36260f2c38e54f681c786eadcf22b836d51b995",
+                "reference": "e36260f2c38e54f681c786eadcf22b836d51b995",
                 "shasum": ""
             },
             "require-dev": {
@@ -152,7 +152,7 @@
                 }
             ],
             "description": "Common utility functions shared accross the ntentan framework.",
-            "time": "2019-05-18T01:47:21+00:00"
+            "time": "2019-05-27T15:39:29+00:00"
         }
     ],
     "packages-dev": [
@@ -1778,7 +1778,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "ntentan/utils": 20,
         "phpunit/phpunit": 0,
         "mikey179/vfsstream": 0,
         "mustache/mustache": 0,
