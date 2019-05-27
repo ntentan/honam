@@ -1,56 +1,47 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-use ntentan\honam\TemplateEngine;
-use ntentan\honam\AssetsLoader;
+use ntentan\honam\exceptions\TemplateEngineNotFoundException;
+use ntentan\honam\exceptions\TemplateResolutionException;
+use ntentan\honam\tests\lib\ViewBaseTest;
 
-use org\bovigo\vfs\vfsStream;
-
-class TemplatesTest extends \ntentan\honam\tests\lib\ViewBaseTest
+class TemplatesTest extends ViewBaseTest
 {
     public function testTemplateLoading()
     {
-        $output = TemplateEngine::render(
+        $output = $this->templateRenderer->render(
             'hello.tpl.php',
             array('firstname'=>'James', 'lastname'=>'Ainooson')
         );
         $this->assertEquals("Hello World! I am James Ainooson.", $output);
         
-        TemplateEngine::prependPath("tests/files/views/secondary");
-        $output = TemplateEngine::render(
+        $this->templateFileResolver->prependToPathHierarchy("tests/files/views/secondary");
+        $output = $this->templateRenderer->render(
             'hello.tpl.php',
             array('firstname'=>'James', 'lastname'=>'Ainooson')
         );
         $this->assertEquals("Hello World Again! I am James Ainooson.", $output);
-        TemplateEngine::reset();
-        TemplateEngine::appendPath('tests/files/views');
     }
     
     public function testSubPathTemplateLoading()
     {
-        $output = TemplateEngine::render('some_login.tpl.php', array());
+        $output = $this->templateRenderer->render('some_login.tpl.php', array());
         $this->assertEquals("This is a Login Page?", $output);
         
-        TemplateEngine::prependPath("tests/files/views/secondary");
-        $output = TemplateEngine::render('some_login.tpl.php', array());
+        $this->templateFileResolver->prependToPathHierarchy("tests/files/views/secondary");
+        $output = $this->templateRenderer->render('some_login.tpl.php', array());
         $this->assertEquals("Is this another Login Page?", $output);
-        TemplateEngine::reset();
-        TemplateEngine::appendPath('tests/files/views');
     }
     
-    /**
-     * @expectedException \ntentan\honam\exceptions\TemplateResolutionException
-     */
     public function testLayoutLoadFailure()
     {
-        TemplateEngine::render('arbitrary.tpl.php', array());
+        $this->expectException(TemplateResolutionException::class);
+        $this->templateRenderer->render('arbitrary.tpl.php', array());
     }
     
-    /**
-     * @expectedException \ntentan\honam\exceptions\TemplateEngineNotFoundException
-     */    
     public function testEngineLoadFailure()
     {
-        TemplateEngine::render('arbitrary.tpl.noengine', array());
+        $this->expectException(TemplateEngineNotFoundException::class);
+        $this->templateRenderer->render('arbitrary.tpl.noengine', array());
     }
 }

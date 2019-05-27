@@ -1,29 +1,32 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
+use ntentan\honam\exceptions\HelperException;
+use ntentan\honam\tests\lib\HelperTestCase;
+
+class FormsHelperTest extends HelperTestCase
 {
     public function testBasicForm()
     {
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/basic_form_test.html'),   
-            (string)$this->helpers->form->open(). (string)$this->helpers->form->close()
+            $this->helpers->form->open()->__toString() . $this->helpers->form->close()->__toString()
         );
         
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/basic_form_id_test.html'),   
-            (string)$this->helpers->form->open('form-with-id'). (string)$this->helpers->form->close()
+            $this->helpers->form->open('form-with-id')->__toString() . $this->helpers->form->close()->__toString()
         );        
         
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/basic_form_no_submit_test.html'),   
-            (string)$this->helpers->form->open('form-with-id'). (string)$this->helpers->form->close(false)
+            $this->helpers->form->open('form-with-id')->__toString() . $this->helpers->form->close(false)->__toString()
         ); 
         
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/basic_form_multi_submit_test.html'),   
-            (string)$this->helpers->form->open('form-with-id'). 
-            (string)$this->helpers->form->close('Close', 'Resolve', 'Comment')
+            $this->helpers->form->open('form-with-id')->__toString() .
+            $this->helpers->form->close('Close', 'Resolve', 'Comment')->__toString()
         ); 
     }
     
@@ -43,10 +46,10 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_errors.html'),
-            (string)$this->helpers->form->open() . 
-            (string)$this->helpers->form->get_text_field('Username', 'username') .
-            (string)$this->helpers->form->get_password_field('Password', 'password').
-            (string)$this->helpers->form->close('Login')
+            $this->helpers->form->open()->__toString() .
+            $this->helpers->form->get_text_field('Username', 'username')->__toString() .
+            $this->helpers->form->get_password_field('Password', 'password')->__toString().
+            $this->helpers->form->close('Login')->__toString()
         );
     }
     
@@ -67,14 +70,14 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/big_form.html'), 
-            (string)$this->helpers->form->open().
-            (string)$this->helpers->form->get_text_field('TextField', 'textfield')->setDescription('A sample text field').
-            (string)$this->helpers->form->get_date_field('DateField', 'datefield')->setDescription('A sample date field')->setRequired(true).
-            (string)$this->helpers->form->get_hidden_field('HiddenField', 'hiddenfield')->setDescription('A sample hidden field').
-            (string)$this->helpers->form->get_checkbox('Something worth checking', 'checkbox')->setDescription('A sample checkbox').
-            (string)$this->helpers->form->get_password_field('Password', 'password')->setDescription('A sample password field').
-            (string)$this->helpers->form->get_radio_button('Option 1', 'radio_button', 'selected')->setDescription('A sample radio button').
-            (string)$this->helpers->form->get_radio_button('Option 2', 'radio_button', 'not_selected')->setDescription('Another sample radio button').
+            (string)$this->helpers->form->open()->__toString().
+            (string)$this->helpers->form->get_text_field('TextField', 'textfield')->setDescription('A sample text field')->__toString().
+            (string)$this->helpers->form->get_date_field('DateField', 'datefield')->setDescription('A sample date field')->setRequired(true)->__toString().
+            (string)$this->helpers->form->get_hidden_field('HiddenField', 'hiddenfield')->setDescription('A sample hidden field')->__toString().
+            (string)$this->helpers->form->get_checkbox('Something worth checking', 'checkbox')->setDescription('A sample checkbox')->__toString().
+            (string)$this->helpers->form->get_password_field('Password', 'password')->setDescription('A sample password field')->__toString().
+            (string)$this->helpers->form->get_radio_button('Option 1', 'radio_button', 'selected')->setDescription('A sample radio button')->__toString().
+            (string)$this->helpers->form->get_radio_button('Option 2', 'radio_button', 'not_selected')->setDescription('Another sample radio button')->__toString().
             (string)$this->helpers->form->get_selection_list('Select', 'select')
                 ->option('Selected', 'selected')
                 ->option('Not Selected', 'not_selected')
@@ -84,10 +87,10 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
                         'two' => 'Two',
                     ),
                     true
-                )->setMultiple(true)->initial('one').
-            (string)$this->helpers->form->get_text_area('Text', 'textarea').
-            (string)$this->helpers->form->get_upload_field('File', 'upload').
-            (string)$this->helpers->form->close()
+                )->setMultiple(true)->initial('one')->__toString().
+            (string)$this->helpers->form->get_text_area('Text', 'textarea')->__toString().
+            (string)$this->helpers->form->get_upload_field('File', 'upload')->__toString().
+            (string)$this->helpers->form->close()->__toString()
         );
     }
     
@@ -96,7 +99,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $element = $this->helpers->form->create('TextField', 'Test', 'test')->setDescription('A test form');
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/text_field.html'),   
-            (string)$element
+            (string)$element->__toString()
         ); 
     }
     
@@ -107,7 +110,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $this->helpers->form->add('PasswordField', 'Password', 'password');
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_form.html'),
-            (string)$this->helpers->form
+            (string)$this->helpers->form->__toString()
         );
     }
     
@@ -123,7 +126,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $this->helpers->form->add('PasswordField', 'Password', 'password');
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_form_values.html'),
-            (string)$this->helpers->form
+            (string)$this->helpers->form->__toString()
         );
     }    
     
@@ -134,7 +137,7 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
         $this->helpers->form->add_password_field('Password', 'password');
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_form.html'),
-            (string)$this->helpers->form
+            (string)$this->helpers->form->__toString()
         );
     }    
     
@@ -142,12 +145,12 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
     {
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/login_fieldset.html'),        
-            (string)$this->helpers->form->open() . 
-            (string)$this->helpers->form->open_fieldset("Login").
-            (string)$this->helpers->form->get_text_field('Username', 'username') .
-            (string)$this->helpers->form->get_password_field('Password', 'password').
-            (string)$this->helpers->form->close_field_set().
-            (string)$this->helpers->form->close('Login')
+            (string)$this->helpers->form->open()->__toString() .
+            (string)$this->helpers->form->open_fieldset("Login")->__toString().
+            (string)$this->helpers->form->get_text_field('Username', 'username')->__toString() .
+            (string)$this->helpers->form->get_password_field('Password', 'password')->__toString().
+            (string)$this->helpers->form->close_field_set()->__toString().
+            (string)$this->helpers->form->close('Login')->__toString()
         );
     }   
     
@@ -155,28 +158,14 @@ class FormsHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
     {
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/form_attributes.html'),    
-            (string)$this->helpers->form->open()->setAttribute('target', '_blank') . (string)$this->helpers->form->close()
+            (string)$this->helpers->form->open()->setAttribute('target', '_blank')->__toString() . (string)$this->helpers->form->close()->__toString()
         );
     }
     
-    /**
-     * @expectedException \ntentan\honam\exceptions\HelperException
-     */
     public function testWrongMethod()
     {
+        $this->expectException(HelperException::class);
         $this->helpers->form->fail();
-    }
-    
-    public function testContainers()
-    {
-        $fieldset = new \ntentan\honam\helpers\form\Fieldset();
-        $this->assertEquals(true, $fieldset->isContainer());
-    }
-    
-    public function testElements()
-    {
-        $form = new \ntentan\honam\helpers\form\Form();
-        $this->assertEquals("ntentan\\honam\\helpers\\form\\Element", $form->getType());
     }
     
     public function testStyling()

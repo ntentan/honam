@@ -1,10 +1,12 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-class FeedHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
+use ntentan\honam\tests\lib\HelperTestCase;
+
+class FeedHelperTest extends HelperTestCase
 {    
 
-    public function setUp()
+    public function setUp() : void
     {
         parent::setUp();
         date_default_timezone_set('UTC');

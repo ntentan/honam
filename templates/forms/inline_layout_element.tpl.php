@@ -1,14 +1,19 @@
-<?php 
-$attributes = $element->getAttributes(\ntentan\honam\helpers\form\Element::SCOPE_WRAPPER);
+<?php
+
+
+use ntentan\honam\engines\php\helpers\form\Container;
+use ntentan\honam\engines\php\helpers\form\Element;
+use ntentan\honam\engines\php\helpers\form\HiddenField;
+
+$attributes = $element->getAttributes(Element::SCOPE_WRAPPER);
 $id = $element->getId();
-if($element->unescape()->getType() === 'ntentan\honam\helpers\form\HiddenField'):?>
+if(is_a($element->unescape(), HiddenField::class)):?>
     <?= $element->unescape()->render(); ?>
 <?php else: ?>
     <div class="form-element <?= $element->hasError() ? 'form-error' : '' ?>" <?php if($id != ''): ?>id="<?= $id ?>_wrapper"<?php endif; ?>>
         <?php
-            if(!$element->isContainer() && $element->getRenderLabel())
-            {
-                echo t("element_label.tpl.php", array('element' => $element, 'label' => $element->getLabel()));
+            if(!is_a($element, Container::class) && $element->getRenderLabel()) {
+                echo $this->partial("element_label.tpl.php", array('element' => $element, 'label' => $element->getLabel()));
             }
         ?>  
         <?= $element->render()->unescape() ?>

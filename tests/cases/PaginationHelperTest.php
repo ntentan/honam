@@ -1,13 +1,15 @@
 <?php
 namespace ntentan\honam\tests\cases;
 
-class PainationHelperTest extends \ntentan\honam\tests\lib\HelperBaseTest
+use ntentan\honam\tests\lib\HelperTestCase;
+
+class PainationHelperTest extends HelperTestCase
 {
     public function testPlainPagination()
     {
         $this->assertXmlStringEqualsXmlString(
             "<ul class='pagination'></ul>", 
-            (string)$this->helpers->pagination()
+            (string)$this->helpers->pagination()->__toString()
         );
     }
     

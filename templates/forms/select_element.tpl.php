@@ -1,4 +1,4 @@
-<select <?= t("element_attributes.tpl.php", array('attributes' => $element->getAttributes())) ?> >
+<select <?= $this->partial("element_attributes.tpl.php", array('attributes' => $element->getAttributes())) ?> >
 
 <?php $options = $element->getOptions();
 $selectValue = $element->getValue()->unescape();

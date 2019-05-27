@@ -7,12 +7,12 @@ ntentan/honam
 [![Latest Stable Version](https://poser.pugx.org/ntentan/honam/version.svg)](https://packagist.org/packages/ntentan/honam)
 [![Total Downloads](https://poser.pugx.org/ntentan/honam/downloads.svg)](https://packagist.org/packages/ntentan/honam)
 
-The views component of the Ntentan Framework. Although intended for use with 
-Ntentan, this package could be used stand-alone. 
+Honam provides an interface through which multiple template engines can be accessed. It ships with support for smarty, mustache and an internal native PHP based template engine.
+
 
 License
 =======
-Copyright (c) 2008-2015 James Ekow Abaka Ainooson
+Copyright (c) 2008-2019 James Ekow Abaka Ainooson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal in 

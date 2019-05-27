@@ -1,1 +1,1 @@
-<label class='nostretch'><?= t("input_element.tpl.php", array('element' => $element)) . $element->getLabel() ?></label>
+<label class='nostretch'><?= $this->partial("input_element.tpl.php", array('element' => $element)) . $element->getLabel() ?></label>

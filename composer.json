@@ -10,7 +10,9 @@
     ],
     "require": {
         "matthiasmullie/minify":"1.*",
-        "ntentan/utils":"@stable"
+        "ntentan/utils":"*",
+        "ext-mbstring": "*",
+        "ext-simplexml": "*"
     },
     "require-dev" : {
         "phpunit/phpunit":"@stable",
