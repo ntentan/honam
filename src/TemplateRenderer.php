@@ -29,7 +29,6 @@ namespace ntentan\honam;
 use ntentan\honam\engines\AbstractEngine;
 use ntentan\honam\exceptions\TemplateEngineNotFoundException;
 use ntentan\honam\exceptions\TemplateResolutionException;
-use ntentan\honam\factories\HelperVariable;
 
 /**
  * The TemplateEngine class does the work of resolving templates, loading template files,
@@ -142,7 +141,7 @@ class TemplateRenderer
      * @param string $template The template reference file.
      * @param $data
      * @param bool $fromString
-     * @param null $extension
+     * @param string $extension
      * @return string
      * @throws TemplateResolutionException
      * @throws exceptions\TemplateEngineNotFoundException

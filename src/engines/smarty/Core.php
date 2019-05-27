@@ -1,8 +1,6 @@
 <?php
 namespace ntentan\honam\engines\smarty;
 
-use ntentan\honam\factories\HelperVariable;
-use ntentan\honam\TemplateRenderer;
 use ntentan\utils\Filesystem;
 use Smarty;
 

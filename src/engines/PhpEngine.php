@@ -30,7 +30,6 @@ use Exception;
 use ntentan\honam\engines\php\HelperVariable;
 use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\engines\php\Variable;
-use ntentan\honam\TemplateFileResolver;
 use ntentan\honam\TemplateRenderer;
 use ntentan\utils\StringStream;
 
@@ -44,9 +43,9 @@ use ntentan\utils\StringStream;
 class PhpEngine extends AbstractEngine
 {
     /**
-     * @var HelperFactory
+     * @var HelperVariable
      */
-    private $helpersLoader;
+    private $helperVariable;
 
     /**
      * @var Janitor
@@ -56,7 +55,7 @@ class PhpEngine extends AbstractEngine
 
     public function __construct(TemplateRenderer $templateRenderer, HelperVariable $helperVariable, Janitor $janitor)
     {
-        $this->helpersLoader = $helperVariable;
+        $this->helperVariable = $helperVariable;
         $this->janitor = $janitor;
         $this->templateRenderer = $templateRenderer;
     }
@@ -92,7 +91,7 @@ class PhpEngine extends AbstractEngine
         }
 
         // Expose helpers
-        $helpers = $this->helpersLoader;
+        $helpers = $this->helperVariable;
 
         // Start trapping the output buffer and include the PHP template for
         // execution.
@@ -137,7 +136,7 @@ class PhpEngine extends AbstractEngine
      * terminator to the text.
      *
      * @param string $text The text to be truncated.
-     * @param string $length The maximum lenght of the truncated string. Might
+     * @param integer $length The maximum lenght of the truncated string. Might
      *      return a shorter string if the lenght ends in the middle of a word.
      * @param string $terminator The ellipsis terminator to use for the text.
      * @return string

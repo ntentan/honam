@@ -3,6 +3,7 @@
 namespace ntentan\honam;
 
 use ntentan\honam\exceptions\TemplateResolutionException;
+use ntentan\utils\Filesystem;
 
 class TemplateFileResolver
 {
@@ -52,10 +53,11 @@ class TemplateFileResolver
         foreach ($paths as $path) {
             $newTemplateFile = "$testTemplate.*";
             $files = array_filter(
-                scandir($path),
+                iterator_to_array(Filesystem::directory($path)->getFiles(false)),
                 function($file) use($newTemplateFile) {
-                    return fnmatch($newTemplateFile, $file);
+                    return fnmatch($newTemplateFile, basename($file));
                 });
+            $files = array_map(function($file) { return basename($file);}, $files);
             if (count($files) == 1) {
                 $templateFile = $path . "/" . reset($files);
                 break;
@@ -70,6 +72,7 @@ class TemplateFileResolver
     private function searchTemplateDirectory($template, $ignoreEngine = false)
     {
         $templateFile = '';
+        $extension = '';
 
         // Split the filename on the dots. The first part before the first dot
         // would be used to implement the file breakdown. The other parts are
@@ -84,7 +87,9 @@ class TemplateFileResolver
             $extension = implode(".", $splitOnDots);
         }
 
-        for ($i = 0; $i < count($breakDown); $i++) {
+        $parts = count($breakDown);
+
+        for ($i = 0; $i < $parts; $i++) {
             $testTemplate = implode("_", array_slice($breakDown, $i, count($breakDown) - $i));
 
             if ($ignoreEngine) {

@@ -52,7 +52,6 @@ class Helper
      * A sort of constructor or entry point for helpers.
      *
      * @param mixed $arguments
-     * @scrutinizer ignore-unused
      * @return Helper
      */
     public function help($arguments)

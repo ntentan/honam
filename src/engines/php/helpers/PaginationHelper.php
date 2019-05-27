@@ -33,29 +33,21 @@
 namespace ntentan\honam\engines\php\helpers;
 
 use ntentan\honam\engines\php\Helper;
-
-use ntentan\honam\TemplateEngine;
 use ntentan\utils\Input;
 
 class PaginationHelper extends Helper
 {
-    /*private $pageNumber;
-    private $numberOfPages;
-    private $baseRoute;
-    private $numberOfLinks;
-    private $query;*/
-    
-    private $parameters = array(
+    private $parameters = [
         'query' => null,
         'number_of_links' => 21,
         'number_of_pages' => null,
         'base_url' => null,
         'page_number' => 1
-    );
+    ];
 
     private $halfNumberOfLinks;
 
-    public function help($params = array())
+    public function help($params = [])
     {
         $this->parameters = array_merge($this->parameters, $params);
         $this->halfNumberOfLinks = ceil($this->parameters['number_of_links'] / 2);
