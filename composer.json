@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "ntentan/utils":"~0.8.0",
+        "ntentan/utils":"~0.9.0",
         "ext-mbstring": "*",
         "ext-simplexml": "*"
     },
