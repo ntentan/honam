@@ -14,6 +14,16 @@ class TemplateFileResolver
      */
     private $pathHierarchy = array();
 
+    public function getPathHierarchy() : array
+    {
+        return $this->pathHierarchy;
+    }
+
+    public function setPathHierarchy(array $pathHierarchy) : void
+    {
+        $this->pathHierarchy = $pathHierarchy;
+    }
+
     /**
      * Append a directory to the end of the template path heirachy.
      *
