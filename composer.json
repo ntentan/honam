@@ -9,8 +9,7 @@
         }
     ],
     "require": {
-        "matthiasmullie/minify":"1.*",
-        "ntentan/utils":"*",
+        "ntentan/utils":"~0.8.0",
         "ext-mbstring": "*",
         "ext-simplexml": "*"
     },
@@ -22,9 +21,7 @@
     },
     "suggest" : {
         "mustache/mustache": "For mustache template support (2.*)",
-        "smarty/smarty": "For smarty template support (3.*)",
-        "natxet/cssmin":"Use CSSMin for CSS minification (3.*)",
-        "tedivm/jshrink":"Use Jshrink for Javascript Minification (1.*)"        
+        "smarty/smarty": "For smarty template support (3.*)"
     },
     "autoload": {
         "psr-4": {
