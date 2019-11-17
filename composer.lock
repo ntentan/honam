@@ -4,26 +4,26 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2368fbca00c3c4f5158a5b470c916773",
+    "content-hash": "2430be28074a1aa9aa19ec645e8a56e3",
     "packages": [
         {
             "name": "ntentan/utils",
-            "version": "v0.9.0",
+            "version": "v0.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ntentan/utils.git",
-                "reference": "1f8372f285cc022cbb4f9a591960e6aefd20fbfa"
+                "reference": "ecf00ff7cc956ab91b659dc289fed8c3a016fa40"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ntentan/utils/zipball/1f8372f285cc022cbb4f9a591960e6aefd20fbfa",
-                "reference": "1f8372f285cc022cbb4f9a591960e6aefd20fbfa",
+                "url": "https://api.github.com/repos/ntentan/utils/zipball/ecf00ff7cc956ab91b659dc289fed8c3a016fa40",
+                "reference": "ecf00ff7cc956ab91b659dc289fed8c3a016fa40",
                 "shasum": ""
             },
             "require-dev": {
                 "mikey179/vfsstream": "@stable",
                 "php-mock/php-mock-phpunit": "^2",
-                "phpunit/phpunit": "^6 <6.5"
+                "phpunit/phpunit": "@stable"
             },
             "type": "library",
             "autoload": {
@@ -43,7 +43,7 @@
                 }
             ],
             "description": "Common utility functions shared accross the ntentan framework.",
-            "time": "2019-06-24T05:30:40+00:00"
+            "time": "2019-11-17T15:12:48+00:00"
         }
     ],
     "packages-dev": [
