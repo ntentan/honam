@@ -1,3 +1,9 @@
+v0.6.3 - 2020-02-06
+===================
+Fixed
+-----
+ - Fixed broken dependencies in previous release.
+
 v0.6.2 - 2019-11-23
 ===================
 Added
