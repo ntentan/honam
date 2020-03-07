@@ -39,9 +39,4 @@ class HiddenField extends Field
         parent::__construct($name, $value);
         $this->setAttribute('type', 'hidden');
     }
-
-    public function getType()
-    {
-        return __CLASS__;
-    }
 }
