@@ -130,6 +130,10 @@ class TemplateFileResolver
             throw new TemplateResolutionException("Empty template file requested");
         }
 
+        if(file_exists($template)) {
+            return $template;
+        }
+
         $templateFile = $this->searchTemplateDirectory($template, pathinfo($template, PATHINFO_EXTENSION) === '');
 
         if ($templateFile == null) {

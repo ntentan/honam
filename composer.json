@@ -9,13 +9,13 @@
         }
     ],
     "require": {
-        "ntentan/utils":"~0.8.0",
+        "ntentan/utils":"0.*",
         "ext-mbstring": "*",
         "ext-simplexml": "*"
     },
     "require-dev" : {
         "phpunit/phpunit":"@stable",
-        "mikey179/vfsStream":"@stable",
+        "mikey179/vfsstream":"@stable",
         "mustache/mustache": "@stable",
         "smarty/smarty": "@stable"
     },

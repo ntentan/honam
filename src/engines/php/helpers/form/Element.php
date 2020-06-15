@@ -210,11 +210,6 @@ abstract class Element
         return $this->error;
     }
 
-    public function getType()
-    {
-        return __CLASS__;
-    }
-
     /**
      * Renders the form element by outputing the HTML associated with
      * the element. This method is abstract and it is implemented by
