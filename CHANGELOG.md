@@ -1,10 +1,11 @@
-Unreleased
+v0.6.4 - 2020-05-15
 ===================
 Fixed
 -----
  - The `Template` can now be used without injecting its dependencies.
  - Styling and unset item notifications in pagination helper.
  - Issue with form input helpers that cause exceptions to be thrown in some cases where a form's value is `null`.
+ - Pagination unit tests
 
 v0.6.3 - 2020-02-06
 ===================
