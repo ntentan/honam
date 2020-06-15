@@ -17,11 +17,10 @@ class PainationHelperTest extends HelperTestCase
     {
         $this->assertXmlStringEqualsXmlString(
             file_get_contents('tests/files/markup/pagination_1.html'),
-            (string)$this->helpers->pagination(
-                array(
-                    'number_of_pages' => 45,
+            (string)$this->helpers->pagination([
+                    'number_of_items' => 45,
                     'base_url' => '/stories/page/'
-                )
+                ]
             )
         );
     }    
@@ -32,7 +31,7 @@ class PainationHelperTest extends HelperTestCase
             file_get_contents('tests/files/markup/pagination_2.html'),
             (string)$this->helpers->pagination(
                 array(
-                    'number_of_pages' => 45,
+                    'number_of_items' => 45,
                     'page_number' => 20,
                     'base_url' => '/stories/page/'
                 )
@@ -46,7 +45,7 @@ class PainationHelperTest extends HelperTestCase
             file_get_contents('tests/files/markup/pagination_3.html'),
             (string)$this->helpers->pagination(
                 array(
-                    'number_of_pages' => 45,
+                    'number_of_items' => 45,
                     'query' => 'page',
                     'base_url' => '/stories/page/'
                 )
@@ -60,7 +59,7 @@ class PainationHelperTest extends HelperTestCase
             file_get_contents('tests/files/markup/pagination_4.html'),
             (string)$this->helpers->pagination(
                 array(
-                    'number_of_pages' => 45,
+                    'number_of_items' => 45,
                     'page_number' => 40,
                     'base_url' => '/stories/page/'
                 )
