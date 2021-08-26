@@ -111,9 +111,15 @@ class PhpEngine extends AbstractEngine
      */
     public function renderFromStringTemplate(string $string, array $data) : string
     {
-        StringStream::register();
-        file_put_contents('string://template', $string);
-        return $this->renderFromFileTemplate('string://template', $data);
+        foreach ($data as $_key => $_value) {
+            $$_key = Variable::initialize($_value, $this->janitor);
+        }
+        // Expose helpers
+        $helpers = $this->helperVariable;
+        
+        ob_start();
+        eval(" ?> $string");
+        return ob_get_clean();
     }
 
     /**
