@@ -1,3 +1,14 @@
+v0.6.5 - 2021-11-29
+===================
+Fixed
+-----
+- The `smarty` dependency to track the `v3.1.x` releases. Might consider switching to the PHP 8.0 version later.
+
+Changed
+-------
+- The `PHPEngine` now uses the eval method to execute instrings instead of including the files directly.
+
+
 v0.6.4 - 2020-05-15
 ===================
 Fixed
