@@ -17,7 +17,7 @@
         "phpunit/phpunit":"@stable",
         "mikey179/vfsstream":"@stable",
         "mustache/mustache": "@stable",
-        "smarty/smarty": "@stable"
+        "smarty/smarty": "~3.1"
     },
     "suggest" : {
         "mustache/mustache": "For mustache template support (2.*)",
