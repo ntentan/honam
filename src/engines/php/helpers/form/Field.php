@@ -1,33 +1,4 @@
 <?php
-/**
- * Abstract form fields
- * 
- * Ntentan Framework
- * Copyright (c) 2008-2013 James Ekow Abaka Ainooson
- * 
- * Permission is hereby granted, free of charge, to any person obtaining
- * a copy of this software and associated documentation files (the
- * "Software"), to deal in the Software without restriction, including
- * without limitation the rights to use, copy, modify, merge, publish,
- * distribute, sublicense, and/or sell copies of the Software, and to
- * permit persons to whom the Software is furnished to do so, subject to
- * the following conditions:
- * 
- * The above copyright notice and this permission notice shall be
- * included in all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
- * EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
- * MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
- * NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
- * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
- * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
- * 
- * @author James Ainooson <jainooson@gmail.com>
- * @copyright Copyright 2010 James Ekow Abaka Ainooson
- * @license MIT
- */
 
 namespace ntentan\honam\engines\php\helpers\form;
 
@@ -55,7 +26,7 @@ class Field extends Element
     /**
      * The constructor for the field element.
      */
-    public function __construct($name="", $value="")
+    public function __construct(string $name = "", string $value = "")
     {
         $this->name = $name;
         $this->value = $value;
@@ -67,7 +38,7 @@ class Field extends Element
      * @param string $value The value of the field.
      * @return Field
      */
-    public function setValue($value)
+    public function setValue(string $value): Field
     {
         $this->value = $value;
         return $this;
@@ -78,7 +49,7 @@ class Field extends Element
      *
      * @return mixed
      */
-    public function getValue()
+    public function getValue(): string
     {
         return $this->value;
     }
@@ -89,7 +60,7 @@ class Field extends Element
      * @param boolean $required
      * @return Field
      */
-    public function setRequired($required)
+    public function setRequired(bool $required): Field
     {
         $this->required = $required;
         return $this;
@@ -100,7 +71,7 @@ class Field extends Element
      *
      * @return bool
      */
-    public function getRequired()
+    public function getRequired(): bool
     {
         return $this->required;
     }
@@ -108,28 +79,28 @@ class Field extends Element
     /**
      * @param $data
      */
-    public function setData($data)
+    public function setData(array $data): Field
     {
-        if(array_search($this->getName(),array_keys($data))!==false)
-        {
+        if (array_search($this->getName(), array_keys($data)) !== false) {
             $this->setValue($data[$this->getName()]);
         }
+        return $this;
     }
 
-    public function getCSSClasses()
-    {
-        $classes = parent::getCSSClasses();
-        if($this->error) $classes.="error ";
-        if($this->getRequired()) $classes .="required ";
-        return trim($classes);
-    }
+    // public function getCSSClasses()
+    // {
+    //     $classes = parent::getCSSClasses();
+    //     if ($this->error) $classes .= "error ";
+    //     if ($this->getRequired()) $classes .= "required ";
+    //     return trim($classes);
+    // }
 
     /**
      * @return string
      */
     public function render()
     {
-        $this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");
+        //$this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");
         $this->setAttribute("name", $this->getName());
         return $this->templateRenderer->render("input_element.tpl.php", array('element' => $this));
     }
