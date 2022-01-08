@@ -26,14 +26,14 @@ abstract class Element
      * 
      * @var string
      */
-    protected $label;
+    protected $label = "";
 
     /**
      * The description of the form element.
      * 
      * @var string
      */
-    protected $description;
+    protected $description = "";
 
     /**
      * An array of all the CSS classes associated with this element.
@@ -145,8 +145,8 @@ abstract class Element
     }
 
     /**
-     * Gets the description which is attached to this element. The description
-     * is normally displayed under the element when rendering HTML.
+     * Gets the description which is attached to this element. The description is normally displayed under the element 
+     * when rendering HTML.
      *
      * @return string
      */
@@ -156,8 +156,8 @@ abstract class Element
     }
 
     /**
-     * Sets the description which is attached to this element. The description
-     * is normally displayed under the element when rendering HTML.
+     * Sets the description which is attached to this element. The description is normally displayed under the element 
+     * when rendering HTML.
      *
      * @return Element
      */
@@ -177,16 +177,14 @@ abstract class Element
         return $this->errors;
     }
 
-    // Returns the error flag for this element.
     public function hasError(): bool
     {
         return $this->error;
     }
 
     /**
-     * Renders the form element by outputing the HTML associated with
-     * the element. This method is abstract and it is implemented by
-     * all the other classes which inherit the Element class.
+     * Renders the form element by outputing the HTML associated with the element. This method is abstract and it is 
+     * implemented by all the other classes which inherit the Element class.
      *
      * @return string
      */
@@ -207,8 +205,8 @@ abstract class Element
     }
 
     /**
-     * Returns an HTML representation of all the attributes. This method is 
-     * normally called when rendering the HTML for the element.
+     * Returns an HTML representation of all the attributes. This method is normally called when rendering the HTML for 
+     * the element.
      */
     public function getAttributes() : array
     {
