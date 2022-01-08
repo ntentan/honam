@@ -1,7 +1,7 @@
 <?php
 namespace ntentan\honam\engines\php\helpers\form;
 
-class DateField extends Text
+class Date extends Text
 {
     public function __construct($label="",$name="",$description="")
     {

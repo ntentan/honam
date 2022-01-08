@@ -1,3 +1,9 @@
+Unreleased
+==========
+Changed
+-------
+- Completely re-written the forms helper of the PHPEngine. The new forms helper uses less code and provides a simpler API.
+
 v0.6.5 - 2021-11-29
 ===================
 Fixed
