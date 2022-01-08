@@ -4,10 +4,9 @@ namespace ntentan\honam\engines\php\helpers\form;
 
 
 /**
- * The form field class. This class represents a form field element.
- * Subclasses of this class are to be used to capture information from
- * the user of the application.
- * \ingroup Form_API
+ * The form field class. 
+ * This class represents a form field element. Subclasses of this class are to be used to capture information from the 
+ * user of the application.
  */
 class Field extends Element
 {
@@ -49,7 +48,7 @@ class Field extends Element
      *
      * @return mixed
      */
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }
@@ -87,21 +86,17 @@ class Field extends Element
         return $this;
     }
 
-    // public function getCSSClasses()
-    // {
-    //     $classes = parent::getCSSClasses();
-    //     if ($this->error) $classes .= "error ";
-    //     if ($this->getRequired()) $classes .= "required ";
-    //     return trim($classes);
-    // }
-
     /**
      * @return string
      */
     public function render()
     {
-        //$this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");
         $this->setAttribute("name", $this->getName());
         return $this->templateRenderer->render("input_element.tpl.php", array('element' => $this));
     }
+
+    public function isContainer()
+    {
+        return false;
+    }    
 }

@@ -12,15 +12,14 @@ use ntentan\honam\TemplateRenderer;
  */
 abstract class Element
 {
-    // const SCOPE_ELEMENT = "";
-    // const SCOPE_WRAPPER = "_wrapper";
+    use ElementFactory;
 
     /**
      * The id of the form useful for CSS styling and DOM access.
      * 
      * @var string
      */
-    protected $id;
+    protected $id = "";
 
     /**
      * The label of the form element.
@@ -75,13 +74,13 @@ abstract class Element
      * assiciated with the field element in one way or the other.
      * @var boolean
      */
-    protected $error;
+    protected $error = false;
 
     /**
      * The parent element which contains this element.
      * @var Element
      */
-    protected $parent = null;
+    //protected $parent = null;
 
     protected $name;
 
@@ -89,11 +88,9 @@ abstract class Element
 
     protected $templateRenderer;
 
-    public function __construct(string $label = "", string $description = "", string $id = "")
+    public function __construct(string $label = "")
     {
         $this->setLabel($label);
-        $this->setDescription($description);
-        $this->setId($id);
     }
 
     public function setId(string $id): Element
@@ -197,33 +194,14 @@ abstract class Element
 
     public function __toString()
     {
-        return $this->templateRenderer->render("inline_layout_element.tpl.php", array('element' => $this));
+        return $this->templateRenderer->render("forms_layout_element.tpl.php", array('element' => $this));
     }
-
-
-    // public function getCSSClasses()
-    // {
-    //     return implode(" ", $this->classes);
-    // }
-
-    // //! Adds a css class to this element.
-    // public function addCSSClass($class)
-    // {
-    //     $this->classes[] = $class;
-    //     return $this;
-    // }
 
     /**
      * Adds an attribute to the element or its surrounding scope.
      */
     public function setAttribute(string $attribute, string $value) : Element
     {
-        // Force the setting of the attribute.
-        //if ($scope == Element::SCOPE_ELEMENT) {
-        //     $this->attributes[$attribute] = $value;
-        // } else if ($scope == Element::SCOPE_WRAPPER) {
-        //     $this->wrapperAttributes[$attribute] = $value;
-        // }
         $this->attributes[$attribute] = $value;
         return $this;
     }
@@ -248,16 +226,6 @@ abstract class Element
         $this->error = true;
         return $this;
     }
-
-    // public function getRenderLabel()
-    // {
-    //     return $this->renderLabel;
-    // }
-
-    // public function setRenderLabel($renderLabel)
-    // {
-    //     $this->renderLabel = $renderLabel;
-    // }
 
     public function setTemplateRenderer(TemplateRenderer $templateRenderer)
     {

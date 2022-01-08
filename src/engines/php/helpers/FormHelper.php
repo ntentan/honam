@@ -4,21 +4,28 @@ namespace ntentan\honam\engines\php\helpers;
 
 use ntentan\honam\engines\php\Helper;
 use ntentan\honam\engines\php\helpers\form\Container;
-use ntentan\honam\engines\php\helpers\form\Form;
-use ntentan\honam\exceptions\HelperException;
-use ntentan\utils\Text;
-use \ReflectionClass;
+use ntentan\honam\engines\php\helpers\form\ElementFactory;
+use ntentan\honam\exceptions\HonamException;
 
 /**
  * A helper for rendering forms.
  */
 class FormHelper extends Helper
 {
+
+    use ElementFactory;
+
     /**
      * An instance of the container for the Form.
-     * @var Container
+     * @var array
      */
-    private $container;
+    private $containers = [];
+
+    /**
+     * An instance of the first container added to the form.
+     * This is saved so that methods that need to access the first container can still work after the form is closed.
+     */
+    private $baseContainer;
 
     /**
      * Data to be rendered into the form.
@@ -37,32 +44,16 @@ class FormHelper extends Helper
      */
     public function __toString()
     {
-        $this->container->setData($this->data);
-        $this->container->setErrors($this->errors);
-        $return = (string) $this->container;
-        $this->container = null;
-        return $return;
-    }
-
-    private function createElement($element, $args)
-    {
-        $elementClass = new ReflectionClass(__NAMESPACE__ . "\\form\\" . $element);
-        $element = $elementClass->newInstanceArgs($args == null ? array() : $args);
-        $element->setTemplateRenderer($this->templateRenderer);
-        return $element;
+        $this->baseContainer->setData($this->data);
+        $this->baseContainer->setErrors($this->errors);
+        $rendered = (string) $this->baseContainer;
+        $this->baseContainer = null;
+        return $rendered;
     }
 
     public function setId($id)
     {
         $this->getContainer()->setId($id);
-    }
-
-    public function add()
-    {
-        $args = func_get_args();
-        $element = array_shift($args);
-        $this->getContainer()->add($this->createElement($element, $args));
-        return $this;
     }
 
     public function setErrors($errors)
@@ -77,75 +68,50 @@ class FormHelper extends Helper
         return $this->container;
     }
 
-    public function open(string $formId = '')
+    public function open()
     {
-        $this->container = new Form(); //$this->create('Form');
-        if ($formId != '') {
-            $this->container->setId($formId);
-        }
-        $this->container->setRenderMode(Container::RENDER_MODE_HEAD);
-        return $this;
+        return $this->open_form();
     }
 
     public function close($submit = 'Submit')
     {
-        $arguments = func_get_args();
-        if ($submit === false) {
-            $this->container->setShowSubmit(false);
-        } else if (count($arguments) > 0) {
-            $this->container->setSubmitValues($arguments);
-        }
-        $this->container->setRenderMode(Container::RENDER_MODE_FOOT);
+        return $this->close_form($submit);
+    }
+
+    public function data(array $data)
+    {
+        $this->data = $data;
         return $this;
     }
 
-    public function __call($name, $arguments)
+    public function errors(array $errors)
     {
-        return $this->createElement($name, $arguments);
+        $this->errors = $errors;
+        return $this;
     }
 
-    // public function __call($function, $arguments)
-    // {
-        // if (substr($function, 0, 5) == "open_") {
-        //     $container = $this->createElement(Text::ucamelize(substr($function, 5, strlen($function))), $arguments);
-        //     $container->setRenderMode(Container::RENDER_MODE_HEAD);
-        //     return $container;
-        // }
+    public function pushContainer(string $name, Container $container)
+    {
+        if($this->baseContainer === null && empty($this->containers)) {
+            $this->baseContainer = $container;
+        } else if ($this->baseContainer !== null && empty($this->containers)) {
+            throw new HonamException("Cannot add a container to a form that has already been closed.");
+        }
+        array_push($this->containers, [$name, $container]);
+    }
 
-        // elseif (substr($function, 0, 6) == "close_") {
-        //     $container = $this->createElement(Text::ucamelize(substr($function, 5, strlen($function))), $arguments);
-        //     $container->setRenderMode(Container::RENDER_MODE_FOOT);
-        //     return $container;
-        // }
+    public function popContainer(string $name)
+    {
+        $container = array_pop($this->containers);
+        if($name === $container[0]) {
+            return $container[1];
+        } else {
+            throw new HonamException("You cannot close the $name container while {$container[0]} is open.");
+        }
+    }
 
-        // elseif (substr($function, 0, 4) == "get_") {
-        //     $element = $this->createElement(Text::ucamelize(substr($function, 4, strlen($function))), $arguments);
-        //     $name = $element->getName();
-        //     if (isset($this->data[$name])) {
-        //         $element->setValue($this->data[$name]);
-        //     }
-        //     if (isset($this->errors[$name])) {
-        //         $element->setErrors($this->errors[$name]);
-        //     }
-        //     return $element;
-        // }
-
-        // elseif (substr($function, 0, 4) == "add_") {
-        //     $element = $this->createElement(Text::ucamelize(substr($function, 4, strlen($function))), $arguments);
-        //     return $this->container->add($element);
-        // }
-
-        // else {
-        //     throw new HelperException("Function *$function* not found in form helper.");
-        // }
-    // }
-
-    // private function getContainer()
-    // {
-    //     if ($this->container === null) {
-    //         $this->container = $this->createElement("Form", []);
-    //     }
-    //     return $this->container;
-    // }
-
+    public function getActiveContainer(): Container
+    {
+        return end($this->containers)[1];
+    }
 }

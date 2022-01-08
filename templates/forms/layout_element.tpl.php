@@ -1,18 +1,15 @@
 <?php
 
-
 use ntentan\honam\engines\php\helpers\form\Container;
-use ntentan\honam\engines\php\helpers\form\Element;
-use ntentan\honam\engines\php\helpers\form\HiddenField;
+use ntentan\honam\engines\php\helpers\form\Hidden;
 
-$attributes = $element->getAttributes(Element::SCOPE_WRAPPER);
 $id = $element->getId();
-if(is_a($element->unescape(), HiddenField::class)):?>
+if(is_a($element->unescape(), Hidden::class)):?>
     <?= $element->unescape()->render(); ?>
 <?php else: ?>
     <div class="form-element <?= $element->hasError() ? 'form-error' : '' ?>" <?php if($id != ''): ?>id="<?= $id ?>_wrapper"<?php endif; ?>>
         <?php
-            if(!is_a($element, Container::class) && $element->getRenderLabel()) {
+            if(!is_a($element, Container::class) && $element->getLabel() != "") {
                 echo $this->partial("element_label.tpl.php", array('element' => $element, 'label' => $element->getLabel()));
             }
         ?>  

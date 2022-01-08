@@ -144,7 +144,7 @@ class PhpEngine extends AbstractEngine
      * @param string $text The text to be truncated.
      * @param integer $length The maximum lenght of the truncated string. Might
      *      return a shorter string if the lenght ends in the middle of a word.
-     * @param string $terminator The ellipsis terminator to use for the text.
+     * @param string $terminator The ellipsis terminator to 6use for the text.
      * @return string
      */
     public function truncate($text, $length, $terminator = ' ...')
