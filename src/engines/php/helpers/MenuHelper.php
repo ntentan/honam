@@ -103,19 +103,15 @@ class MenuHelper extends Helper
         {
             if(is_string($item) || is_numeric($item))
             {
-                $item = array(
+                $item = [
                     'label' => $item,
                     'url' => $this->makeFullUrl(strtolower(str_replace(' ', '_', $item))),
                     'default' => null
-                );
+                ];
             }
                         
-            $item['selected'] = (
-                $item['url'] == substr($this->currentUrl, 0, strlen($item['url']))
-            );
-            
+            $item['selected'] = $item['url'] == substr($this->currentUrl, 0, strlen($item['url']));
             $item['fully_matched'] = $item['url'] == $this->currentUrl;
-            
             $menuItems[$index] = $item;
         }
         

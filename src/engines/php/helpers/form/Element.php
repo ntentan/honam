@@ -76,15 +76,9 @@ abstract class Element
      */
     protected $error = false;
 
-    /**
-     * The parent element which contains this element.
-     * @var Element
-     */
-    //protected $parent = null;
-
     protected $name;
 
-    protected $renderLabel = true;
+    protected $hasLabel = true;
 
     protected $templateRenderer;
 
@@ -228,5 +222,10 @@ abstract class Element
     public function setTemplateRenderer(TemplateRenderer $templateRenderer)
     {
         $this->templateRenderer = $templateRenderer;
+    }
+
+    public function getHasLabel(): bool
+    {
+        return $this->hasLabel;
     }
 }

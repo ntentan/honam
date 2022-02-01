@@ -6,6 +6,8 @@ namespace ntentan\honam\engines\php\helpers\form;
  */
 class Checkable extends Field
 {
+    protected $hasLabel = false;
+
     /**
      * The value that this field should contain if this checkbox is checked.
      */
@@ -55,7 +57,6 @@ class Checkable extends Field
         }
         
         $this->setAttribute("name", $this->getName());
-        //$this->setAttribute("class", "{$this->getAttribute('type')} {$this->getCSSClasses()}");        
         $this->setValue($this->getCheckedValue());
         return $this->templateRenderer->render('input_checkable_element.tpl.php', array('element' => $this));
     }

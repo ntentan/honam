@@ -9,7 +9,7 @@ if(is_a($element->unescape(), Hidden::class)):?>
 <?php else: ?>
     <div class="form-element <?= $element->hasError() ? 'form-error' : '' ?>" <?php if($id != ''): ?>id="<?= $id ?>_wrapper"<?php endif; ?>>
         <?php
-            if(!is_a($element, Container::class) && $element->getLabel() != "") {
+            if(!is_a($element, Container::class) && $element->getHasLabel()) {
                 echo $this->partial("element_label.tpl.php", array('element' => $element, 'label' => $element->getLabel()));
             }
         ?>  

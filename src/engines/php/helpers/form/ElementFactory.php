@@ -4,6 +4,9 @@ namespace ntentan\honam\engines\php\helpers\form;
 use ntentan\honam\exceptions\HonamException;
 use ntentan\utils\Text;
 
+/**
+ * A trait that allows for chaining the methods in form elements.
+ */
 trait ElementFactory {
 
     private $caller;
@@ -53,5 +56,4 @@ trait ElementFactory {
     {
         $this->caller = $caller;
     }
-
 }

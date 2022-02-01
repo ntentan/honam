@@ -7,7 +7,7 @@ use ntentan\honam\engines\php\Variable;
  * A selection list class for the forms helper. This class renders an HTML
  * select form object with its associated options.
  */
-class SelectionList extends Field
+class Select extends Field
 {
     /**
      * An array of options to display with this selection list
@@ -31,10 +31,11 @@ class SelectionList extends Field
      * @param string $name The name of the selection list
      * @param string $description A brief description for the selection list
      */
-    public function __construct($label="", $name="", $description="")
+    public function __construct($label="", $name="", $options=[])
     {
         Field::__construct($name);
-        Element::__construct($label, $description);
+        Element::__construct($label);
+        $this->setOptions($options);
     }
 
     /**
