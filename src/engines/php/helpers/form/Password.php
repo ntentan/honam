@@ -4,9 +4,9 @@ namespace ntentan\honam\engines\php\helpers\form;
 
 class Password extends Text
 {
-    public function __construct(string $label = "", string $name = "", string $description = "")
+    public function render()
     {
-        parent::__construct($label, $name, $description);
-        $this->setAttribute("type", "password");
+        $this->setAttribute('type', 'password');
+        return parent::render();
     }
 }

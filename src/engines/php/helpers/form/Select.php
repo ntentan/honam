@@ -31,12 +31,12 @@ class Select extends Field
      * @param string $name The name of the selection list
      * @param string $description A brief description for the selection list
      */
-    public function __construct($label="", $name="", $options=[])
-    {
-        Field::__construct($name);
-        Element::__construct($label);
-        $this->setOptions($options);
-    }
+    // public function __construct($label="", $name="", $options=[])
+    // {
+    //     Field::__construct($name);
+    //     Element::__construct($label);
+    //     $this->setOptions($options);
+    // }
 
     /**
      * Sets whether multiple selections are allowed. This method automatically

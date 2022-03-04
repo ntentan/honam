@@ -6,19 +6,10 @@ namespace ntentan\honam\engines\php\helpers\form;
  */
 class RadioButton extends Checkable
 {
-
-    /**
-     * Constructor for the checkbox.
-     *
-     * @param string $label The label of the checkbox.
-     * @param string $name The name of the checkbox used for the name='' attribute of the HTML output
-     * @param string $value A value to assign to this checkbox.
-     * @param string $description A description of the field.
-     */
-    public function __construct($label="", $name="", $value="")
+    public function render()
     {
-        parent::__construct($label, $name, $value);
         $this->setAttribute('type', 'radio');
+        return parent::render();
     }
 }
 

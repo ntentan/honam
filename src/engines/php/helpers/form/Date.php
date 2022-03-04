@@ -3,10 +3,10 @@ namespace ntentan\honam\engines\php\helpers\form;
 
 class Date extends Text
 {
-    public function __construct($label="",$name="",$description="")
+    public function render()
     {
-        parent::__construct($label,$name,$description);
-    	$this->setAttribute('type', 'date');
+        $this->setAttribute('type', 'date');
+        return parent::render();
     }
 }
 

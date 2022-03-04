@@ -25,10 +25,12 @@ class Field extends Element
     /**
      * The constructor for the field element.
      */
-    public function __construct(string $name = "", string $value = "")
+    public final function __construct(string $label = "", string $name = "", string $value = "")
     {
         $this->name = $name;
         $this->value = $value;
+        $this->label = $label;
+        $this->setAttribute("id", "field-$name");
     }
 
     /**
@@ -98,5 +100,5 @@ class Field extends Element
     public function isContainer()
     {
         return false;
-    }    
+    }
 }
