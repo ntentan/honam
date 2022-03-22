@@ -5,13 +5,6 @@ namespace ntentan\honam\engines\php\helpers\form;
 
 class Textarea extends Field
 {
-    public function __construct($label="",$name="",$description="")
-    {
-        $this->setLabel($label);
-        $this->setName($name);
-        $this->setDescription($description);
-    }
-
     public function render()
     {
         $this->setAttribute('rows', 10);
