@@ -72,7 +72,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         return $this->unescape();
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->data);
     }
@@ -82,7 +82,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         return $this->data;
     }
 
-    public function rewind()
+    public function rewind(): void
     {
         if ($this->iteratable) {
             $this->data->rewind();
@@ -91,7 +91,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
-    public function valid()
+    public function valid(): bool
     {
         if ($this->iteratable) {
             return $this->data->valid();
@@ -100,7 +100,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
-    public function current()
+    public function current(): mixed
     {
         if ($this->iteratable) {
             return $this->data->current();
@@ -109,7 +109,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
-    public function key()
+    public function key(): mixed
     {
         if ($this->iteratable) {
             return $this->data->key();
@@ -118,7 +118,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
-    public function next()
+    public function next(): void
     {
         if ($this->iteratable) {
             $this->data->next();
@@ -127,12 +127,12 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->data[$offset]);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         if (isset($this->data[$offset])) {
             return Variable::initialize($this->data[$offset], $this->janitor);
@@ -141,7 +141,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (is_null($offset)) {
             $this->data[] = $value;
@@ -150,7 +150,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->data[$offset]);
     }
