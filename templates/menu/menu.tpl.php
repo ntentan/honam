@@ -7,6 +7,6 @@
                 if($key == 'url' || $key == 'label' || $key == 'selected' || $key == 'id' || $key == 'fully_matched' || $key == 'children') continue;
                 $params .= "$key = '$value' ";
             }
-            echo $this->partial( "{$alias}_menu_item", ['params' => $params, 'id' => $id, 'item' => $item, 'has_links' => $has_links ?? false, 'css_classes' => $css_classes]) ;
+            echo $this->partial( "{$alias}_menu_item", ['params' => $params, 'item' => $item, 'has_links' => $has_links ?? false, 'css_classes' => $css_classes]) ;
         } ?></ul>
 <?php endif ?>

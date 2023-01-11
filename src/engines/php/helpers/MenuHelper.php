@@ -3,7 +3,6 @@
 namespace ntentan\honam\engines\php\helpers;
 
 use ntentan\honam\engines\php\Helper;
-
 use ntentan\honam\TemplateRenderer;
 use ntentan\utils\Input;
 
@@ -35,7 +34,7 @@ class MenuHelper extends Helper
     public function __construct(TemplateRenderer $templateRenderer)
     {
         parent::__construct($templateRenderer);
-        $this->setCurrentUrl(Input::server('REQUEST_URI'));
+        $this->setCurrentUrl(filter_var($_SERVER["REQUEST_URI"], FILTER_SANITIZE_URL));
     }
 
     public function help($items = null)

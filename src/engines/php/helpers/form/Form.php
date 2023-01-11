@@ -16,7 +16,7 @@ class Form extends Container
 
     public function __construct()
     {
-        $this->action = Input::server("REQUEST_URI");
+        $this->action = filter_var($_SERVER["REQUEST_URI"], FILTER_VALIDATE_URL); //Input::server("REQUEST_URI");
     }
 
     public function setAction($action)

@@ -63,13 +63,13 @@ class FormHelper extends Helper
     public function setErrors($errors)
     {
         $this->errors = $errors;
-        return $this->container;
+        return $this->baseContainer;
     }
 
     public function setData($data)
     {
         $this->data = $data;
-        return $this->container;
+        return $this->baseContainer;
     }
 
     public function open()
@@ -96,9 +96,11 @@ class FormHelper extends Helper
 
     public function pushContainer(string $name, Container $container)
     {
-        if($this->baseContainer === null && empty($this->containers)) {
+        if ($this->baseContainer === null && empty($this->containers)) {
+            // If a container is opened and there is no base container, we can assume its the base container.
             $this->baseContainer = $container;
         } else if ($this->baseContainer !== null && empty($this->containers)) {
+            // If the container is stack is empty while we still have a base container, something is wrong.
             throw new HonamException("Cannot add a container to a form that has already been closed.");
         }
         array_push($this->containers, ['name' => $name, 'instance' => $container]);
@@ -107,11 +109,11 @@ class FormHelper extends Helper
     public function popContainer(string $name)
     {
         $container = array_pop($this->containers);
-        if($name === $container['name']) {
-            $currentContainer = end($this->containers)['instance'];
-            if($currentContainer !== null) {
-                $currentContainer->add($container['instance']);
-            }
+        if ($name === $container['name']) {
+            // $currentContainer = end($this->containers);
+            // if ($currentContainer !== false) {
+            //     $currentContainer['instance']->add($container['instance']);
+            // }
             return $container['instance'];
         } else {
             throw new HonamException("You cannot close the $name container while {$container['name']} is open.");
