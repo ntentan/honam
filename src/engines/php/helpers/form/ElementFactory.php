@@ -52,6 +52,7 @@ trait ElementFactory
         $element->setTemplateRenderer($this->templateRenderer);
         $element->setCaller($this);
 
+        //
         if ($containerCheck && is_a($element, __NAMESPACE__ . "\\Container")) {
             $this->pushContainer($name, $element);
         } else if ($containerCheck) {

@@ -2,6 +2,7 @@
 
 namespace ntentan\honam\engines\php\helpers\form;
 
+use ntentan\honam\engines\php\Variable;
 use ntentan\honam\TemplateRenderer;
 
 
@@ -212,7 +213,7 @@ abstract class Element
         return $this->attributes[$attribute] ?? null;
     }
 
-    public function setErrors(array $errors) : Element
+    public function setErrors(array|Variable $errors) : Element
     {
         $this->errors = $errors;
         $this->error = true;
