@@ -1,10 +1,11 @@
 <?php
 namespace ntentan\honam\engines\php\helpers\form;
 
+use ntentan\honam\engines\php\Variable;
+
 /**
- * The container class. This abstract class provides the necessary
- * basis for implementing form element containers. The container
- * is a special element which contains other form elements.
+ * The container class. This abstract class provides the necessary basis for implementing form element containers. The 
+ * container is a special element which contains other form elements.
  */
 abstract class Container extends Element
 {
@@ -33,13 +34,24 @@ abstract class Container extends Element
      * This method sets the data for the fields in this container. The parameter passed to this method is a structured 
      * array which has field names as keys and the values as value.
      */
-    public function setData($data)
+    public function setData(array|Variable $data)
     {
-        if (is_array($data)) {
-            foreach ($this->elements as $element) {
-                $element->setData($data);
+        foreach ($this->elements as $element) {
+            $element->setData($data);
+        }
+        return $this;
+    }
+
+    public function setErrors(array|Variable $errors): Element
+    {
+        foreach($this->elements as $element) {
+            $fieldNames = array_keys(is_a($errors, Variable::class) ? $errors->unescape() : $errors);
+            $fieldName = $element->getName();
+            if (array_search($fieldName, $fieldNames) !== false) {
+                $element->setErrors($errors[$fieldName]);
             }
         }
+        return $this;
     }
 
     public function render()

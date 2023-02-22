@@ -1,11 +1,9 @@
 <?php
 namespace ntentan\honam\engines\php\helpers\form;
 
-use ntentan\utils\Input;
-
 /**
- * The form class. This class represents the overall form class. This
- * form represents the main form for collecting data from the user.
+ * The form class. This class represents the overall form class. This form represents the main form for collecting data
+ * from the user.
  */
 class Form extends Container
 {
@@ -16,7 +14,7 @@ class Form extends Container
 
     public function __construct()
     {
-        $this->action = filter_var($_SERVER["REQUEST_URI"], FILTER_VALIDATE_URL); //Input::server("REQUEST_URI");
+        $this->action = filter_var($_SERVER["REQUEST_URI"], FILTER_VALIDATE_URL);
     }
 
     public function setAction($action)

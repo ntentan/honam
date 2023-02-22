@@ -2,6 +2,7 @@
 
 namespace ntentan\honam\engines\php\helpers\form;
 
+use ntentan\honam\engines\php\Variable;
 
 /**
  * The form field class. 
@@ -27,10 +28,10 @@ class Field extends Element
      */
     public final function __construct(string $label = "", string $name = "", string $value = "")
     {
-        $this->name = $name;
+        $this->name = $name === "" ? $label : $name; // Repeat the label as name if name is empty
         $this->value = $value;
         $this->label = $label;
-        $this->setAttribute("id", "field-$name");
+        $this->setAttribute("id", "field-{$this->name}");
     }
 
     /**
@@ -39,7 +40,7 @@ class Field extends Element
      * @param string $value The value of the field.
      * @return Field
      */
-    public function setValue(string $value): Field
+    public function setValue(string|null|Variable $value): Field
     {
         $this->value = $value;
         return $this;
@@ -80,9 +81,10 @@ class Field extends Element
     /**
      * @param $data
      */
-    public function setData(array $data): Field
+    public function setData(array|Variable $data): Field
     {
-        if (array_search($this->getName(), array_keys($data)) !== false) {
+        $fieldNames = array_keys(is_a($data, Variable::class) ? $data->unescape() : $data);
+        if (array_search($this->getName(), $fieldNames) !== false) {
             $this->setValue($data[$this->getName()]);
         }
         return $this;

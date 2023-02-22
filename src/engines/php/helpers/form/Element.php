@@ -156,7 +156,7 @@ abstract class Element
      *
      * @return Element
      */
-    public function setDescription($description): Element
+    public function setDescription(string $description): Element
     {
         $this->description = $description;
         return $this;
@@ -167,7 +167,7 @@ abstract class Element
      *
      * @return array 
      */
-    public function getErrors(): array
+    public function getErrors(): array|Variable
     {
         return $this->errors;
     }

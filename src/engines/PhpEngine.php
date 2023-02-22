@@ -81,12 +81,12 @@ class PhpEngine extends AbstractEngine
     /**
      * Passes the data to be rendered to the template engine instance.
      */
-    public function renderFromFileTemplate(string $filePath, array $data) : string
+    public function renderFromFileTemplate(string $_filePath, array $_data) : string
     {
         // Escape each variable by passing it through the variable class.
         // Users would have to unescape them by calling the escape method directly
         // on the variable.
-        foreach ($data as $_key => $_value) {
+        foreach ($_data as $_key => $_value) {
             $$_key = Variable::initialize($_value, $this->janitor);
         }
 
@@ -97,7 +97,7 @@ class PhpEngine extends AbstractEngine
         // execution.
         ob_start();
         try {
-            include $filePath;
+            include $_filePath;
         } catch (Exception $e) {
             ob_get_flush();
             throw $e;

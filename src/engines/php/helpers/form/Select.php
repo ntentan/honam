@@ -107,7 +107,7 @@ class Select extends Field
      * 
      * @return SelectionList
      */
-    public function setOptions($options = [])
+    public function setOptions(array|Variable $options = []): Select
     {
         if(is_a($options, Variable::class))
         {

@@ -60,18 +60,6 @@ class FormHelper extends Helper
         $this->getContainer()->setId($id);
     }
 
-    public function setErrors($errors)
-    {
-        $this->errors = $errors;
-        return $this->baseContainer;
-    }
-
-    public function setData($data)
-    {
-        $this->data = $data;
-        return $this->baseContainer;
-    }
-
     public function open()
     {
         return $this->open_form();
@@ -80,18 +68,6 @@ class FormHelper extends Helper
     public function close($submit = 'Submit')
     {
         return $this->close_form($submit);
-    }
-
-    public function data(array $data)
-    {
-        $this->data = $data;
-        return $this;
-    }
-
-    public function errors(array $errors)
-    {
-        $this->errors = $errors;
-        return $this;
     }
 
     public function pushContainer(string $name, Container $container)
@@ -110,10 +86,13 @@ class FormHelper extends Helper
     {
         $container = array_pop($this->containers);
         if ($name === $container['name']) {
-            // $currentContainer = end($this->containers);
-            // if ($currentContainer !== false) {
-            //     $currentContainer['instance']->add($container['instance']);
-            // }
+            // Add this container to a parent if containers are nested in any way.
+            $currentContainer = end($this->containers);
+            if ($currentContainer === false) {
+                $this->baseContainer = null;
+            } else {
+                $currentContainer['instance']->add($container['instance']);
+            }
             return $container['instance'];
         } else {
             throw new HonamException("You cannot close the $name container while {$container['name']} is open.");
