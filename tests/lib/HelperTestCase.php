@@ -21,11 +21,5 @@ class HelperTestCase extends TestCase
         $templateRenderer = new TemplateRenderer($engineRegistry, $templateFileResolver);
         $this->helpers = new HelperVariable($templateRenderer, $templateFileResolver);
         $engineRegistry->registerEngine(['tpl.php'], new PhpEngineFactory($templateRenderer, $this->helpers, new Janitor()));
-        //$engineRegistry->registerEngine(['tpl.php'], new PhpEngineFactory($templateRenderer, $this->helpers, new Janitor()));
-//        $engineRegistry = new EngineRegistry();
-//        $phpEngineFactory = new PhpEngineFactory($this->helpers, new Janitor());
-//        $engineRegistry->registerEngine(["tpl.php"], $phpEngineFactory);
-//        $this->helpers->setupTemplatePaths($templateFileResolver);
-//        $this->helpers->setTemplateRenderer(new TemplateRenderer($engineRegistry, $templateFileResolver));
     }
 }

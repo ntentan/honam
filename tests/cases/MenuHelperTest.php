@@ -11,6 +11,12 @@ use ntentan\honam\tests\lib\HelperTestCase;
  */
 class MenuHelperTest extends HelperTestCase
 {
+    public function setUp(): void
+    {
+        parent::setUp();
+        $_SERVER['REQUEST_URI'] = ""; // Set this to an empty string
+    }
+
     public function testMenu()
     {
         $this->assertXmlStringEqualsXmlString(
