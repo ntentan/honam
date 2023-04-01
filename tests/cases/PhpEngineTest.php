@@ -20,7 +20,7 @@ class PhpEngineTest extends ViewBaseTest
     public function testVariableUnescape()
     {
         $output = $this->templateRenderer->render('phptest_variable.tpl.php', array('some_html' => "<div><span>Hello I'm HTML</span></div>"));
-        $this->assertEquals("&lt;div&gt;&lt;span&gt;Hello I'm HTML&lt;/span&gt;&lt;/div&gt; : <div><span>Hello I'm HTML</span></div>", $output);
+        $this->assertEquals("&lt;div&gt;&lt;span&gt;Hello I&#039;m HTML&lt;/span&gt;&lt;/div&gt; : <div><span>Hello I'm HTML</span></div>", $output);
     }
     
     public function testArrayVariable()

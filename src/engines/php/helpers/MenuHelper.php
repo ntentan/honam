@@ -4,7 +4,6 @@ namespace ntentan\honam\engines\php\helpers;
 
 use ntentan\honam\engines\php\Helper;
 use ntentan\honam\TemplateRenderer;
-use ntentan\utils\Input;
 
 /**
  * A helper class for generating HTML menus.

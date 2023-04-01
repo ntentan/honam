@@ -3,7 +3,7 @@ namespace ntentan\honam\tests\cases;
 
 use ntentan\honam\tests\lib\HelperTestCase;
 
-class PainationHelperTest extends HelperTestCase
+class PaginationHelperTest extends HelperTestCase
 {
     public function testPlainPagination()
     {
