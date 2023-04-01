@@ -1,7 +1,7 @@
 ntentan/honam
 =============
 
-[![Build Status](https://travis-ci.org/ntentan/honam.svg)](https://travis-ci.org/ntentan/honam)
+[![Tests](https://github.com/ntentan/honam/actions/workflows/tests.yml/badge.svg)](https://github.com/ntentan/honam/actions/workflows/tests.yml)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ntentan/honam/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ntentan/honam/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/ntentan/honam/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/ntentan/honam/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/ntentan/honam/version.svg)](https://packagist.org/packages/ntentan/honam)
@@ -12,7 +12,7 @@ Honam provides an interface through which multiple template engines can be acces
 
 License
 =======
-Copyright (c) 2008-2019 James Ekow Abaka Ainooson
+Copyright (c) 2008-2023 James Ekow Abaka Ainooson
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of 
 this software and associated documentation files (the "Software"), to deal in 
