@@ -17,11 +17,11 @@
         "phpunit/phpunit":"@stable",
         "mikey179/vfsstream":"@stable",
         "mustache/mustache": "@stable",
-        "smarty/smarty": "~4"
+        "smarty/smarty": "@stable"
     },
     "suggest" : {
         "mustache/mustache": "For mustache template support (2.*)",
-        "smarty/smarty": "For smarty template support (3.*)"
+        "smarty/smarty": "For smarty template support (4.*)"
     },
     "autoload": {
         "psr-4": {

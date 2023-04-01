@@ -1,8 +1,14 @@
-Unreleased
-==========
+v0.7.0 - 2023-03-31
+===================
 Changed
 -------
-- Completely re-written the forms helper of the PHPEngine. The new forms helper uses less code and provides a simpler API.
+- Completely rewrote the forms helper of the PHPEngine. The new forms helper uses less code and provides a simpler API. Completely shed all the weight from the WYF codebase.
+- The PHPEngine's menu helper no longer generates default HTML classes and ids. Moving forward, these have to be explicitly added to the top level. 
+
+Fixed
+-----
+- Finally switched the smarty dependency to track `v4.x` releases. This helps keep up with the vulnerabilities in the code.
+- Issues with internal variables leaking into the PHPEngine's rendering. This may need to be checked further for potential RCE vulnerabilities.
 
 v0.6.5 - 2021-11-29
 ===================
