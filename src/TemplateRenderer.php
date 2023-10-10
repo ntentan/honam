@@ -99,7 +99,7 @@ class TemplateRenderer
      * @return bool
      * @throws TemplateEngineNotFoundException
      */
-    public function canRender($templateFile)
+    public function canRender(string $templateFile): bool
     {
         try {
             $this->getTemplateExtension($templateFile);
@@ -147,7 +147,7 @@ class TemplateRenderer
      * @throws exceptions\TemplateEngineNotFoundException
      * @throws exceptions\FactoryException
      */
-    public function render($template, $data, $fromString = false, $extension=null)
+    public function render(string $template, array  $data, bool $fromString = false, string $extension=null): string
     {
         if($fromString) {
             $engine = $this->loadEngine($extension);

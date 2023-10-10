@@ -60,16 +60,16 @@ class PhpEngine extends AbstractEngine
         $this->templateRenderer = $templateRenderer;
     }
 
-    public function partial($template, $templateData = array())
+    public function partial(string $template, array | Variable $templateData = array())
     {
-        return $this->templateRenderer->render($template, $templateData);
+        return $this->templateRenderer->render($template, $this->unescape($templateData));
     }
 
     /**
      * @param mixed $item
      * @return mixed
      */
-    public function unescape($item)
+    public function unescape(mixed $item): mixed
     {
         if($item instanceof Variable) {
             return $item->unescape();
@@ -129,7 +129,7 @@ class PhpEngine extends AbstractEngine
      * @param string $text
      * @return string
      */
-    public function strip($text)
+    public function strip(string $text): string
     {
         return $this->janitor->cleanHtml($text, true);
     }
@@ -147,7 +147,7 @@ class PhpEngine extends AbstractEngine
      * @param string $terminator The ellipsis terminator to 6use for the text.
      * @return string
      */
-    public function truncate($text, $length, $terminator = ' ...')
+    public function truncate(string $text, int $length, string $terminator = ' ...'): string
     {
         while (mb_substr($text, $length, 1) != ' ' && $length > 0) {
             $length--;
