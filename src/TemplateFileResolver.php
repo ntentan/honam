@@ -62,6 +62,9 @@ class TemplateFileResolver
         $templateFile = '';
         foreach ($paths as $path) {
             $newTemplateFile = "$testTemplate.*";
+            if (!file_exists($path)) {
+                continue;
+            }
             $files = array_filter(
                 iterator_to_array(Filesystem::directory($path)->getFiles(false)),
                 function($file) use($newTemplateFile) {
