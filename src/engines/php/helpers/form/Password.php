@@ -2,7 +2,7 @@
 
 namespace ntentan\honam\engines\php\helpers\form;
 
-class Password extends Text
+class Password extends Field
 {
     public function render()
     {

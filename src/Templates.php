@@ -1,8 +1,5 @@
 <?php
-
-
 namespace ntentan\honam;
-
 
 use ntentan\honam\TemplateFileResolver;
 use ntentan\honam\TemplateRenderer;
