@@ -32,6 +32,7 @@ use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\engines\php\Variable;
 use ntentan\honam\TemplateRenderer;
 use ntentan\utils\StringStream;
+use ParseError;
 
 /**
  * The PHP engine is a template engine built into honam which uses raw PHP as

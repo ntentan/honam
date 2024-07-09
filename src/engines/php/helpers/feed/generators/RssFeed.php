@@ -25,7 +25,7 @@ class RssFeed extends Generator
             $itemElement = $rss->channel->addChild('item');
             foreach($item as $field => $value)
             {
-                $value = mb_convert_encoding($value, 'UTF-8', 'ISO-8859-1');
+                $value = mb_convert_encoding($value ?? "", 'UTF-8', 'ISO-8859-1');
                 $property = $this->convertProperty($field);
                 $itemElement->addChild($property, $this->formatProperty($property, $value));
             }
