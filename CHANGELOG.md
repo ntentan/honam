@@ -1,9 +1,19 @@
+v0.8.0 - 2024-07-13
+===================
+Added
+-----
+- Type hints to most methods
+
+Fixed
+-----
+- The password field, to prevent it from showing as a plain text field.
+
 v0.7.0 - 2023-03-31
 ===================
 Changed
 -------
 - Completely rewrote the forms helper of the PHPEngine. The new forms helper uses less code and provides a simpler API. Completely shed all the weight from the WYF codebase.
-- The PHPEngine's menu helper no longer generates default HTML classes and ids. Moving forward, these have to be explicitly added to the top level. 
+- The PHPEngine's menu helper no longer generates default HTML classes and ids. Moving forward, these have to be explicitly added to the top level.
 
 Fixed
 -----
@@ -51,7 +61,7 @@ Added
 
 Fixed
 -----
- - Broken comparison in the input template for the form helper 
+ - Broken comparison in the input template for the form helper
 
 v0.6.0 - 2019-05-27
 ===================
