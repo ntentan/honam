@@ -1,8 +1,6 @@
 <?php
 namespace ntentan\honam;
 
-use ntentan\honam\TemplateFileResolver;
-use ntentan\honam\TemplateRenderer;
 use ntentan\honam\factories\PhpEngineFactory;
 use ntentan\honam\factories\MustacheEngineFactory;
 use ntentan\honam\engines\php\HelperVariable;
