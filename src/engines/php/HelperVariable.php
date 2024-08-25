@@ -34,9 +34,35 @@ use ReflectionMethod;
  */
 class HelperVariable
 {
-    private $loadedHelpers = array();
-    private $templateRenderer;
+    /**
+     * A list of all helpers that have been loaded.
+     * @var array
+     */
+    private array $loadedHelpers = array();
 
+    /**
+     * An instance of the template renderer.
+     * @var TemplateRenderer
+     */
+    private TemplateRenderer $templateRenderer;
+
+    /**
+     * The current path being rendered.
+     * @var string
+     */
+    private string $baseUrl = '/';
+
+    /**
+     * A prefix for the current URL to be prefixed or used by helpers.
+     * @var string
+     */
+    private string $prefix = '';
+
+    /**
+     * Create a new instance of the helper variable.
+     * @param TemplateRenderer $templateRenderer
+     * @param TemplateFileResolver $templateFileResolver
+     */
     public function __construct(TemplateRenderer $templateRenderer, TemplateFileResolver $templateFileResolver)
     {
         $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../../templates/forms");
@@ -57,6 +83,7 @@ class HelperVariable
         if(!isset($this->loadedHelpers[$helperName])) {
             $helperClass = 'ntentan\honam\engines\php\helpers\\' . ucfirst($helperName) . "Helper";;
             $helperInstance = new $helperClass($this->templateRenderer);
+            $helperInstance->setUrlParameters($this->baseUrl, $this->prefix);
             $this->loadedHelpers[$helperName] = $helperInstance;
         }
         return $this->loadedHelpers[$helperName];
@@ -77,5 +104,11 @@ class HelperVariable
     {
         $helper = $this->getHelper($helperName);;
         return (new ReflectionMethod($helper, 'help'))->invokeArgs($helper, $arguments);
+    }
+
+    public function setUrlParameters(string $baseUrl, string $prefix): void
+    {
+        $this->baseUrl = $baseUrl;
+        $this->prefix = $prefix;
     }
 }

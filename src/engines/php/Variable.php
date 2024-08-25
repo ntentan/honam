@@ -18,12 +18,12 @@ class Variable implements ArrayAccess, Iterator, Countable
     private $janitor;
 
     /**
-     * @param $data
+     * @param mixed $data
      * @param Janitor $janitor
      * @return mixed
      * @throws HonamException
      */
-    public static function initialize($data, Janitor $janitor)
+    public static function initialize(mixed $data, Janitor $janitor): mixed
     {
         $type = gettype($data);
         switch ($type) {
@@ -45,7 +45,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
-    public function __construct(Janitor $janitor, $data, $keys = array())
+    public function __construct(Janitor $janitor, mixed $data, array $keys = array())
     {
         $this->janitor = $janitor;
 
@@ -67,7 +67,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         return $this->janitor->cleanHtml((string)$this->data);
     }
 
-    public function u()
+    public function u(): mixed
     {
         return $this->unescape();
     }
@@ -77,7 +77,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         return count($this->data);
     }
 
-    public function unescape()
+    public function unescape(): mixed
     {
         return $this->data;
     }
