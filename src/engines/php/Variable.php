@@ -132,6 +132,11 @@ class Variable implements ArrayAccess, Iterator, Countable
         return isset($this->data[$offset]);
     }
 
+    public function __invoke()
+    {
+        return Variable::initialize(call_user_func_array($this->data, func_get_args()), $this->janitor);
+    }
+
     public function offsetGet($offset): mixed
     {
         if (isset($this->data[$offset])) {
