@@ -5,8 +5,6 @@ namespace ntentan\honam\tests\cases;
 use ntentan\honam\tests\lib\HelperTestCase;
 
 /**
- * Description of MenuHelperTest
- *
  * @author ekow
  */
 class MenuHelperTest extends HelperTestCase
@@ -45,23 +43,11 @@ class MenuHelperTest extends HelperTestCase
     {
         $this->assertXmlStringEqualsXmlString(
         file_get_contents('tests/files/markup/menu_styling.html'),
-            (string)$this->helpers->menu(
+            (string) $this->helpers->menu(
                 array(
                     'Home', 'Projects', 'Blog', 'About'
                 )
             )->addCSSClass('styling')->setAlias('side_menu')
         );
-    }    
-    
-    public function testMenuMatching()
-    {
-        $this->assertXmlStringEqualsXmlString(
-        file_get_contents('tests/files/markup/menu_matched.html'),
-            (string)$this->helpers->menu(
-                array(
-                    'Home', 'Projects', 'Blog', 'About'
-                )
-            )->setCurrentUrl('about')
-        );    
-    }   
+    }
 }

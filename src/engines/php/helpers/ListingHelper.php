@@ -34,7 +34,7 @@ class ListingHelper extends Helper
      * @param array $arguments
      * @return ListingHelper
      */
-    public function help($arguments)
+    public function help(mixed $arguments): Helper
     {
         $this->parameters = array_merge($this->parameters, $arguments);
         return $this;

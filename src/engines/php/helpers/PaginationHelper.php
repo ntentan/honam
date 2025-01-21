@@ -6,7 +6,7 @@ use ntentan\utils\Input;
 
 class PaginationHelper extends Helper
 {
-    private $parameters = [
+    private array $parameters = [
         'query' => null,
         'number_of_links' => 21,
         'number_of_items' => null,
@@ -17,7 +17,7 @@ class PaginationHelper extends Helper
 
     private $halfNumberOfLinks;
 
-    public function help($params = [])
+    public function help(mixed $params): Helper
     {
         $this->parameters = array_merge($this->parameters, $params);
         $this->parameters['number_of_pages'] = ceil($this->parameters['number_of_items'] / $this->parameters['items_per_page']);

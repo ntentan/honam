@@ -64,7 +64,7 @@ class DateHelper extends Helper
      * @param string $time
      * @return DateHelper
      */
-    public function help($time)
+    public function help(mixed $time): Helper
     {
         $this->timestamp = strtotime($time);
         return $this;
