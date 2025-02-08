@@ -147,7 +147,7 @@ class TemplateRenderer
      * @throws exceptions\TemplateEngineNotFoundException
      * @throws exceptions\FactoryException
      */
-    public function render(string $template, array  $data, bool $fromString = false, string $extension=null): string
+    public function render(string $template, array  $data, bool $fromString = false, ?string $extension=null): string
     {
         if($fromString) {
             $engine = $this->loadEngine($extension);
