@@ -13,47 +13,42 @@ class Templates
 {
     /**
      * An instance of the template renderer for rendering templates.
-     * @var TemplateRenderer
      */
-    private $templateRenderer;
+    private TemplateRenderer $templateRenderer;
     
     /**
      * An instance of the resolver that resolves template files for requests.
-     * @var TemplateFileResolver
      */
-    private $templateFileResolver;
-    
-    /**
-     * An instance of the engine registry for loading template engines.
-     * This engine registry is only used when an external template renderer is not supplied.
-     * 
-     * @var EngineRegistry
-     */
-    private $engineRegistry;
+    private TemplateFileResolver $templateFileResolver;
 
-    public function __construct(TemplateFileResolver $templateFileResolver = null, TemplateRenderer $templateRenderer = null)
+    public function __construct(TemplateFileResolver $templateFileResolver, TemplateRenderer $templateRenderer)
     {
-        $this->templateFileResolver = $templateFileResolver ?? new TemplateFileResolver();
-        $this->templateRenderer = $templateRenderer ?? new TemplateRenderer($this->engineRegistry = new EngineRegistry(), $this->templateFileResolver);
-        if($this->engineRegistry) {
-            $this->engineRegistry->registerEngine(['.mustache'], new MustacheEngineFactory($this->templateFileResolver));
-            $helperVariable = new HelperVariable($this->templateRenderer, $this->templateFileResolver);
-            $this->engineRegistry->registerEngine(['.tpl.php'], new PhpEngineFactory($this->templateRenderer, $helperVariable, new Janitor()));
-        }
+        $this->templateFileResolver = $templateFileResolver;
+        $this->templateRenderer = $templateRenderer;
     }
 
-    public function prependPath(string $path)
+    public function prependPath(string $path): void
     {
         $this->templateFileResolver->prependToPathHierarchy($path);
     }
 
-    public function appendPath(string $path)
+    public function appendPath(string $path): void
     {
-        $this->templateFileResolver->appendPath($path);
+        $this->templateFileResolver->appendToPathHierarchy($path);
     }
 
-    public function render(string $template, array $data)
+    public function render(string $template, array $data): string
     {
         return $this->templateRenderer->render($template, $data);
+    }
+
+    public static function getDefaultInstance(): Templates
+    {
+        $templateFileResolver = new TemplateFileResolver();
+        $templateRenderer = new TemplateRenderer($engineRegistry = new EngineRegistry(), $templateFileResolver);
+        $engineRegistry->registerEngine(['.mustache'], new MustacheEngineFactory($templateFileResolver));
+        $helperVariable = new HelperVariable($templateRenderer, $templateFileResolver);
+        $engineRegistry->registerEngine(['.tpl.php'], new PhpEngineFactory($templateRenderer, $helperVariable, new Janitor()));
+        return new Templates($templateFileResolver, $templateRenderer);
     }
 }
