@@ -1,3 +1,10 @@
+v0.9.0 - 2025-04-05
+===================
+Added
+-----
+- Extended the reach of typehints.
+- A static method for creating an instance of the template renderer with default dependencies. 
+
 v0.8.0 - 2024-07-13
 ===================
 Added
