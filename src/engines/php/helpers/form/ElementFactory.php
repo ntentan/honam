@@ -48,16 +48,16 @@ trait ElementFactory
 
         // Create an instance of the element we need
         $elementClass = new \ReflectionClass(__NAMESPACE__ . "\\" . Text::ucamelize($name));
+        /** @var Element|Container $element */
         $element = $elementClass->newInstanceArgs($arguments == null ? array() : $arguments);
         $element->setTemplateRenderer($this->templateRenderer);
         $element->setCaller($this);
 
-        //
         if ($containerCheck && is_a($element, __NAMESPACE__ . "\\Container")) {
             $this->pushContainer($name, $element);
         } else if ($containerCheck) {
             throw new HonamException("Element $name is not a container. Use the open_ prefix only when creating a container.");
-        } else if (!$containerCheck) {
+        } else if ($this->hasActiveContainer()) {
             $this->getActiveContainer()->add($element);
         }
 

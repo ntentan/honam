@@ -26,11 +26,11 @@ class Field extends Element
     /**
      * The constructor for the field element.
      */
-    public final function __construct(string $label = "", string $name = "", string $value = "")
+    public function __construct(string $label = "", string $name = "", string $value = "")
     {
+        parent::__construct($label);
         $this->name = $name === "" ? $label : $name; // Repeat the label as name if name is empty
         $this->value = $value;
-        $this->label = $label;
         $this->setAttribute("id", "field-{$this->name}");
     }
 
