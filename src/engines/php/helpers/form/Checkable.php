@@ -7,16 +7,20 @@ namespace ntentan\honam\engines\php\helpers\form;
  */
 class Checkable extends Field
 {
-   /**
+    /**
      * The value that this field should contain if this checkbox is checked.
      */
-    protected $checkedValue = 1;
+    protected $checkedValue;
+
+    public function __construct($label, $name, $checkedValue = 1)
+    {
+        parent::__construct($label, $name);
+        $this->checkedValue = $checkedValue;
+    }
 
     /**
      * Sets the value that should be assigned as the checked value for
      * this check box.
-     * @param string $checkedValue
-     * @return CheckableField
      */
     public function setCheckedValue($checkedValue)
     {
@@ -35,10 +39,16 @@ class Checkable extends Field
 
     public function render()
     {
-        if ($this->getCheckedValue() == (string)$this->getValue()) {
+        if ($this->getCheckedValue() == (string) $this->getValue()) {
             $this->setAttribute('checked', 'checked');
         }
+        $this->setAttribute("name", $this->getName());
+        $this->setAttribute("value", $this->getCheckedValue());
+        return $this->templateRenderer->render("input_checkable_element.tpl.php", array('element' => $this));
+    }
 
-        return parent::render();
+    public function getHasLabel(): bool
+    {
+        return false;
     }
 }

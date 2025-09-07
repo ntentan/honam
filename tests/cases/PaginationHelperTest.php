@@ -9,7 +9,7 @@ class PaginationHelperTest extends HelperTestCase
     {
         $this->assertXmlStringEqualsXmlString(
             "<ul class='pagination'></ul>", 
-            (string)$this->helpers->pagination()->__toString()
+            (string) $this->helpers->pagination([])->__toString()
         );
     }
     

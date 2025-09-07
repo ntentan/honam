@@ -31,14 +31,11 @@ use ntentan\honam\exceptions\TemplateEngineNotFoundException;
 use ntentan\honam\exceptions\TemplateResolutionException;
 
 /**
- * The TemplateEngine class does the work of resolving templates, loading template files,
- * loading template engines and rendering templates. The `ntentan/views` package takes a reference to a 
- * template and tries to find a specific template file to be used for the rendering. 
- * `ntentan/views` does not expect to find all view templates in a single directory.
- * It uses a heirachy of directories which it searches for the template to render.
- * Templates in directories closer to the beginning of the array have a higher
- * priority over those closer to the end of the array.
- * 
+ * The TemplateEngine class does the work of resolving templates, loading template files, loading template engines and
+ * rendering templates. The `ntentan/views` package takes a reference to a template and tries to find a specific
+ * template file to be used for the rendering. `ntentan/views` does not expect to find all view templates in a single
+ * directory. It uses a heirachy of directories which it searches for the template to render. Templates in directories
+ * closer to the beginning of the array have a higher priority over those closer to the end of the array.
  */
 class TemplateRenderer
 {
@@ -47,21 +44,21 @@ class TemplateRenderer
      * An array of loaded template engine instances.
      * @var array<AbstractEngine>
      */
-    private $loadedInstances;
+    private array $loadedInstances;
 
     /**
      * Instance of the engine registry for loading template engines.
      * @var EngineRegistry
      */
-    private $registry;
+    private EngineRegistry $registry;
 
     /**
      * Instance of the template file resolver for finding template files.
      * @var TemplateFileResolver
      */
-    private $templateFileResolver;
+    private TemplateFileResolver $templateFileResolver;
 
-    private $tempDirectory;
+    private string $tempDirectory;
 
     /**
      * TemplateRenderer constructor.
@@ -74,8 +71,6 @@ class TemplateRenderer
         $this->registry = $registry;
         $this->templateFileResolver = $templateFileResolver;
         $this->tempDirectory = sys_get_temp_dir() . DIRECTORY_SEPARATOR . "honam_temp";
-
-        //$registry->setTemplateRenderer($this);
     }
 
     /**
@@ -83,11 +78,11 @@ class TemplateRenderer
      * @return string|null
      * @throws TemplateEngineNotFoundException
      */
-    private function getTemplateExtension($templateFile)
+    private function getTemplateExtension(string $templateFile): string
     {
         $supportedExtensions = $this->registry->getSupportedExtensions();
         foreach($supportedExtensions as $extension) {
-            if($extension == substr($templateFile, -strlen($extension))) return $extension;
+            if(str_ends_with($templateFile, $extension)) return $extension;
         }
         throw new TemplateEngineNotFoundException("There are currently no registered engines that can render $templateFile");
     }
@@ -95,6 +90,7 @@ class TemplateRenderer
 
     /**
      * Check if an engine exists that can render the given file.
+     *
      * @param $templateFile
      * @return bool
      * @throws TemplateEngineNotFoundException
@@ -107,19 +103,16 @@ class TemplateRenderer
         } catch(TemplateEngineNotFoundException $exception) {
             return false;
         }
-
     }
 
-
     /**
-     * Load and cache an instance of the a template engine.
+     * Load and cache an instance of a template engine.
      *
-     * @param $extension
      * @return mixed
      * @throws exceptions\TemplateEngineNotFoundException
      * @throws exceptions\FactoryException
      */
-    private function loadEngine($extension)
+    private function loadEngine(string $extension): AbstractEngine
     {
         if(!isset($this->loadedInstances[$extension])) {
             $this->loadedInstances[$extension] = $this->registry->getEngineInstance($extension);
@@ -127,15 +120,14 @@ class TemplateRenderer
         return $this->loadedInstances[$extension];
     }
 
-    public function setTempDirectory(string $tempDirectory)
+    public function setTempDirectory(string $tempDirectory): void
     {
         $this->tempDirectory = $tempDirectory;
     }
 
     /**
-     * Renders a given template reference with associated template data. This render
-     * function combs through the template directory heirachy to find a template
-     * file which matches the given template reference and uses it for the purpose
+     * Renders a given template reference with associated template data. This render function combs through the template
+     * directory heirachy to find a template file which matches the given template reference and uses it for the purpose
      * of rendering the view.
      *
      * @param string $template The template reference file.
@@ -147,7 +139,7 @@ class TemplateRenderer
      * @throws exceptions\TemplateEngineNotFoundException
      * @throws exceptions\FactoryException
      */
-    public function render(string $template, array  $data, bool $fromString = false, string $extension=null): string
+    public function render(string $template, array  $data, bool $fromString = false, string $extension=''): string
     {
         if($fromString) {
             $engine = $this->loadEngine($extension);

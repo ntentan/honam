@@ -37,7 +37,7 @@ class FeedHelper extends Helper
     private $properties = array();
     private $format = 'rss';
     
-    public function help($items)
+    public function help(mixed $items): Helper
     {
         $this->items = $items;
         return $this;

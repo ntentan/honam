@@ -38,23 +38,27 @@ class Helper
      * This variable is used in the Helper::makeFullUrl method.
      * @var string
      */
-    private $baseUrl;
+    private string $baseUrl;
 
-    protected $templateRenderer;
+    /**
+     * Prefixes for URLS.
+     * @var string
+     */
+    private string $prefix;
+
+    protected TemplateRenderer $templateRenderer;
 
     public function __construct(TemplateRenderer $templateRenderer)
     {
         $this->templateRenderer = $templateRenderer;
     }
 
-
     /**
      * A sort of constructor or entry point for helpers.
-     *
      * @param mixed $arguments
      * @return Helper
      */
-    public function help($arguments)
+    public function help(mixed $arguments): Helper
     {
         return $this;
     }
@@ -63,20 +67,33 @@ class Helper
      * Set the base url used in the helpers.
      * @param string $url The new base url
      */
-    public function setBaseUrl($url)
+    public function setUrlParameters(string $baseUrl, string $prefix): void
     {
-        $this->baseUrl = $url;
+        $this->baseUrl = $baseUrl;
+        $this->prefix = $prefix;
     }
 
     /**
      * Generate a full url by concatenating the base url with a path.
-     *
      * @param string $url
      * @return string
      */
-    protected function makeFullUrl($url)
+    protected function makeFullUrl(string $url = ''): string
     {
-        return $this->baseUrl . "$url";
+        return "{$this->prefix}/{$this->baseUrl}/$url";
     }
 
+    /**
+     * Get the base URL to be used by helpers that need the current URI.
+     * @return string
+     */
+    protected function getBaseUrl(): string
+    {
+        return $this->baseUrl;
+    }
+
+    protected function getPrefix(): string
+    {
+        return $this->prefix;
+    }
 }

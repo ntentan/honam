@@ -12,10 +12,10 @@ class Janitor
      * A utility method which either strips html tags or escapes them.
      *
      * @param string $string The string to be cleaned
-     * @param boolean $strip When true the tags are stripped instead of being escaped.
+     * @param bool $strip When true the tags are stripped instead of being escaped.
      * @return string
      */
-    public function cleanHtml($string, $strip = false)
+    public function cleanHtml(string $string, bool $strip = false): string
     {
         if ($strip === false) {
             return htmlspecialchars((string)$string);

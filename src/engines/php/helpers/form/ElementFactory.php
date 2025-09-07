@@ -48,6 +48,7 @@ trait ElementFactory
 
         // Create an instance of the element we need
         $elementClass = new \ReflectionClass(__NAMESPACE__ . "\\" . Text::ucamelize($name));
+        /** @var Element|Container $element */
         $element = $elementClass->newInstanceArgs($arguments == null ? array() : $arguments);
         $element->setTemplateRenderer($this->templateRenderer);
         $element->setCaller($this);

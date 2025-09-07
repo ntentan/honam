@@ -6,15 +6,13 @@ use ntentan\honam\engines\php\Helper;
 
 class FilesizeHelper extends Helper
 {
-    private $size;
-    private $commas;
-    private $decimals;
+    private int $size;
+    private string $commas = ',';
+    private int $decimals = 2;
     
-    public function help($size, $decimals = 2, $commas = true)
+    public function help(mixed $size): Helper
     {
         $this->size = $size;
-        $this->decimals($decimals);
-        $this->commas($commas);
         
         return $this;
     }

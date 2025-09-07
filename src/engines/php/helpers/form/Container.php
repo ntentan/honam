@@ -1,6 +1,7 @@
 <?php
 namespace ntentan\honam\engines\php\helpers\form;
 
+use Error;
 use ntentan\honam\engines\php\Variable;
 
 /**
@@ -25,9 +26,14 @@ abstract class Container extends Element
      * Method for adding an element to the form container.
      * @return Container
      */
-    public function add(Element $element)
+    public function add(Element|array $element)
     {
-        $this->elements[] = $element;
+        if (is_array($element)) {
+            $this->elements = array_merge($this->elements, $element);
+        } else {
+            $this->elements[] = $element;
+        }
+        return $this;
     }
 
     /**
@@ -45,16 +51,20 @@ abstract class Container extends Element
     public function setErrors(array|Variable $errors): Element
     {
         foreach($this->elements as $element) {
-            $fieldNames = array_keys(is_a($errors, Variable::class) ? $errors->unescape() : $errors);
-            $fieldName = $element->getName();
-            if (array_search($fieldName, $fieldNames) !== false) {
-                $element->setErrors($errors[$fieldName]);
+            if ($element instanceof Container) {
+                $element->setErrors($errors);
+            } else {
+                $fieldNames = array_keys(is_a($errors, Variable::class) ? $errors->unescape() : $errors);
+                $fieldName = $element->getName();
+                if (in_array($fieldName, $fieldNames)) {
+                    $element->setErrors($errors[$fieldName]);
+                }
             }
         }
         return $this;
     }
 
-    public function render()
+    public function render(): string
     {
         return $this->renderHead() 
             . $this->templateRenderer->render('elements.tpl.php', array('elements' => $this->getElements()))

@@ -7,6 +7,7 @@ class Html extends Element
 
     public function __construct(string $htmlCode)
     {
+        parent::__construct("");
         $this->htmlCode = $htmlCode;
     }
 
