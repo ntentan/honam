@@ -103,4 +103,9 @@ class FormHelper extends Helper
     {
         return end($this->containers)['instance'];
     }
+
+    public function hasActiveContainer(): bool
+    {
+        return !empty($this->containers);
+    }
 }
