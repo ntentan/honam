@@ -39,7 +39,7 @@ class DateHelper extends Helper
      * The UNIX timestamp which represents the most recently parsed date.
      * @var integer
      */
-    private $timestamp;
+    private int $timestamp;
     
     /**
      * Internal utility method for selecting a timestamp. This method returns

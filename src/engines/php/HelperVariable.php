@@ -25,6 +25,11 @@
 
 namespace ntentan\honam\engines\php;
 
+use ntentan\honam\engines\php\helpers\FormHelper;
+use ntentan\honam\engines\php\helpers\ListingHelper;
+use ntentan\honam\engines\php\helpers\MenuHelper;
+use ntentan\honam\engines\php\helpers\PaginationHelper;
+use ntentan\honam\exceptions\HelperException;
 use ntentan\honam\TemplateFileResolver;
 use ntentan\honam\TemplateRenderer;
 use ReflectionMethod;
@@ -58,17 +63,20 @@ class HelperVariable
      */
     private string $prefix = '';
 
+    private array $factories = [
+        'form' => FormHelper::class,
+        'list' => ListingHelper::class,
+        'menu' => MenuHelper::class,
+        'pagination' => PaginationHelper::class,
+    ];
+
     /**
      * Create a new instance of the helper variable.
+     *
      * @param TemplateRenderer $templateRenderer
-     * @param TemplateFileResolver $templateFileResolver
      */
-    public function __construct(TemplateRenderer $templateRenderer, TemplateFileResolver $templateFileResolver)
+    public function __construct(TemplateRenderer $templateRenderer)
     {
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../../templates/forms");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../../templates/lists");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../../templates/menu");
-        $templateFileResolver->appendToPathHierarchy(__DIR__ . "/../../../templates/pagination");
         $this->templateRenderer = $templateRenderer;
     }
 
@@ -76,12 +84,15 @@ class HelperVariable
      * Get the instance of a helper given the string name of the helper.
      * 
      * @param string $helperName
-     * @return boolean|Helper
+     * @return Helper
      */
     private function getHelper(string $helperName) : Helper
     {
         if(!isset($this->loadedHelpers[$helperName])) {
-            $helperClass = 'ntentan\honam\engines\php\helpers\\' . ucfirst($helperName) . "Helper";;
+            if (!isset($this->factories[$helperName]) || !class_exists($this->factories[$helperName]) ) {
+                throw new HelperException("The helper '$helperName' is not defined.");
+            }
+            $helperClass = $this->factories[$helperName];
             $helperInstance = new $helperClass($this->templateRenderer);
             $helperInstance->setUrlParameters($this->baseUrl, $this->prefix);
             $this->loadedHelpers[$helperName] = $helperInstance;

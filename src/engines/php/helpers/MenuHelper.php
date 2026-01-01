@@ -48,9 +48,10 @@ class MenuHelper extends Helper
     const SELECTED_ITEM = 'selected';
     const MATCHED_ITEM = 'matched';
 
-    public function __construct(TemplateRenderer $templateRenderer, string $requestPath = null)
+    public function __construct(TemplateRenderer $templateRenderer)
     {
         parent::__construct($templateRenderer);
+        $templateRenderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../templates/menus");
     }
 
     public function help(mixed $items): Helper

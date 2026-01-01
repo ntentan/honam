@@ -4,6 +4,7 @@
 namespace ntentan\honam\engines\php\helpers;
 
 use ntentan\honam\engines\php\Helper;
+use ntentan\honam\TemplateRenderer;
 
 
 class ListingHelper extends Helper
@@ -16,10 +17,11 @@ class ListingHelper extends Helper
           "default_cell_template" =>  null,
           "variables"             =>  null
        );
-    
-    public function stylesheet()
+
+    public function __construct(TemplateRenderer $templateRenderer)
     {
-        return __DIR__ . '/../../assets/css/lists/lists.css';
+        parent::__construct($templateRenderer);
+        $templateRenderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../templates/lists");
     }
 
     /**

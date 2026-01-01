@@ -6,6 +6,7 @@ use ntentan\honam\engines\php\Helper;
 use ntentan\honam\engines\php\helpers\form\Container;
 use ntentan\honam\engines\php\helpers\form\ElementFactory;
 use ntentan\honam\exceptions\HonamException;
+use ntentan\honam\TemplateRenderer;
 
 /**
  * A helper for rendering forms.
@@ -40,6 +41,12 @@ class FormHelper extends Helper
      * Any errors that should be rendered with the form.
      */
     private array $errors = [];
+
+    public function __construct(TemplateRenderer $renderer)
+    {
+        parent::__construct($renderer);
+        $renderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../templates/forms");
+    }
 
     /**
      * Renders the form when the value is used as a string

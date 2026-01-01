@@ -28,8 +28,8 @@ namespace ntentan\honam\engines\php;
 use ntentan\honam\TemplateRenderer;
 
 /**
- * Base class for helpers. Helpers are little utilities that make it possible to
- * perform repetitively routine tasks in views.
+ * Base class for helpers. Helpers are little utilities that make it possible to perform repetitively routine tasks in
+ * views.
  */
 class Helper
 {

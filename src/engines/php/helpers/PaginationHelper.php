@@ -17,6 +17,12 @@ class PaginationHelper extends Helper
 
     private $halfNumberOfLinks;
 
+    public function __construct(\ntentan\honam\TemplateRenderer $templateRenderer)
+    {
+        parent::__construct($templateRenderer);
+        $templateRenderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../templates/pagination");
+    }
+
     public function help(mixed $params): Helper
     {
         $this->parameters = array_merge($this->parameters, $params);
