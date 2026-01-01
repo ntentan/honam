@@ -1,3 +1,9 @@
+v0.10.0 - 2026-01-01
+====================
+Added
+-----
+- Added a factory method for injecting custom helpers into the PHP Engine.
+
 v0.9.1 - 2025-08-07
 ===================
 Fixed
