@@ -25,6 +25,9 @@
 
 namespace ntentan\honam\engines\php;
 
+use ntentan\honam\engines\php\helpers\DateHelper;
+use ntentan\honam\engines\php\helpers\FeedHelper;
+use ntentan\honam\engines\php\helpers\FilesizeHelper;
 use ntentan\honam\engines\php\helpers\FormHelper;
 use ntentan\honam\engines\php\helpers\ListingHelper;
 use ntentan\honam\engines\php\helpers\MenuHelper;
@@ -65,9 +68,12 @@ class HelperVariable
 
     private array $factories = [
         'form' => FormHelper::class,
-        'list' => ListingHelper::class,
+        'listing' => ListingHelper::class,
         'menu' => MenuHelper::class,
         'pagination' => PaginationHelper::class,
+        'date' => DateHelper::class,
+        'feed' => FeedHelper::class,
+        'filesize' => FilesizeHelper::class
     ];
 
     /**
@@ -121,5 +127,10 @@ class HelperVariable
     {
         $this->baseUrl = $baseUrl;
         $this->prefix = $prefix;
+    }
+
+    public function registerHelperFactory(string $helperName, string $helperClass): void
+    {
+        $this->factories[$helperName] = $helperClass;
     }
 }

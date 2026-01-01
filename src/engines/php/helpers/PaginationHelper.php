@@ -20,7 +20,7 @@ class PaginationHelper extends Helper
     public function __construct(\ntentan\honam\TemplateRenderer $templateRenderer)
     {
         parent::__construct($templateRenderer);
-        $templateRenderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../templates/pagination");
+        $templateRenderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../../templates/pagination");
     }
 
     public function help(mixed $params): Helper

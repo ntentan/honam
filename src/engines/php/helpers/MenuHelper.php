@@ -51,7 +51,7 @@ class MenuHelper extends Helper
     public function __construct(TemplateRenderer $templateRenderer)
     {
         parent::__construct($templateRenderer);
-        $templateRenderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../templates/menus");
+        $templateRenderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../../templates/menu");
     }
 
     public function help(mixed $items): Helper

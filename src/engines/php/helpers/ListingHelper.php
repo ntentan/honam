@@ -21,7 +21,7 @@ class ListingHelper extends Helper
     public function __construct(TemplateRenderer $templateRenderer)
     {
         parent::__construct($templateRenderer);
-        $templateRenderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../templates/lists");
+        $templateRenderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../../templates/lists");
     }
 
     /**
