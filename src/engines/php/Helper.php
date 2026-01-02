@@ -55,6 +55,7 @@ class Helper
 
     /**
      * A sort of constructor or entry point for helpers.
+     *
      * @param mixed $arguments
      * @return Helper
      */
@@ -65,7 +66,9 @@ class Helper
     
     /**
      * Set the base url used in the helpers.
-     * @param string $url The new base url
+     *
+     * @param string $baseUrl The new base url
+     * @param string $prefix The prefix to be used in url generation
      */
     public function setUrlParameters(string $baseUrl, string $prefix): void
     {
@@ -75,6 +78,7 @@ class Helper
 
     /**
      * Generate a full url by concatenating the base url with a path.
+     *
      * @param string $url
      * @return string
      */
@@ -85,6 +89,7 @@ class Helper
 
     /**
      * Get the base URL to be used by helpers that need the current URI.
+     *
      * @return string
      */
     protected function getBaseUrl(): string

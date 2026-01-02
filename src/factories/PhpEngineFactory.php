@@ -9,19 +9,19 @@ use ntentan\honam\TemplateRenderer;
 
 class PhpEngineFactory implements EngineFactoryInterface
 {
-    private $helperFactory;
-    private $janitor;
-    private $templateRenderer;
+    private HelperVariable $helperVariable;
+    private Janitor $janitor;
+    private TemplateRenderer $templateRenderer;
 
     public function __construct(TemplateRenderer $templateRenderer, HelperVariable $helperFactory, Janitor $janitor)
     {
-        $this->helperFactory = $helperFactory;
+        $this->helperVariable = $helperFactory;
         $this->janitor = $janitor;
         $this->templateRenderer = $templateRenderer;
     }
 
     public function create(): AbstractEngine
     {
-        return new PhpEngine($this->templateRenderer, $this->helperFactory, $this->janitor);
+        return new PhpEngine($this->templateRenderer, $this->helperVariable, $this->janitor);
     }
 }

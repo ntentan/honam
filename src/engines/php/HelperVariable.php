@@ -25,15 +25,6 @@
 
 namespace ntentan\honam\engines\php;
 
-use ntentan\honam\engines\php\helpers\DateHelper;
-use ntentan\honam\engines\php\helpers\FeedHelper;
-use ntentan\honam\engines\php\helpers\FilesizeHelper;
-use ntentan\honam\engines\php\helpers\FormHelper;
-use ntentan\honam\engines\php\helpers\ListingHelper;
-use ntentan\honam\engines\php\helpers\MenuHelper;
-use ntentan\honam\engines\php\helpers\PaginationHelper;
-use ntentan\honam\exceptions\HelperException;
-use ntentan\honam\TemplateFileResolver;
 use ntentan\honam\TemplateRenderer;
 use ReflectionMethod;
 
@@ -48,59 +39,31 @@ class HelperVariable
      */
     private array $loadedHelpers = array();
 
-    /**
-     * An instance of the template renderer.
-     * @var TemplateRenderer
-     */
+    private HelperFactory $helperFactory;
+
     private TemplateRenderer $templateRenderer;
-
-    /**
-     * The current path being rendered.
-     * @var string
-     */
-    private string $baseUrl = '/';
-
-    /**
-     * A prefix for the current URL to be prefixed or used by helpers.
-     * @var string
-     */
-    private string $prefix = '';
-
-    private array $factories = [
-        'form' => FormHelper::class,
-        'listing' => ListingHelper::class,
-        'menu' => MenuHelper::class,
-        'pagination' => PaginationHelper::class,
-        'date' => DateHelper::class,
-        'feed' => FeedHelper::class,
-        'filesize' => FilesizeHelper::class
-    ];
 
     /**
      * Create a new instance of the helper variable.
      *
      * @param TemplateRenderer $templateRenderer
      */
-    public function __construct(TemplateRenderer $templateRenderer)
+    public function __construct(HelperFactory $helperFactory, TemplateRenderer $templateRenderer)
     {
+        $this->helperFactory = $helperFactory;
         $this->templateRenderer = $templateRenderer;
     }
 
     /**
      * Get the instance of a helper given the string name of the helper.
-     * 
+     *
      * @param string $helperName
      * @return Helper
      */
     private function getHelper(string $helperName) : Helper
     {
         if(!isset($this->loadedHelpers[$helperName])) {
-            if (!isset($this->factories[$helperName]) || !class_exists($this->factories[$helperName]) ) {
-                throw new HelperException("The helper '$helperName' is not defined.");
-            }
-            $helperClass = $this->factories[$helperName];
-            $helperInstance = new $helperClass($this->templateRenderer);
-            $helperInstance->setUrlParameters($this->baseUrl, $this->prefix);
+            $helperInstance = $this->helperFactory->create($helperName, $this->templateRenderer);
             $this->loadedHelpers[$helperName] = $helperInstance;
         }
         return $this->loadedHelpers[$helperName];
@@ -121,16 +84,5 @@ class HelperVariable
     {
         $helper = $this->getHelper($helperName);;
         return (new ReflectionMethod($helper, 'help'))->invokeArgs($helper, $arguments);
-    }
-
-    public function setUrlParameters(string $baseUrl, string $prefix): void
-    {
-        $this->baseUrl = $baseUrl;
-        $this->prefix = $prefix;
-    }
-
-    public function registerHelperFactory(string $helperName, string $helperClass): void
-    {
-        $this->factories[$helperName] = $helperClass;
     }
 }
