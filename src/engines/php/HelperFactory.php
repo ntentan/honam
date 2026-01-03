@@ -14,18 +14,26 @@ use ntentan\honam\TemplateRenderer;
 
 class HelperFactory
 {
-    private array $factories = [
-        'form' => FormHelper::class,
-        'listing' => ListingHelper::class,
-        'menu' => MenuHelper::class,
-        'pagination' => PaginationHelper::class,
-        'date' => DateHelper::class,
-        'feed' => FeedHelper::class,
-        'filesize' => FilesizeHelper::class
-    ];
+    private array $factories;
 
     public function __construct(private string $baseUrl = '/', private string $prefix = '')
     {
+        $this->factories = [
+            'form' => $this->makeFactory(FormHelper::class),
+            'listing' => $this->makeFactory(ListingHelper::class),
+            'menu' => $this->makeFactory(MenuHelper::class),
+            'pagination' => $this->makeFactory(PaginationHelper::class),
+            'date' => $this->makeFactory(DateHelper::class),
+            'feed' => $this->makeFactory(FeedHelper::class),
+            'filesize' => $this->makeFactory(FilesizeHelper::class)
+        ];
+    }
+
+    private function makeFactory(string $helperClass): callable
+    {
+        return function (TemplateRenderer $templateRenderer) use ($helperClass) {
+            return new $helperClass($templateRenderer);
+        };
     }
 
     /**
@@ -38,17 +46,16 @@ class HelperFactory
      */
     public function create (string $helperName, TemplateRenderer $templateRenderer) : Helper
     {
-        if (!isset($this->factories[$helperName]) || !class_exists($this->factories[$helperName]) ) {
+        if (!isset($this->factories[$helperName])) {
             throw new HelperException("The helper '$helperName' is not defined.");
         }
-        $helperClass = $this->factories[$helperName];
-        $helperInstance = new $helperClass($templateRenderer);
+        $helperInstance = $this->factories[$helperName]($templateRenderer);
         $helperInstance->setUrlParameters($this->baseUrl, $this->prefix);
         return $helperInstance;
     }
 
-    public function registerHelper(string $helperName, string $helperClass): void
+    public function registerHelper(string $helperName, callable $callable): void
     {
-        $this->factories[$helperName] = $helperClass;
+        $this->factories[$helperName] = $callable;
     }
 }
