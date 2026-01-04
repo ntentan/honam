@@ -1,3 +1,10 @@
+v0.10.1 - 2026-01-03
+====================
+Updated
+-------
+- Switching the way factories are injected into the helpers.
+
+
 v0.10.0 - 2026-01-01
 ====================
 Added
