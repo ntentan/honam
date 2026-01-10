@@ -1,6 +1,7 @@
 <?php
 namespace ntentan\honam;
 
+use ntentan\honam\engines\php\HelperFactory;
 use ntentan\honam\factories\PhpEngineFactory;
 use ntentan\honam\factories\MustacheEngineFactory;
 use ntentan\honam\engines\php\HelperVariable;
@@ -47,7 +48,8 @@ class Templates
         $templateFileResolver = new TemplateFileResolver();
         $templateRenderer = new TemplateRenderer($engineRegistry = new EngineRegistry(), $templateFileResolver);
         $engineRegistry->registerEngine(['.mustache'], new MustacheEngineFactory($templateFileResolver));
-        $helperVariable = new HelperVariable($templateRenderer, $templateFileResolver);
+        $helperFactory = new HelperFactory();
+        $helperVariable = new HelperVariable($helperFactory, $templateRenderer);
         $engineRegistry->registerEngine(['.tpl.php'], new PhpEngineFactory($templateRenderer, $helperVariable, new Janitor()));
         return new Templates($templateFileResolver, $templateRenderer);
     }
