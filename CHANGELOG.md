@@ -1,3 +1,9 @@
+v0.10.2 - 2026-01-09
+====================
+Fixed
+-----
+- Fixed an issue with the call to `Templates::getDefaultInstance()` improperly initializing the HelperVariable.
+
 v0.10.1 - 2026-01-03
 ====================
 Updated
