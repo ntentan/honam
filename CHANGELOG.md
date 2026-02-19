@@ -1,3 +1,10 @@
+v0.10.3 - 2026-02-19
+====================
+Fixed
+-----
+- Removed the Janitor class from PHP engine, which was no longer needed as it was only used for sanitizing output, which is now handled by the template renderer itself.
+
+
 v0.10.2 - 2026-01-09
 ====================
 Fixed
