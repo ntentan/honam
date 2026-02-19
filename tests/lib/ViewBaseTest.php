@@ -3,7 +3,6 @@ namespace ntentan\honam\tests\lib;
 
 use ntentan\honam\EngineRegistry;
 use ntentan\honam\engines\php\HelperFactory;
-use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\factories\PhpEngineFactory;
 use ntentan\honam\factories\SmartyEngineFactory;
 use ntentan\honam\TemplateFileResolver;
@@ -32,7 +31,7 @@ class ViewBaseTest extends  TestCase
         $engineRegistry = new EngineRegistry();
         $this->templateRenderer = new TemplateRenderer($engineRegistry, $this->templateFileResolver);
         $helpers = new HelperVariable(new HelperFactory(), $this->templateRenderer);
-        $engineRegistry->registerEngine(['tpl.php'], new PhpEngineFactory($this->templateRenderer, $helpers, new Janitor()));
+        $engineRegistry->registerEngine(['tpl.php'], new PhpEngineFactory($this->templateRenderer, $helpers));
         $engineRegistry->registerEngine(["smarty", "tpl"], new SmartyEngineFactory());
         $this->templateFileResolver->appendToPathHierarchy(__DIR__ . "/../files/views");
     }

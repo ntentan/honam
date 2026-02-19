@@ -4,7 +4,6 @@ namespace ntentan\honam\tests\lib;
 use ntentan\honam\EngineRegistry;
 use ntentan\honam\engines\php\HelperFactory;
 use ntentan\honam\engines\php\HelperVariable;
-use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\factories\PhpEngineFactory;
 use ntentan\honam\TemplateFileResolver;
 use ntentan\honam\TemplateRenderer;
@@ -21,6 +20,6 @@ class HelperTestCase extends TestCase
         $engineRegistry = new EngineRegistry();
         $templateRenderer = new TemplateRenderer($engineRegistry, $templateFileResolver);
         $this->helpers = new HelperVariable(new HelperFactory(), $templateRenderer);
-        $engineRegistry->registerEngine(['tpl.php'], new PhpEngineFactory($templateRenderer, $this->helpers, new Janitor()));
+        $engineRegistry->registerEngine(['tpl.php'], new PhpEngineFactory($templateRenderer, $this->helpers));
     }
 }

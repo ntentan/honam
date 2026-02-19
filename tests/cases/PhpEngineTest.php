@@ -4,13 +4,7 @@ namespace ntentan\honam\tests\cases;
 use ntentan\honam\tests\lib\ViewBaseTest;
 
 class PhpEngineTest extends ViewBaseTest
-{    
-    public function testStrip()
-    {
-        $output = $this->templateRenderer->render('phptest_strip.tpl.php', array());
-        $this->assertEquals("This should strip", $output);
-    }
-    
+{
     public function testTruncate()
     {
         $output = $this->templateRenderer->render('phptest_truncate.tpl.php', array());
