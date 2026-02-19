@@ -34,11 +34,9 @@ use ntentan\utils\StringStream;
 use ParseError;
 
 /**
- * The PHP engine is a template engine built into honam which uses raw PHP as
- * the template language. By virtue of this, the PHP engine can boast of high
- * performance. Since this engine uses PHP, it has access to all the language's
- * features. This could sometimes create a problem since some of these features
- * are not intended for templating use.
+ * The PHP engine is a template engine built into honam which uses raw PHP as the template language. By virtue of this,
+ * the PHP engine can boast of high performance. Since this engine uses PHP, it has access to all the language's
+ * features. This could sometimes create a problem since some of these features are not intended for templating use.
  */
 class PhpEngine extends AbstractEngine
 {
