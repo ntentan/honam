@@ -5,7 +5,6 @@ use ntentan\honam\engines\php\HelperFactory;
 use ntentan\honam\factories\PhpEngineFactory;
 use ntentan\honam\factories\MustacheEngineFactory;
 use ntentan\honam\engines\php\HelperVariable;
-use ntentan\honam\engines\php\Janitor;
 
 /**
  * An access point to most of the functionality in honam
@@ -50,7 +49,7 @@ class Templates
         $engineRegistry->registerEngine(['.mustache'], new MustacheEngineFactory($templateFileResolver));
         $helperFactory = new HelperFactory();
         $helperVariable = new HelperVariable($helperFactory, $templateRenderer);
-        $engineRegistry->registerEngine(['.tpl.php'], new PhpEngineFactory($templateRenderer, $helperVariable, new Janitor()));
+        $engineRegistry->registerEngine(['.tpl.php'], new PhpEngineFactory($templateRenderer, $helperVariable));
         return new Templates($templateFileResolver, $templateRenderer);
     }
 }

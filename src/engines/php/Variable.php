@@ -10,29 +10,26 @@ use ntentan\honam\exceptions\HonamException;
 
 class Variable implements ArrayAccess, Iterator, Countable
 {
-
     private $keys;
     private $position;
     private $data;
     private $iteratable = false;
-    private $janitor;
 
     /**
      * @param mixed $data
-     * @param Janitor $janitor
      * @return mixed
      * @throws HonamException
      */
-    public static function initialize(mixed $data, Janitor $janitor): mixed
+    public static function initialize(mixed $data): mixed
     {
         $type = gettype($data);
         switch ($type) {
             case 'object':
             case 'string':
-                return new Variable($janitor, $data);
+                return new Variable($data);
 
             case 'array':
-                return new Variable($janitor, $data, array_keys($data));
+                return new Variable($data, array_keys($data));
 
             case 'NULL':
             case 'boolean':
@@ -45,10 +42,8 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
-    public function __construct(Janitor $janitor, mixed $data, array $keys = array())
+    public function __construct(mixed $data, array $keys = array())
     {
-        $this->janitor = $janitor;
-
         if ($data instanceof Variable) {
             $this->data = $data->getData();
             $this->keys = $data->getKeys();
@@ -62,9 +57,34 @@ class Variable implements ArrayAccess, Iterator, Countable
         }
     }
 
+    public function __serialize(): array
+    {
+        return [
+            'data' => $this->data,
+            'keys' => $this->keys,
+            'iteratable' => $this->iteratable,
+        ];
+    }
+
+    public function __unserialize(array $data): void
+    {
+        $this->data = $data['data'];
+        $this->keys = $data['keys'];
+        $this->iteratable = $data['iteratable'];
+    }
+
     public function __toString()
     {
-        return $this->janitor->cleanHtml((string)$this->data);
+        return $this->cleanHtml((string)$this->data);
+    }
+
+    private function cleanHtml(string $string, bool $strip = false): string
+    {
+        if ($strip === false) {
+            return htmlspecialchars((string)$string);
+        } else {
+            return strip_tags((string)$string);
+        }
     }
 
     public function u(): mixed
@@ -105,7 +125,7 @@ class Variable implements ArrayAccess, Iterator, Countable
         if ($this->iteratable) {
             return $this->data->current();
         } else {
-            return Variable::initialize($this->data[$this->keys[$this->position]], $this->janitor);
+            return Variable::initialize($this->data[$this->keys[$this->position]]);
         }
     }
 
@@ -134,13 +154,13 @@ class Variable implements ArrayAccess, Iterator, Countable
 
     public function __invoke()
     {
-        return Variable::initialize(call_user_func_array($this->data, func_get_args()), $this->janitor);
+        return Variable::initialize(call_user_func_array($this->data, func_get_args()));
     }
 
     public function offsetGet($offset): mixed
     {
         if (isset($this->data[$offset])) {
-            return Variable::initialize($this->data[$offset], $this->janitor);
+            return Variable::initialize($this->data[$offset]);
         } else {
             return null;
         }
@@ -168,7 +188,7 @@ class Variable implements ArrayAccess, Iterator, Countable
      */
     public function __call($method, $arguments)
     {
-        return Variable::initialize(call_user_func_array([$this->data, $method], $arguments), $this->janitor);
+        return Variable::initialize(call_user_func_array([$this->data, $method], $arguments));
     }
 
     /**
@@ -178,7 +198,7 @@ class Variable implements ArrayAccess, Iterator, Countable
      */
     public function __get($name)
     {
-        return Variable::initialize($this->data->$name, $this->janitor);
+        return Variable::initialize($this->data->$name);
     }
 
     public function __debugInfo()

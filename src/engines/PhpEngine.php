@@ -28,7 +28,6 @@ namespace ntentan\honam\engines;
 
 use Exception;
 use ntentan\honam\engines\php\HelperVariable;
-use ntentan\honam\engines\php\Janitor;
 use ntentan\honam\engines\php\Variable;
 use ntentan\honam\TemplateRenderer;
 use ntentan\utils\StringStream;
@@ -48,16 +47,11 @@ class PhpEngine extends AbstractEngine
      */
     private $helperVariable;
 
-    /**
-     * @var Janitor
-     */
-    private $janitor;
     private $templateRenderer;
 
-    public function __construct(TemplateRenderer $templateRenderer, HelperVariable $helperVariable, Janitor $janitor)
+    public function __construct(TemplateRenderer $templateRenderer, HelperVariable $helperVariable)
     {
         $this->helperVariable = $helperVariable;
-        $this->janitor = $janitor;
         $this->templateRenderer = $templateRenderer;
     }
 
@@ -88,7 +82,7 @@ class PhpEngine extends AbstractEngine
         // Users would have to unescape them by calling the escape method directly
         // on the variable.
         foreach ($_data as $_key => $_value) {
-            $$_key = Variable::initialize($_value, $this->janitor);
+            $$_key = Variable::initialize($_value);
         }
 
         // Expose helpers
@@ -113,7 +107,7 @@ class PhpEngine extends AbstractEngine
     public function renderFromStringTemplate(string $string, array $data) : string
     {
         foreach ($data as $_key => $_value) {
-            $$_key = Variable::initialize($_value, $this->janitor);
+            $$_key = Variable::initialize($_value);
         }
         // Expose helpers
         $helpers = $this->helperVariable;
@@ -121,18 +115,6 @@ class PhpEngine extends AbstractEngine
         ob_start();
         eval(" ?> $string");
         return ob_get_clean();
-    }
-
-    /**
-     * A utility function to strip the text of all HTML code. This function
-     * removes all HTML tags instead of escaping them.
-     *
-     * @param string $text
-     * @return string
-     */
-    public function strip(string $text): string
-    {
-        return $this->janitor->cleanHtml($text, true);
     }
 
     /**
@@ -160,5 +142,4 @@ class PhpEngine extends AbstractEngine
     {
         StringStream::unregister();
     }
-
 }
