@@ -120,8 +120,8 @@ class TemplateFileResolver
     }
 
     /**
-     * Resolve a template file by running through all the directories in the
-     * template heirachy till a file that matches the template is found.
+     * Resolve a template file by running through all the directories in the template heirachy till a file that matches
+     * the template is found.
      *
      * @param string $template
      * @return string

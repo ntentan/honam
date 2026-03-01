@@ -45,7 +45,7 @@ class FormHelper extends Helper
     public function __construct(TemplateRenderer $renderer)
     {
         parent::__construct($renderer);
-        $renderer->getTemplateFileResolver()->appendToPathHierarchy(__DIR__ . "/../../../templates/forms");
+        $renderer->getTemplateFileResolver()->appendToPathHierarchy(realpath(__DIR__ . "/../../../../templates/forms"));
     }
 
     /**
