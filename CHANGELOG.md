@@ -1,3 +1,9 @@
+v0.10.4 - 2026-03-02
+====================
+Fixed
+-----
+- Fixed the template file resolver in `FormHelper` by using `realpath` to ensure correct path resolution.
+
 v0.10.3 - 2026-02-19
 ====================
 Fixed
