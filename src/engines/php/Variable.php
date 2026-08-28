@@ -198,7 +198,7 @@ class Variable implements ArrayAccess, Iterator, Countable
      */
     public function __get($name)
     {
-        return Variable::initialize($this->data->$name);
+        return Variable::initialize($this->data->$name ?? null);
     }
 
     public function __debugInfo()
